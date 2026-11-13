@@ -1,6 +1,6 @@
-# 原始计数到 Gata1 KO：一次实际 CellOracle 网络模拟
+# 原始计数到 Gata1 KO/OE：实际 CellOracle 网络模拟
 
-**本案例已在 Linux CPU 环境实际执行 CellOracle 0.20.0，完成 GRN 拟合、Gata1 KO 模拟、随机化投影对照和结果导出。独立生物学验证尚未完成。**
+**本案例已在 Linux CPU 环境实际执行 CellOracle 0.20.0，完成 GRN 拟合、Gata1 KO 与另一次 OE 模拟、随机化投影对照和结果导出。独立生物学验证尚未完成。**
 
 这里使用原研究 GSE72857 的整数分子计数和样本设计，构造有明确身份的小鼠造血背景。它与[教程文件输入审计](../celloracle-paul2015-input-audit/README.md)是不同入口：不把教程中非整数的 `raw_count` 层取整，也不通过改尺度声明来绕过输入要求。
 
@@ -127,6 +127,28 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLBACKEND=Agg \
 本次所有数值有限，三个表达矩阵的细胞和基因轴一致。每个 `delta_X` 都等于模拟表达减内部基线，Gata1 的模拟表达全为 0。共有 1,311 个非目标基因出现非零模拟差值；这些是网络计算结果，并非实测 Gata1 扰动差异基因。
 
 平均 UMAP 位移幅度约 0.5133，单次随机化投影约 0.3110。这里只报告描述性数值，不能据此给出效应显著性、模型准确率或靶点确证。UMAP 轴、投影幅度、CellOracle 内部表达尺度也不能互相转换为实验倍数或百分比。
+
+## 6. 已实跑的过表达分支
+
+同一份原始数据准备结果也已在相同 CellOracle 0.20.0 环境执行 Gata1 OE，使用新的输出目录。这里明确选择内部 imputed 表达的 **95 分位**作为固定设定，仅用于本案例；它不是所有用户任务的默认值，也不代表实验过表达倍数。
+
+```bash
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLBACKEND=Agg \
+  .venv-celloracle/bin/python examples/ko_oe/celloracle_run.py \
+  --h5ad local-runs/paul-wt-prepared/paul2015_wt_input.h5ad \
+  --base-grn local-runs/paul-mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet \
+  --target-gene Gata1 --mode oe --oe-percentile 95 \
+  --output-dir local-runs/paul-gata1-oe-model \
+  --group-col Plate_ID --n-hvg 1500 --n-pcs 20 --n-neighbors 50 --n-jobs 2 --seed 123
+```
+
+本次仍为 **500 × 1,500** 的完整模型输出，约 50.7 秒，退出码 0。固定设定值为 **1.5566748438**：475 个细胞的目标表达被提高，原本高于设定值的 25 个细胞被降低。因此报告不能写成“全部细胞都上调”，也不能将该值解释成 1.56 倍过表达。
+
+![Gata1 OE 的真实模拟位移与随机化投影](oe_state_shift_preview.png)
+
+750,000 个 delta 元素已与模拟表达减基线逐项复核，CSV 往返后的最大绝对误差约为 `1.11e-15`。完整表达、目标设定表、投影和三张图均保留；输入、代码和全部产物哈希见 [OE 运行证据](oe-evidence.json)。KO 的原有证据单独保留，两个条件不混写为同一次执行。
+
+本次 OE 同样没有独立真实过表达标签，科学状态保留 `simulated_unvalidated`。读图时沿用上述技术分组、随机化投影和 UMAP 的解释范围。
 
 ## 局限与来源
 

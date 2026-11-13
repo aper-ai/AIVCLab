@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-11-13",
+  "scope": "Executed input-import and result-reading engineering verification; does not establish independent scientific validation.",
+  "user_data": {
+    "script": "../scripts/prepare_user_data.py",
+    "script_sha256": "d6eec325ac52590340c9d3ceda29e51554227daab6554aa5aa27928cecf78128",
+    "source": "GSE72857 wild-type prepared input documented in cases/celloracle-paul2015-gata1",
+    "source_sha256": "ef6a9063f4c8b0b497d11179b4a0e7880faf1b139fa1e1636bb99c6603be3175",
+    "shape": [
+      500,
+      10757
+    ],
+    "stored_nonzero_values": 894121,
+    "checks": {
+      "shape": true,
+      "dtype": true,
+      "storage": true,
+      "data": true,
+      "indices": true,
+      "indptr": true,
+      "obs_ids": true,
+      "var_ids": true,
+      "obs_exact": true,
+      "var_exact": true,
+      "source_hash_unchanged": true,
+      "output_hashes_exact": true,
+      "preflight_no_blockers": true,
+      "model_not_run": true,
+      "request_keeps_virtual_environment_entry": true,
+      "requested_interpreter_reads_h5ad": true,
+      "requested_interpreter_keeps_venv_prefix": true,
+      "requested_interpreter_keeps_executable_entry": true
+    },
+    "preflight_status": "incomplete",
+    "model_execution": "not_run",
+    "interpreter_check": "Started the interpreter stored by the generated request; checked the selected model environment and AnnData 0.10.8 can read the output.",
+    "earlier_check_gap": "The first H5AD compatibility check used a separately supplied model interpreter and missed the generated-request symlink dereference. A novice task exposed it; both preparation and preflight now preserve the invocation path, with new regression checks and a fresh run."
+  },
+  "result_reading": {
+    "script": "../scripts/explain_result.py",
+    "script_sha256": "1c2bd53da2f5652e6a6244eb78f2df2d370a87bb64e869418a5555d5503cfb9e",
+    "supported_real_runs": [
+      "Kang donor-paired observations",
+      "PRnet fixed reference evaluation",
+      "CellOracle Gata1 KO",
+      "CellOracle Gata1 OE"
+    ],
+    "checks": {
+      "kang": {
+        "source_hashes_unchanged": true,
+        "script_hash_current": true,
+        "independent_validation_not_assessed": true,
+        "report_links_resolve": true,
+        "link_count": 8,
+        "positive_ids_exact": true,
+        "positive_values_equal": true,
+        "negative_ids_exact": true,
+        "negative_values_equal": true
+      },
+      "prnet": {
+        "source_hashes_unchanged": true,
+        "script_hash_current": true,
+        "independent_validation_not_assessed": true,
+        "report_links_resolve": true,
+        "link_count": 9,
+        "prnet_mean_rmse": true,
+        "prnet_mean_mae": true,
+        "prnet_mean_pearson": true,
+        "prnet_sample_rmse": true,
+        "prnet_sample_mae": true,
+        "prnet_sample_pearson": true,
+        "no_change_rmse": true,
+        "no_change_mae": true,
+        "no_change_pearson": true,
+        "other_group_mean_rmse": true,
+        "other_group_mean_mae": true,
+        "other_group_mean_pearson": true,
+        "baseline_verdict_correct": true,
+        "185_vs_476_source_counts": true
+      },
+      "celloracle-ko": {
+        "source_hashes_unchanged": true,
+        "script_hash_current": true,
+        "independent_validation_not_assessed": true,
+        "report_links_resolve": true,
+        "link_count": 10,
+        "cell_count_exact": true,
+        "above_setting_exact": true,
+        "target_mean_equal": true,
+        "both_directions_reported": true
+      },
+      "celloracle-oe": {
+        "source_hashes_unchanged": true,
+        "script_hash_current": true,
+        "independent_validation_not_assessed": true,
+        "report_links_resolve": true,
+        "link_count": 11,
+        "cell_count_exact": true,
+        "above_setting_exact": true,
+        "target_mean_equal": true,
+        "both_directions_reported": true
+      }
+    },
+    "source_runs_unchanged": true,
+    "independent_validation": "not_assessed"
+  },
+  "full_run_artifacts": "Generated locally in new directories; original data, matrices, weights and machine-specific environments are not bundled. Reproduce using the corresponding guides and case sources.",
+  "novice_task": {
+    "task": "Import a separate 32-cell CSV subset with reordered metadata for Gata1 KO preparation; interpret an existing OE run.",
+    "source": "First 32 cells from the public Paul2015 input; not an additional dataset or biological replicate.",
+    "input_shape": [
+      32,
+      10757
+    ],
+    "matrix_values_compared": 344224,
+    "generated_request_unmodified": true,
+    "preparation_exit_code": 0,
+    "preflight_status": "incomplete",
+    "preflight_exit_code": 1,
+    "preflight_blockers": [],
+    "requested_interpreter_execution_exit_code": 0,
+    "backend_input_checks_passed": true,
+    "selected_environment_entry_and_prefix_preserved": true,
+    "model_versions_imported": {
+      "CellOracle": "0.20.0",
+      "AnnData": "0.10.8"
+    },
+    "source_and_tool_integrity": true,
+    "model_inference_status": "not_run",
+    "independent_validation": "not_assessed",
+    "remaining_checks": [
+      "Original upstream raw-count provenance was not independently read; source note and delivered hashes verified only.",
+      "Selected-HVG capacity and preprocessing are untested.",
+      "GRN fit, Gata1 active regulator eligibility after fit, and simulation compatibility are untested.",
+      "Biological validity, stability with 32 cells from one recorded mouse, and independent perturbation validation are not assessed."
+    ],
+    "first_run_defect": "The initial generated request dereferenced the virtual-environment launcher to base Python. The final fresh-directory task used the fixed tools and the automatically generated request with no manual patch.",
+    "preflight_script": "../scripts/preflight.py",
+    "preflight_script_sha256": "a5e8b82b0be05198fae625dfe9ecbd4931076368134b5ad0a844d0d1c2466c54",
+    "historical_oe_reading": {
+      "exit_code": 0,
+      "source_files_unchanged": 19,
+      "fixed_setting_increases": 475,
+      "fixed_setting_decreases": 25,
+      "new_model_execution": false,
+      "original_per_artifact_hashes_in_run_provenance": "not_available; current hashes and read-period integrity checked only"
+    }
+  }
+}

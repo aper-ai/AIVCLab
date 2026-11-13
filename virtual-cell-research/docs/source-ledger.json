@@ -339,6 +339,11 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "agents/openai.yaml",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "archive/aivc-587579e7/README.md",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
@@ -379,6 +384,16 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
+      "path": "cases/celloracle-paul2015-gata1/oe-evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/oe_state_shift_preview.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
       "path": "cases/celloracle-paul2015-gata1/resources.json",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
@@ -400,6 +415,21 @@
     },
     {
       "path": "cases/celloracle-paul2015-input-audit/request.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-heldout-baseline/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-heldout-baseline/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-heldout-baseline/holdout_metrics_preview.svg",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
@@ -484,7 +514,27 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "docs/tool-verification.json",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "references/first-run.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/prediction-evaluation.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/result-reading.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/user-data.md",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
@@ -500,6 +550,21 @@
     },
     {
       "path": "scripts/cases.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/evaluate_predictions.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/explain_result.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/kang_holdout_baseline.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
@@ -524,6 +589,11 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "scripts/prepare_user_data.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "scripts/prnet_reference_case.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
@@ -535,6 +605,11 @@
     },
     {
       "path": "tests/test_celloracle_capacity.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_explain_result.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
@@ -559,12 +634,22 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "tests/test_prediction_evaluation.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "tests/test_preflight.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
       "path": "tests/test_prnet_reference.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_user_data.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     }

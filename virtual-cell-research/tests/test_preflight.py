@@ -109,6 +109,22 @@ class PreflightTests(unittest.TestCase):
         self.assertEqual(report["requested_python_status"], "readable_path_only_not_executed")
         self.assertFalse((self.base / "should_never_exist").exists())
 
+    def test_interpreter_symlink_preserves_absolute_and_relative_venv_launchers(self):
+        launcher = self.base / "selected-env" / "bin" / "python"
+        launcher.parent.mkdir(parents=True)
+        try:
+            launcher.symlink_to(Path(sys.executable).resolve())
+        except (OSError, NotImplementedError):
+            self.skipTest("This platform/account cannot create interpreter symlinks")
+        for value in (str(launcher), "selected-env/bin/python"):
+            with self.subTest(value=value):
+                report = self.inspect(python_executable=value)
+                recorded = report["files"]["python_executable"]
+                self.assertEqual(recorded["path"], str(launcher.absolute()))
+                self.assertNotEqual(recorded["path"], str(launcher.resolve()))
+                self.assertEqual(recorded["path_semantics"], "invocation_path_preserved_not_executed")
+                self.assertEqual(report["requested_python_status"], "readable_path_only_not_executed")
+
     def test_missing_and_empty_files_are_not_accepted(self):
         self.assertEqual(self.inspect(input_file="missing.csv")["status"], "blocked")
         self.write("empty.txt", "")

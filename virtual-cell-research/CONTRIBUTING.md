@@ -34,6 +34,14 @@
 
 具体科学边界见 [输入契约](references/input-contracts.md)、[能力登记](references/model-capabilities.md) 和 [下游规范](references/downstream-results.md)。新贡献不需要引入插件平台、通用任务框架或额外智能体内核。
 
+## 扩展输入、评价与结果说明
+
+新增文件格式可从 [数据准备入口](references/user-data.md) 扩展，保持稳定 ID、明确尺度和原始数值；不要在导入时自动归一化或合并有歧义的基因。涉及解释器时保留用户选择的虚拟环境入口，不把符号链接展开为基础 Python。
+
+增加评价指标或数据划分时遵守 [预测评估说明](references/prediction-evaluation.md)，注明评价单位、同尺度基线和训练成员。加入一种新的中文结果解释时，按 [结果解读契约](references/result-reading.md) 读取真实输出，检查状态和核心源表；不通过目录名、图存在或脚本退出码补造科学结论。
+
+真实输入与四类运行结果的工具核对记录见 [tool-verification.json](docs/tool-verification.json)。工程一致性记录与模型的独立科学验证分开维护。
+
 ## 本地检查
 
 在独立 Python 3.12 环境、包含 `SKILL.md` 的目录运行。`requirements-tests.txt` 包含数据教学与工程测试需要的依赖，不会安装全部模型环境或下载权重。

@@ -32,22 +32,27 @@ def issue(report, group, code, message, required=False):
     report[group].append(entry)
 
 
-def local_path(value, base):
+def local_path(value, base, *, resolve_symlinks=True):
     if not isinstance(value, str) or not value.strip():
         raise ValueError("must be a nonempty local path string")
     path = Path(value).expanduser()
-    return (path if path.is_absolute() else base / path).resolve()
+    candidate = path if path.is_absolute() else base / path
+    # A venv Python launcher may link to a shared base binary. Resolving that
+    # link changes the environment selected by a subsequent invocation.
+    return candidate.resolve() if resolve_symlinks else candidate.absolute()
 
 
 def readable_file(value, label, base, report):
     try:
-        path = local_path(value, base)
+        path = local_path(value, base, resolve_symlinks=label != "python_executable")
         if not path.is_file():
             raise ValueError("must name an existing regular file")
         with path.open("rb") as handle:
             if not handle.read(1):
                 raise ValueError("file is empty")
         report["files"][label] = {"path": str(path), "bytes": path.stat().st_size}
+        if label == "python_executable":
+            report["files"][label]["path_semantics"] = "invocation_path_preserved_not_executed"
         return path
     except (OSError, ValueError, RuntimeError) as exc:
         issue(report, "blockers", "file_unreadable", f"{label}: {exc}")

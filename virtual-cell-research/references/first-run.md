@@ -1,6 +1,8 @@
 # 第一次使用 Virtual Cell Research
 
-先完成一次可以核对来源、对照和完整结果的真实数据阅读，再决定需要哪种虚拟干预模型。你不必先学会挑模型和解释器；Agent 先读取已提供的信息与可用环境，只询问会改变研究问题的缺项。
+先选择与你当前目标相符的入口：已有数据和干预目标就直接准备输入并运行兼容模型；希望先了解虚拟细胞时，可从小型真实案例开始。你不必先学会挑模型和解释器；Agent 读取已提供的信息与可用环境，只询问会改变研究问题的缺项。
+
+**已有自己的数据**先读 [数据准备](user-data.md)，**已有运行结果**先读 [中文解读](result-reading.md)，**已有实测与预测**先读 [预测评估](prediction-evaluation.md)。下面的 HT115 教学是可选入门，不是所有任务的必经步骤。
 
 ## 目录
 
@@ -113,15 +115,16 @@ Windows 用户可直接复制对应命令：
 
 ## 理解其他案例的实际阶段
 
-[案例目录](../cases/README.md) 收录九项具体问题。先用 `show <case-id>` 看限制，不必一次下载全部数据。
+[案例目录](../cases/README.md) 收录十项具体问题。先用 `show <case-id>` 看限制，不必一次下载全部数据。
 
 - **Paul2015 输入尺度审计已经实做。** 约 66.3 MB 的教程对象，其 `raw_count` 层含非整数值；按当前原始整数计数契约，预检应返回 `blocked`、退出码 `2`。这是检查找到了问题，不是模型计算失败。按 [案例步骤](../cases/celloracle-paul2015-input-audit/README.md) 阅读或复现，不要靠四舍五入伪装原始计数。
 - **Kang IFN-β PBMC 已完成真实供体配对教学。** 六份来源文件合计约 58.7 MB；按 [案例步骤](../cases/kang-ifnb-pbmc/README.md) 获取并运行，学习样本与 barcode 对齐、原始计数聚合、缺失配对和供体内差值。默认 CD14+ 分析有 8 个供体配对，未执行预测模型。
-- **CellOracle Gata1 KO 已完成真实模型执行。** [完整案例](../cases/celloracle-paul2015-gata1/README.md) 从 GSE72857 原始整数 UMI 和 GEO 实验标签核实野生型背景，固定选择 500 个细胞，实际拟合网络并模拟 KO。数据准备与模型环境分开，Linux CPU 路线已实测；这不等于独立生物学验证或 Windows 安装验收。
+- **Kang 留一供体基线评估已完成。** [真实评估教学](../cases/kang-heldout-baseline/README.md) 每次只用另外 7 位供体构建均值参照，预测被留出的 1 位，再与零响应比较；保存全部成员和 8 折结果。它帮助理解数据划分与评价，不是 CellOracle/PRnet 的独立验证。
+- **CellOracle Gata1 KO 和 OE 已完成真实模型执行。** [完整案例](../cases/celloracle-paul2015-gata1/README.md) 从 GSE72857 原始整数 UMI 和 GEO 实验标签核实野生型背景，固定选择 500 个细胞，实际拟合网络并分别模拟 KO 和内部 95 分位固定值的 OE，记录实际被提高与降低的细胞数量。数据准备与模型环境分开，Linux CPU 路线已实测；这不等于独立生物学验证或 Windows 安装验收。
 - **PRnet 已完成固定权重的 CPU 参考推理。** [参考评估案例](../cases/prnet-reference-evaluation/README.md) 明确获取一组固定官方代码、权重与 demo，保留稳定 profile ID、随机种子和同尺度结果，并与零响应基线比较。本次正相关没有转化成更低的平均误差；训练重叠未知，不能标为独立验证，也不能将此固定 demo 入口直接用于任意用户矩阵。
 - **sci-Plex3、Norman2019、Adamson2016 和 Replogle2022 目前是已收录路线。** 数据尚未下载。Replogle 案例列出的是约 79.8 MB pseudobulk，不是原始单细胞矩阵；更大的资源需要明确提高下载限额。
 
-目录阶段 `catalogued`、`data_downloaded`、`prepared`、`model_executed`、`validated` 含义不同。当前有三项数据教学/审计、两项真实模型执行，独立验证仍未完成。一个教学脚本完成、输入审计正确阻断、真正执行模型，分别说明，不合并为“已复现论文结论”。
+目录阶段 `catalogued`、`data_downloaded`、`prepared`、`model_executed`、`validated` 含义不同。当前有四项数据教学/审计/基线评估、两条真实模型路线（CellOracle 已分别运行 KO 与 OE），独立验证仍未完成。一个教学脚本完成、输入审计正确阻断、真正执行模型，分别说明，不合并为“已复现论文结论”。
 
 对自己的 H5AD，预检默认只读元数据与形状。在请求 JSON 中显式加入 `"scan_h5ad_values": true` 后，可按块扫描所选 dense/CSR/CSC 的全部存储值。数值合格仍不能证明原始计数来源、稀疏索引完整性、`n_counts` 与矩阵一致或模型环境兼容；通常仍有 `incomplete` 项。具体请求字段见 [预检与排错](../docs/troubleshooting.md)。
 
@@ -219,7 +222,7 @@ V1 的 cell 汇总与 V2 的 CLS 表征指标分开展示。现有 `observation_
 
 HT115 教学只读真实观测数据；完成教学不表示 PRnet 已安装或权重已经通过验收。
 
-目前药筛代码是需要适配的历史示例，不是把任意 `.h5ad` 放进去就可运行的统一命令。先读 [药筛适配步骤](model-setup.md#复用药筛示例的配置步骤)，检查脚本实际依赖的源码、环境、checkpoint、数据、协变量与条件索引。
+想先运行真实药物响应模型，可直接使用 [PRnet 固定参考案例](../cases/prnet-reference-evaluation/README.md)。对自己的矩阵与药物库，先读 [药筛适配步骤](model-setup.md#复用药筛示例的配置步骤)，核对源码、环境、checkpoint、基因轴、预处理、协变量与条件索引；参考入口不自动接收任意 `.h5ad`。
 
 - PRnet 和 chemCPA 的接口可接受外部基线，但要对齐具体权重的基因轴与预处理；接口能接收矩阵不代表跨背景预测已获验证。
 - UniPert-G2CP 当前调用使用模型自带的细胞系对照，无剂量维度；必须明确实际背景，不能将其结果标成用户样本预测。

@@ -54,6 +54,10 @@ jobs:
           python scripts/observed_kang_case.py --help
           python scripts/prepare_paul2015_case.py --help
           python scripts/prnet_reference_case.py --help
+          python scripts/prepare_user_data.py --help
+          python scripts/evaluate_predictions.py --help
+          python scripts/kang_holdout_baseline.py --help
+          python scripts/explain_result.py --help
           python examples/ko_oe/celloracle_run.py --help
           python examples/ko_oe/geneformer_route.py --help
       - name: Build and verify the source-only skill package

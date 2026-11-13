@@ -1,48 +1,44 @@
 # Virtual Cell Research · 虚拟细胞研究 Skill
 
-面向初学者和研究者的虚拟细胞研究流程：从真实案例认识数据和对照，完成输入检查，再选择适合研究问题的模型，交付可复查的结果。Skill 由本项目独立维护，当前重点是数据契约、清楚的操作说明、实际案例和可维护的模型适配。
+**从表达数据出发，开展虚拟基因敲除、过表达与药物筛选。**
 
-## 从一个真实案例开始
+**Virtual Cell Research** 是面向转录组和单细胞研究的科研 Agent Skill。提供表达矩阵、目标基因或药物库后，Agent 按研究目标检查数据与对照、匹配模型、运行虚拟干预，生成预测响应、变化基因、状态位移或药物评分，并交付图表、质量检查与可追溯的运行记录。
 
-进入 [Virtual Cell Research](virtual-cell-research/README.md)。首次使用可运行约 3 MB 的 HT115 观测响应教学，再学习 Kang PBMC 的供体配对分析；进阶案例已在独立 Linux CPU 环境实际执行 CellOracle Gata1 KO 和 PRnet 参考推理。案例目录另有输入审计、SciPlex3、CRISPRa 与 CRISPRi 等路线，明确区分来源整理、数据准备、模型执行与独立验证。
+## 三项核心能力
 
-- [首次使用指南](virtual-cell-research/references/first-run.md)：创建独立环境，获取小型数据，生成表、图和检查记录。
-- [案例目录](virtual-cell-research/cases/README.md)：九个工作流案例的研究问题、真实完成阶段、资源与限制。
-- [预检与排错](virtual-cell-research/docs/troubleshooting.md)：缺少什么、为什么停止、下一步怎样处理。
-- [模型能力与实现程度](virtual-cell-research/references/model-capabilities.md)：参数化入口、历史脚本与文档路线分别说明。
-- [参与建设](virtual-cell-research/CONTRIBUTING.md)：从一个案例、一条适配或一个错误修复开始。
+| 研究任务 | 提供什么 | 得到什么 |
+| --- | --- | --- |
+| **虚拟基因敲除** | 表达数据、目标基因、细胞背景 | 模型支持的表达变化、受影响基因与细胞状态变化 |
+| **虚拟过表达** | 表达数据、目标基因、明确的过表达设定 | 设定条件下的模拟响应，以及对应基线和实际作用范围 |
+| **虚拟药物筛选** | 药物库、细胞背景和模型所需基线；疾病方向比较另需疾病参照 | 逐药转录响应、适用的评分与排序；支持剂量的模型可比较浓度 |
 
-源码包不包含模型权重或原始表达矩阵。当前有三项实际数据教学/审计和两项真实模型执行，独立预测验证仍未完成；历史分析单独归档。项目独立维护工作流与工具，科研方法和归属见 [方法说明](virtual-cell-research/docs/methodology-and-scope.md)；复用代码、模型和数据分别保留[来源与许可](virtual-cell-research/THIRD_PARTY_NOTICES.md)。
+结果类型随模型能力而定。具体入口、所需资源及真实运行范围见 [模型能力表](virtual-cell-research/references/model-capabilities.md)。
 
-## 已有 Windows 结果查看器
+## 直接从你的任务开始
 
-**0.1.0 · Windows x64 预览版**
+- **已有自己的数据**：按 [数据准备](virtual-cell-research/references/user-data.md) 检查 CSV、TSV 或 H5AD，保留完整标识与原始数值，再进入模型分析。
+- **第一次接触虚拟细胞**：从 [首次使用](virtual-cell-research/references/first-run.md) 选择一个小型真实案例，学习输入、对照、预测与图表。
+- **已经得到结果**：用 [结果解读](virtual-cell-research/references/result-reading.md) 生成中文说明，先看关键变化和基线，再回到完整源表。
+- **想评价预测是否有用**：按 [预测评估](virtual-cell-research/references/prediction-evaluation.md) 对齐实测与预测、检查数据划分，并与简单基线比较。
 
-已有「Aper AI 虚拟细胞工作台」用于读取带 `manifest.json` 的模型运行包，把图、表、参数和来源整理为复核记录。它在本机运行，无需登录或上传数据。观测教学的输出是独立的数据报告，当前没有模型运行包的 `manifest.json`，请直接阅读生成的 `report.md`、表格和图。Skill 的使用不依赖此查看器。
+对 Agent 说明你的问题即可，例如：
 
-### 使用查看器
+> 使用 Virtual Cell Research，对我提供的单细胞数据模拟 STAT3 敲除。请检查输入、选择适用模型，输出完整模拟结果、变化基因和状态图，并解释主要发现与限制。
 
-1. 安装后打开「Aper AI 虚拟细胞工作台」，点击「打开 AIVC 公开样例」开始体验；也可导入带有 `manifest.json` 的现有运行目录。
-2. 查看「运行概览」「图表」「源表」和「参数与验证」。图表页可跳转到运行包中已有的图件来源清单；源表页可选择数值列绘图。
-3. 在「运行对比」选左右两个结果。先查看上下文是否一致，再核对参数、状态和汇总指标。汇总差值仅针对声明一致的上下文及同表、同名、同单位的合规指标，计算方向为右减左。
-4. 点击右上角导出单次或对比 HTML 报告。报告自带预览图及来源链接，可以离线打开或从浏览器打印。表格和图件预览有大小及数量限制，完整原件以导入目录为准。
+完整使用方式、三类任务的提示词和执行入口见 [Skill 使用说明](virtual-cell-research/README.md)。
 
-内置样例取自 [AIVC-Skill 固定版本的历史测试报告](https://github.com/Pengzhi-Gao/aivc-skill/blob/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/reports/reproduction-report.md#L33-L56)。它们是 CellOracle 同一批次的两个历史条件，未经独立实验或留出数据验证。样例出处、限制与上游许可见 [samples/README.md](samples/README.md)。
+## 为什么适合研究与共建
 
-### 模型运行包与查看器的衔接
+**让 Agent 处理流程，让研究者掌握判断。** 已提供的信息会直接沿用；需要选择的科学条件会清楚说明。每次分析记录模型版本、输入来源、参数、对照和完成状态，便于复查、重跑及协作。
 
-| 已有环节 | 工作台 0.1.0 |
-| --- | --- |
-| 运行清单、模型参数、验证与来源记录 | 导入原记录，独立显示运行和验证状态；缺失信息保留为未知 |
-| 标准化结果与已生成的图 | 预览 CSV、CSV.GZ 与常见位图；按表选择数值列绘图；读取图件来源清单 |
-| 失败记录、原始输出、上游报告 | 读取错误和报告文本，列出原始文件名称，保留原目录 |
-| 单次结果交付 | 新增参数差异、受条件约束的汇总差值及离线复核报告 |
-| 建环境、提交任务、运行模型、生成预测与验证 | 继续由独立运行环境承担；这个安装包不包含模型权重和推理引擎 |
+**用完整结果支撑图表。** 先保存预测、基线、响应和稳定 ID，再生成摘要与图。运行成功、技术质量和独立科学验证分别呈现。
 
-直接选择运行目录（例如 `results/<run_id>/`），而非它的父目录。可选内容包括 `validation.json`、`provenance.json`、`errors.jsonl`、`raw/`、`tables/`、`figures/` 和 `report.md`。运行包不会被执行或改写。定量汇总表使用表头 `metric,value,unit`，不能拿预览数值当作独立实验结论。需要直接访问未预览的格式，可从「报告与文件」打开原目录。
+**从一个具体贡献开始。** 新增数据案例、模型适配、输入检查或结果图表，都可以沿现有约定逐步加入。无需先理解或搭建一个庞大的平台，见 [贡献指南](virtual-cell-research/CONTRIBUTING.md)。
 
-### 构建与验证查看器
+## 真实案例与资源
 
-使用 Windows x64 Python 3.12、[requirements-build.txt](requirements-build.txt) 中的依赖及 Inno Setup 6，运行 `build.ps1`。脚本生成 `dist/AperAI-VirtualCell-Workbench-Setup-0.1.0-x64.exe`，仅安装到当前用户，无需管理员权限。
+[案例目录](virtual-cell-research/cases/README.md) 提供来源、数据获取、运行命令、结果图和实际完成阶段。已执行的路线包括 HT115 药物观测、Kang 供体配对、CellOracle 基因扰动和 PRnet 参考推理；各自的证据与解释范围保存在案例中。
 
-从安装目录启动 `AperVirtualCellWorkbench.exe --smoke-test <证据目录>`，可重跑公开样例验收并保存截图、HTML 报告和检查结果。
+模型环境按路线独立准备，数据和权重从所列来源获取。项目提供的 [Windows 结果查看器](docs/desktop-viewer.md) 可用于已有模型运行包的本地复核，Skill 本身可以直接使用。
+
+[代码许可](virtual-cell-research/LICENSE) · [资源与来源记录](virtual-cell-research/THIRD_PARTY_NOTICES.md)

@@ -36,6 +36,8 @@ python scripts/preflight.py --request /path/to/request.json --output /path/to/pr
 
 Windows 解释器路径可写成 `D:/envs/celloracle/python.exe`，避免 JSON 反斜杠转义。未指定解释器时，记录 `requested_python_status: unknown` 和检查器自身的 `sys.executable`，供用户选择；不会把检查器环境自动认定为兼容模型的环境。即使给出的文件可读，也只记录 `readable_path_only_not_executed`。
 
+解释器路径保留用户选择的虚拟环境入口，不将 `.venv/bin/python` 的符号链接展开成共享基础 Python；后者可能没有该环境的模型依赖。数据准备生成的请求与预检报告都应保留这一入口，后续运行使用相同路径。普通数据资源可规范解析路径，解释器入口需要保留其环境含义。
+
 ### 请求字段（schema_version 1）
 
 | 字段 | 规则 |

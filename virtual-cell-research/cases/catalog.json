@@ -257,9 +257,60 @@
       }
     },
     {
+      "id": "kang-heldout-baseline",
+      "title": "Kang 留一供体基线：用另外七位供体预测响应",
+      "task": "heldout_baseline_evaluation_teaching",
+      "context": "GSE96583 batch 2; eight lupus PBMC donors; CD14+ Monocytes; 6h IFN-beta; full 35635 source genes",
+      "stage": "prepared",
+      "model_status": "not_run",
+      "baseline_status": "executed",
+      "evaluation_status": "completed",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "Kang original paper",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5784859/"
+        },
+        {
+          "title": "GEO GSE96583",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583"
+        }
+      ],
+      "resources": [],
+      "resource_note": "Uses the already completed kang-ifnb-pbmc observed output; download the six source assets through that prerequisite case. No additional weights or raw resources.",
+      "prerequisite_case": "kang-ifnb-pbmc",
+      "limitations": [
+        "This is baseline cross-validation within one experiment, not external/independent biological validation of CellOracle, PRnet or other virtual-cell backends.",
+        "Training sets overlap across folds; eight folds are not eight independent experiments.",
+        "Condition-specific source libraries remain confounded with stimulation; donor holdout does not remove this effect.",
+        "All 35635 genes are retained, including shared zeros; aggregate performance does not imply every responding gene is predicted accurately.",
+        "The original 8 lupus donors, 6h stimulation, source singlet annotations, pseudobulk conventions and source-vs-paper cell-count discrepancy are inherited from the observed case.",
+        "No p-values, confidence intervals, causal or efficacy claims."
+      ],
+      "expected_outputs": [
+        "report.md",
+        "fitting.json",
+        "figure_manifest.json",
+        "evaluation-input/observed.csv.gz",
+        "evaluation-input/predicted.csv.gz",
+        "evaluation-input/metadata.csv",
+        "evaluation-input/settings.json",
+        "evaluation-input/split_membership.csv",
+        "evaluation/report.md",
+        "evaluation/evaluation.json",
+        "evaluation/qc.json",
+        "evaluation/provenance.json",
+        "evaluation/raw/aligned_responses.npz",
+        "evaluation/tables/unit_metrics.csv"
+      ],
+      "evidence": "cases/kang-heldout-baseline/evidence.json",
+      "source_checked_on": "2026-11-13",
+      "workflow": "python scripts/kang_holdout_baseline.py --observed-run local-runs/kang-observed --output-dir local-runs/kang-heldout-baseline"
+    },
+    {
       "id": "celloracle-paul2015-gata1",
-      "title": "CellOracle：GSE72857 原始计数到 Gata1 KO 实际模拟",
-      "task": "gene_knockout_simulation",
+      "title": "CellOracle：GSE72857 原始计数到 Gata1 KO/OE 实际模拟",
+      "task": "gene_knockout_overexpression_simulation",
       "context": "Mus musculus; GSE72857; Mouse 2 wild-type C57BL/6 bone-marrow Lin-cKit+Sca1- cells; mm9; fixed 500-cell subset; 1500 model genes",
       "stage": "model_executed",
       "model_status": "executed",
@@ -338,7 +389,8 @@
         "Excluding 2109 multiname gene rows removes about 13.2 percent of molecules; this is a substantial input limitation, not a lossless conversion.",
         "The raw source mixes experimental backgrounds; selected batches are explicitly matched to GEO SOFT wild-type sample metadata.",
         "Simulation and randomized-delta projection are technical outputs, not measured effects, significance tests or proof of biological specificity.",
-        "CellOracle fixed-source license contains noncommercial academic-use restrictions; data and prior terms are not separately verified."
+        "CellOracle fixed-source license contains noncommercial academic-use restrictions; data and prior terms are not separately verified.",
+        "OE uses an internal fixed 95th-percentile value, not an experimental fold increase; baseline values above it decrease. No real Gata1 OE labels are available for independent evaluation."
       ],
       "expected_outputs": [
         "manifest.json",
@@ -362,9 +414,14 @@
         "Run scripts/prepare_paul2015_case.py with the three fixed source files; max-cells=500, min-counts=1000, min-genes=500, seed=123.",
         "Use the dedicated Python 3.10 CellOracle 0.20.0 environment and pinned mm9 promoter prior.",
         "Run examples/ko_oe/celloracle_run.py for Gata1 KO, n-hvg=1500, n-pcs=20, n-neighbors=50, n-jobs=2, seed=123.",
-        "Retain the earlier n-hvg=1000 failure and interpret the successful simulation as simulated_unvalidated."
+        "Retain the earlier n-hvg=1000 failure and interpret the successful simulation as simulated_unvalidated.",
+        "A separate executed OE condition explicitly sets --mode oe --oe-percentile 95: 475 target values increase and 25 decrease; see oe-evidence.json."
       ],
-      "output_note": "Input preparation has its own qc.json; model QC is recorded in validation.json, with provenance and full output matrices in the model run directory."
+      "output_note": "Input preparation has its own qc.json; model QC is recorded in validation.json, with provenance and full output matrices in the model run directory.",
+      "condition_evidence": {
+        "ko": "cases/celloracle-paul2015-gata1/evidence.json",
+        "oe": "cases/celloracle-paul2015-gata1/oe-evidence.json"
+      }
     },
     {
       "id": "prnet-reference-evaluation",
