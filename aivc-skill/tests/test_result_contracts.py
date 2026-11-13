@@ -1,6 +1,8 @@
 """Adversarial regression tests; no model weights or network calls."""
 import importlib.util
 import json
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 from pathlib import Path
 import tempfile
 import types
@@ -266,6 +268,50 @@ class ResultContracts(unittest.TestCase):
                 run.save_predictions(pd.DataFrame({'drug': ['A', 'B', 'C']}),
                                      ['g1', 'g2'], prediction, baseline, response + 1)
             self.assertNotEqual(common.RunDir('test').root, run.root)
+
+    def test_repeated_run_creation_with_fixed_clock_preserves_previous_files(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(common, 'datetime') as clock:
+            clock.now.return_value = datetime(2026, 11, 13, 12, 30, 45, 123456)
+            first = common.RunDir('repeated', base_dir=Path(tmp))
+            (first.raw / 'marker.txt').write_text('original result', encoding='utf-8')
+            second = common.RunDir('repeated', base_dir=Path(tmp))
+            (second.raw / 'marker.txt').write_text('new result', encoding='utf-8')
+            self.assertNotEqual(first.root, second.root)
+            self.assertNotEqual(first.run_id, second.run_id)
+            for run in (first, second):
+                self.assertEqual(run.run_id, run.root.name)
+                self.assertTrue(run.run_id.startswith('repeated_20261113T123045123456_'))
+                self.assertTrue(all(folder.is_dir() for folder in (run.raw, run.tables, run.figures)))
+            self.assertEqual((first.raw / 'marker.txt').read_text(encoding='utf-8'), 'original result')
+            self.assertEqual((second.raw / 'marker.txt').read_text(encoding='utf-8'), 'new result')
+
+    def test_concurrent_run_creation_with_fixed_clock_is_atomic(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(common, 'datetime') as clock:
+            clock.now.return_value = datetime(2026, 11, 13, 12, 30, 45, 123456)
+
+            def create(index):
+                run = common.RunDir('parallel', base_dir=Path(tmp))
+                (run.raw / 'marker.txt').write_text(str(index), encoding='utf-8')
+                return run, index
+
+            with ThreadPoolExecutor(max_workers=8) as pool:
+                runs = list(pool.map(create, range(32)))
+            self.assertEqual(len({run.root for run, _ in runs}), 32)
+            self.assertEqual(len({run.run_id for run, _ in runs}), 32)
+            for run, index in runs:
+                self.assertEqual(run.run_id, run.root.name)
+                self.assertEqual((run.raw / 'marker.txt').read_text(encoding='utf-8'), str(index))
+
+    def test_run_id_rejects_path_components_before_creating_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for invalid in ('', ' ', '.', '..', '../outside', 'nested/run', 'nested\\run',
+                            '/absolute', 'C:\\outside', 'C:relative', 'bad:name', 'bad?name', '\0', '\x1f', None, 123):
+                with self.subTest(run_id=invalid), self.assertRaisesRegex(ValueError, 'single filename component'):
+                    common.RunDir(invalid, base_dir=Path(tmp))
+            self.assertFalse((Path(tmp) / 'results').exists())
+            run = common.RunDir('肺癌 筛选', base_dir=Path(tmp))
+            self.assertEqual(run.run_id, run.root.name)
+            self.assertTrue(run.run_id.startswith('肺癌 筛选_'))
 
     def test_scoring_requires_scale_contract(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(common, 'ROOT', Path(tmp)), patch.object(common, 'DATA', Path(tmp)):

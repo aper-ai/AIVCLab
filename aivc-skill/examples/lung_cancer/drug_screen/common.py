@@ -12,6 +12,7 @@
 from pathlib import Path
 import json
 import hashlib
+import tempfile
 from datetime import datetime
 
 import numpy as np
@@ -374,14 +375,21 @@ class RunDir:
     """统一的结果目录：raw / tables / figures + manifest / validation / errors。"""
 
     def __init__(self, run_id, base_dir=None):
-        # Each execution gets a new directory; historical results are not overwritten.
-        self.run_id = f'{run_id}_{datetime.now():%Y%m%dT%H%M%S%f}'
-        self.root = Path(base_dir or ROOT) / 'results' / self.run_id
+        if (not isinstance(run_id, str) or not run_id.strip() or run_id in {'.', '..'}
+                or any(char in '<>:"/\\|?*' or ord(char) < 32 for char in run_id)):
+            raise ValueError('run_id must be a nonempty single filename component valid on Windows and POSIX')
+        results = Path(base_dir or ROOT) / 'results'
+        results.mkdir(parents=True, exist_ok=True)
+        # Timestamps label runs; mkdtemp atomically reserves a fresh directory
+        # even when clocks repeat or several workers create the same run at once.
+        prefix = f'{run_id}_{datetime.now():%Y%m%dT%H%M%S%f}_'
+        self.root = Path(tempfile.mkdtemp(prefix=prefix, dir=results))
+        self.run_id = self.root.name
         self.raw = self.root / 'raw'
         self.tables = self.root / 'tables'
         self.figures = self.root / 'figures'
         for d in (self.raw, self.tables, self.figures):
-            d.mkdir(parents=True, exist_ok=True)
+            d.mkdir()
         self.errors = []
 
     def save_predictions(self, conditions, genes, prediction, baseline, response):
