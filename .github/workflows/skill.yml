@@ -2,10 +2,10 @@ name: Verify Virtual Cell Research
 
 on:
   pull_request:
-    paths: ['virtual-cell-research/**', '.github/workflows/skill.yml']
+    paths: ['README.md', 'docs/**', 'virtual-cell-research/**', '.github/workflows/skill.yml']
   push:
     branches: [main]
-    paths: ['virtual-cell-research/**', '.github/workflows/skill.yml']
+    paths: ['README.md', 'docs/**', 'virtual-cell-research/**', '.github/workflows/skill.yml']
   workflow_dispatch:
 
 permissions:

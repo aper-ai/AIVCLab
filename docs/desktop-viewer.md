@@ -1,6 +1,14 @@
 # Windows 结果查看器
 
-本页记录已有 0.1.0 查看器的使用与构建。当前科研分析主入口见 [Virtual Cell Research](../virtual-cell-research/README.md)。
+本页记录已有 0.1.0 查看器的使用与构建。当前科研分析主入口是 [Virtual Cell Research Skill](../README.md)，首页直接展示研究任务、使用流程和本轮真实案例图。
+
+| 内容 | 位置与用途 |
+| --- | --- |
+| 当前 Skill 与真实案例 | `virtual-cell-research/`：运行分析、整理数据、生成图表及评价结果 |
+| 查看器源码 | 仓库根目录的 `app.py`、`run_data.py`、`build.ps1` 与 `installer/`：本地查看已有模型运行包 |
+| 查看器内置历史样例 | `samples/`：演示查看、比较与报告导出；与首页本轮重新计算的案例分开记录 |
+
+GitHub Releases 中的 0.1.0 安装包对应本页查看器。获取当前 Skill 时保留完整 `virtual-cell-research/` 目录，并让支持 Skill 的科研 Agent 读取其中的 `SKILL.md`。
 
 
 **0.1.0 · Windows x64 预览版**
