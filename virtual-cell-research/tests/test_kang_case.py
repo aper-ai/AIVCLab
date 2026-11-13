@@ -104,7 +104,7 @@ class KangCaseContracts(unittest.TestCase):
         summary = pd.read_csv(output / "tables/gene_summary.csv")
         np.testing.assert_allclose(summary.mean_paired_difference, expected.mean(axis=0))
         self.assertEqual(result["provenance"]["source_kind"], "synthetic_test_fixture")
-        self.assertIn("SYNTHETIC TEST FIXTURE", (output / "report.md").read_text())
+        self.assertIn("SYNTHETIC TEST FIXTURE", (output / "report.md").read_text(encoding="utf-8"))
 
     def test_missing_low_cell_and_zero_library_pairs_stay_explicit(self):
         groups = pd.DataFrame([
@@ -136,7 +136,7 @@ class KangCaseContracts(unittest.TestCase):
     def test_fixed_hashes_and_fixture_override_cannot_be_silent(self):
         with self.assertRaisesRegex(ValueError, "size"):
             module.run_case(self.input, self.root / "wrong-real")
-        self.assertEqual(json.loads((self.root / "wrong-real/error.json").read_text())["model_status"], "not_run")
+        self.assertEqual(json.loads((self.root / "wrong-real/error.json").read_text(encoding="utf-8"))["model_status"], "not_run")
         with self.assertRaisesRegex(ValueError, "require synthetic"):
             module.run_case(self.input, self.root / "unlabelled", expected_checksums=self.hashes)
         corrupted = dict(self.hashes, genes="0" * 64)
@@ -150,15 +150,15 @@ class KangCaseContracts(unittest.TestCase):
         output = self.root / "out"
         self.assertTrue((output / "raw/paired_responses.npz").is_file())
         self.assertTrue((output / "provenance.json").is_file())
-        self.assertNotIn("![", (output / "report.md").read_text())
+        self.assertNotIn("![", (output / "report.md").read_text(encoding="utf-8"))
 
     def test_existing_output_is_not_modified(self):
         output = self.root / "out"
         output.mkdir()
-        (output / "keep").write_text("existing")
+        (output / "keep").write_text("existing", encoding="utf-8")
         with self.assertRaises(FileExistsError):
             self.execute()
-        self.assertEqual((output / "keep").read_text(), "existing")
+        self.assertEqual((output / "keep").read_text(encoding="utf-8"), "existing")
         self.assertEqual(len(list(output.iterdir())), 1)
 
     def test_source_na_annotation_is_retained_without_becoming_a_cell_type(self):

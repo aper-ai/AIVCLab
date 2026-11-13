@@ -39,7 +39,8 @@ class SourcePackageTests(unittest.TestCase):
                 manifest = json.loads(archive.read('virtual-cell-research/package_manifest.json'))
                 self.assertEqual(set(manifest), {'SKILL.md', 'scripts/example.py', 'cases/example/evidence.json'})
                 self.assertEqual(len(archive.namelist()), 4)
-                self.assertEqual(archive.read('virtual-cell-research/scripts/example.py'), b'print("source")\n')
+                self.assertEqual(archive.read('virtual-cell-research/scripts/example.py'),
+                                 (root / 'scripts/example.py').read_bytes())
 
 
 if __name__ == '__main__':
