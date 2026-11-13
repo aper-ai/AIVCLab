@@ -1,0 +1,74 @@
+name: Verify Virtual Cell Research
+
+on:
+  pull_request:
+    paths: ['README.md', 'docs/**', 'virtual-cell-research/**', '.github/workflows/skill.yml']
+  push:
+    branches: [main]
+    paths: ['README.md', 'docs/**', 'virtual-cell-research/**', '.github/workflows/skill.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skill-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  skill-tests:
+    name: Skill tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    defaults:
+      run:
+        working-directory: virtual-cell-research
+    env:
+      MPLBACKEND: Agg
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            virtual-cell-research/requirements-tests.txt
+            virtual-cell-research/requirements-data.txt
+      - name: Install fast-test dependencies
+        run: python -m pip install -r requirements-tests.txt
+      - name: Run contract and preflight tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify lightweight command entry points
+        run: |
+          python scripts/preflight.py --help
+          python scripts/cases.py validate
+          python scripts/cases.py --help
+          python scripts/observed_prnet_case.py --help
+          python scripts/observed_kang_case.py --help
+          python scripts/observed_airway_case.py --help
+          python scripts/plot_celloracle_case.py --help
+          python scripts/plot_prnet_case.py --help
+          python scripts/plot_kang_case.py --help
+          python scripts/prepare_paul2015_case.py --help
+          python scripts/prnet_reference_case.py --help
+          python scripts/prepare_user_data.py --help
+          python scripts/evaluate_predictions.py --help
+          python scripts/kang_holdout_baseline.py --help
+          python scripts/explain_result.py --help
+          python examples/ko_oe/celloracle_run.py --help
+          python examples/ko_oe/geneformer_route.py --help
+      - name: Build and verify the source-only skill package
+        run: python scripts/package_skill.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: virtual-cell-research-${{ matrix.os }}
+          path: virtual-cell-research/dist/virtual-cell-research.zip
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,1629 @@
+{
+  "schema_version": 1,
+  "case_id": "gallery-celloracle-gata1-ko-oe",
+  "frozen_utc": "2026-11-13T08:43:18.581300+00:00",
+  "run_directory": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113",
+  "status": {
+    "technical_processing": "completed",
+    "model_status": "executed",
+    "validation_status": "not_assessed",
+    "scientific_status": "simulated_unvalidated",
+    "independent_experimental_validation": false
+  },
+  "execution_origin": "New official data downloads, new isolated Python environment and fresh real CellOracle KO/OE execution in this session. No old image or output-matrix reuse; no mock model or synthetic case inputs.",
+  "data_resources": {
+    "umi": {
+      "schema_version": 1,
+      "case_id": "celloracle-paul2015-gata1",
+      "asset_id": "umi",
+      "status": "downloaded",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_umitab.txt.gz",
+      "final_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_umitab.txt.gz",
+      "file_name": "GSE72857_umitab.txt.gz",
+      "format": "tsv.gz",
+      "max_bytes": 67108864,
+      "bytes": 16413252,
+      "sha256": "6f45b72b935493181f0f9fdb7343181a5eeca63d0d39ba2a2a8439ac34f08e74",
+      "expected_bytes": 16413252,
+      "expected_bytes_verified": true,
+      "expected_sha256": "6f45b72b935493181f0f9fdb7343181a5eeca63d0d39ba2a2a8439ac34f08e74",
+      "expected_sha256_verified": true,
+      "format_check": "gzip_signature_only",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "started_at": "2026-11-13T08:34:43.657896+00:00",
+      "finished_at": "2026-11-13T08:34:52.868600+00:00",
+      "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/umi/GSE72857_umitab.txt.gz",
+      "error": null
+    },
+    "design": {
+      "schema_version": 1,
+      "case_id": "celloracle-paul2015-gata1",
+      "asset_id": "design",
+      "status": "downloaded",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_experimental_design.txt.gz",
+      "final_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_experimental_design.txt.gz",
+      "file_name": "GSE72857_experimental_design.txt.gz",
+      "format": "tsv.gz",
+      "max_bytes": 67108864,
+      "bytes": 115876,
+      "sha256": "b547a49285a59476e194d77c9a34a9747628ee465736227d840a6aac5f3a5f68",
+      "expected_bytes": 115876,
+      "expected_bytes_verified": true,
+      "expected_sha256": "b547a49285a59476e194d77c9a34a9747628ee465736227d840a6aac5f3a5f68",
+      "expected_sha256_verified": true,
+      "format_check": "gzip_signature_only",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "started_at": "2026-11-13T08:34:43.691913+00:00",
+      "finished_at": "2026-11-13T08:34:50.505455+00:00",
+      "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/design/GSE72857_experimental_design.txt.gz",
+      "error": null
+    },
+    "samples": {
+      "schema_version": 1,
+      "case_id": "celloracle-paul2015-gata1",
+      "asset_id": "samples",
+      "status": "downloaded",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/soft/GSE72857_family.soft.gz",
+      "final_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/soft/GSE72857_family.soft.gz",
+      "file_name": "GSE72857_family.soft.gz",
+      "format": "soft.gz",
+      "max_bytes": 67108864,
+      "bytes": 5888,
+      "sha256": "9dac928a12f462739c0c92f3562acedff4813b2a2acdcf3aa2bee9e62cd6b440",
+      "expected_bytes": 5888,
+      "expected_bytes_verified": true,
+      "expected_sha256": "9dac928a12f462739c0c92f3562acedff4813b2a2acdcf3aa2bee9e62cd6b440",
+      "expected_sha256_verified": true,
+      "format_check": "gzip_signature_only",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "started_at": "2026-11-13T08:34:43.771550+00:00",
+      "finished_at": "2026-11-13T08:34:49.637393+00:00",
+      "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/samples/GSE72857_family.soft.gz",
+      "error": null
+    },
+    "mouse-grn": {
+      "schema_version": 1,
+      "case_id": "celloracle-paul2015-gata1",
+      "asset_id": "mouse-grn",
+      "status": "downloaded",
+      "url": "https://raw.githubusercontent.com/morris-lab/CellOracle/7948870a3b70f7d228e54734e1fa9ed3291fc23b/celloracle/data/promoter_base_GRN/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+      "final_url": "https://raw.githubusercontent.com/morris-lab/CellOracle/7948870a3b70f7d228e54734e1fa9ed3291fc23b/celloracle/data/promoter_base_GRN/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+      "file_name": "mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+      "format": "parquet",
+      "max_bytes": 67108864,
+      "bytes": 4596514,
+      "sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+      "expected_bytes": 4596514,
+      "expected_bytes_verified": true,
+      "expected_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+      "expected_sha256_verified": true,
+      "format_check": "not_checked",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "started_at": "2026-11-13T08:34:43.678528+00:00",
+      "finished_at": "2026-11-13T08:34:52.409677+00:00",
+      "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+      "error": null
+    }
+  },
+  "preparation_qc": {
+    "case_id": "celloracle-paul2015-gata1",
+    "source_kind": "GSE72857_original_UMI_and_design",
+    "source_cells": 10368,
+    "source_genes": 27297,
+    "candidate_cells": 3040,
+    "eligible_cells": 2342,
+    "selected_cells": 500,
+    "selected_expressed_genes": 10757,
+    "excluded_multiname_genes": 2109,
+    "candidate_counts_before_exclusion": 9946777,
+    "candidate_counts_excluded_multiname": 1311971,
+    "selected_counts_excluded_multiname": 284322,
+    "selected_counts_before_exclusion": 2149673,
+    "selected_counts_retained": 1865351,
+    "selected_target_positive_cells": 224,
+    "raw_counts_passed": true,
+    "background_verified_in_GEO": true,
+    "model_status": "not_run",
+    "independent_validation": "not_assessed",
+    "numeric_check_scope": "all genes and count values in the 3040-well selected background before QC; other experimental backgrounds are not scanned"
+  },
+  "preparation_provenance": {
+    "created_at": "2026-11-13T08:36:13.797127+00:00",
+    "sources": {
+      "counts": {
+        "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/umi/GSE72857_umitab.txt.gz",
+        "bytes": 16413252,
+        "sha256": "6f45b72b935493181f0f9fdb7343181a5eeca63d0d39ba2a2a8439ac34f08e74",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_umitab.txt.gz"
+      },
+      "design": {
+        "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/design/GSE72857_experimental_design.txt.gz",
+        "bytes": 115876,
+        "sha256": "b547a49285a59476e194d77c9a34a9747628ee465736227d840a6aac5f3a5f68",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_experimental_design.txt.gz"
+      },
+      "samples": {
+        "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/samples/GSE72857_family.soft.gz",
+        "bytes": 5888,
+        "sha256": "9dac928a12f462739c0c92f3562acedff4813b2a2acdcf3aa2bee9e62cd6b440",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/soft/GSE72857_family.soft.gz"
+      }
+    },
+    "script_sha256": "79442d6f823081c64ef43265e044abb90130ea9b366c85e07d75211c157c69c2",
+    "sys_executable": "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+    "parameters": {
+      "max_cells": 500,
+      "min_counts": 1000,
+      "min_genes": 500,
+      "seed": 123
+    },
+    "versions": {
+      "anndata": "0.10.8",
+      "numpy": "1.26.4",
+      "pandas": "1.5.3",
+      "scipy": "1.11.4"
+    },
+    "model_status": "not_run",
+    "independent_validation": "not_assessed",
+    "artifacts": {
+      "candidate_cells.csv": {
+        "bytes": 487282,
+        "sha256": "310817475cc45c371541accc6fbdf806fb28acebb4505c1918ad27745d2f3d36"
+      },
+      "excluded_genes.csv": {
+        "bytes": 113036,
+        "sha256": "6de4f408ecf6e707b258ded95aae3b2dec98bcc4597fb771602388243dbb39f2"
+      },
+      "paul2015_wt_input.h5ad": {
+        "bytes": 2464038,
+        "sha256": "266e9b97c3413c0296823c1814107a8fbaff2923257641bf57c561fddfd4390e"
+      },
+      "qc.json": {
+        "bytes": 862,
+        "sha256": "35e61cb63fb6cb1d1632eaff5a21ed0fb1f31612d6a3925a2e05552821a2f32a"
+      },
+      "sample_metadata.json": {
+        "bytes": 4668,
+        "sha256": "7591070383477bde2149f2b25cb23b4b7962f2c39d30e25e0549ccd4da68d19e"
+      }
+    }
+  },
+  "sample_metadata": {
+    "AB173": {
+      "geo_sample": "GSM1873452",
+      "title": "AB173 [Sample 3]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB174": {
+      "geo_sample": "GSM1873453",
+      "title": "AB174 [Sample 4]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB175": {
+      "geo_sample": "GSM1873454",
+      "title": "AB175 [Sample 5]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB176": {
+      "geo_sample": "GSM1873455",
+      "title": "AB176 [Sample 6]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB203": {
+      "geo_sample": "GSM1873456",
+      "title": "AB203 [Sample 7]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB204": {
+      "geo_sample": "GSM1873457",
+      "title": "AB204 [Sample 8]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB205": {
+      "geo_sample": "GSM1873458",
+      "title": "AB205 [Sample 9]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB206": {
+      "geo_sample": "GSM1873459",
+      "title": "AB206 [Sample 10]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB207": {
+      "geo_sample": "GSM1873460",
+      "title": "AB207 [Sample 11]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB208": {
+      "geo_sample": "GSM1873461",
+      "title": "AB208 [Sample 12]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB209": {
+      "geo_sample": "GSM1873462",
+      "title": "AB209 [Sample 13]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB210": {
+      "geo_sample": "GSM1873463",
+      "title": "AB210 [Sample 14]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB211": {
+      "geo_sample": "GSM1873464",
+      "title": "AB211 [Sample 15]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB212": {
+      "geo_sample": "GSM1873465",
+      "title": "AB212 [Sample 16]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB213": {
+      "geo_sample": "GSM1873466",
+      "title": "AB213 [Sample 17]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    },
+    "AB214": {
+      "geo_sample": "GSM1873467",
+      "title": "AB214 [Sample 18]",
+      "source": "Unsorted myeloid",
+      "strain background": "C57BL/6",
+      "genotype/variation": "wild type",
+      "tissue": "bone marrow",
+      "selection marker": "Lin- cKit+ Sca1-",
+      "genome_build": "mm9"
+    }
+  },
+  "model_run_records": {
+    "ko": {
+      "manifest": {
+        "schema_version": "1.0",
+        "created_utc": "2026-11-13T08:37:29.198699+00:00",
+        "status": "completed",
+        "backend": {
+          "name": "CellOracle",
+          "version": "0.20.0"
+        },
+        "task": "ko",
+        "target_gene": "Gata1",
+        "inputs": {
+          "h5ad": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/prepared/paul2015_wt_input.h5ad",
+          "h5ad_sha256": "266e9b97c3413c0296823c1814107a8fbaff2923257641bf57c561fddfd4390e",
+          "base_grn": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "counts_layer": null
+        },
+        "parameters": {
+          "counts_layer": null,
+          "target_gene": "Gata1",
+          "mode": "ko",
+          "group_col": "Plate_ID",
+          "grn_unit_col": null,
+          "oe_value": null,
+          "oe_percentile": null,
+          "n_hvg": 1500,
+          "n_pcs": 20,
+          "n_neighbors": 50,
+          "n_propagation": 3,
+          "alpha": 10.0,
+          "bagging_number": 20,
+          "n_jobs": 2,
+          "min_grn_cells": 30,
+          "seed": 123
+        },
+        "software": {
+          "python": "3.10.22",
+          "anndata": "0.10.8",
+          "scanpy": "1.9.8",
+          "numpy": "1.26.4",
+          "pandas": "1.5.3"
+        },
+        "output_type": "network_simulation",
+        "independent_validation": "none",
+        "celloracle_internal_scale": "log1p(raw counts), then KNN smoothing into imputed_count; native simulated_count and delta_X retain that internal scale",
+        "genes_used": 1500,
+        "n_pcs_used": 20,
+        "filtered_grn_links": null,
+        "filtered_links_used_for_simulation": false,
+        "completed_utc": "2026-11-13T08:38:42.180124+00:00",
+        "outputs": [
+          "errors.jsonl",
+          "figures/figure_manifest.csv",
+          "figures/gene_effects.png",
+          "figures/shift_distribution.png",
+          "figures/state_shift.png",
+          "manifest.json",
+          "provenance.json",
+          "raw/baseline_imputed_expression.csv.gz",
+          "raw/delta_X.csv.gz",
+          "raw/simulated_expression.csv.gz",
+          "raw/simulation_grn_coefficients_000.csv.gz",
+          "report.md",
+          "tables/cell_state_shift.csv.gz",
+          "tables/gene_effects.csv",
+          "tables/shift_by_group.csv",
+          "tables/simulation_grn_index.csv",
+          "tables/target_expression_setting.csv",
+          "validation.json"
+        ],
+        "scientific_status": "simulated_unvalidated"
+      },
+      "provenance": {
+        "schema_version": "1.0",
+        "status": "completed",
+        "created_utc": "2026-11-13T08:37:29.198699+00:00",
+        "script": {
+          "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/examples/ko_oe/celloracle_run.py",
+          "sha256": "a6b8e0948a8d0c2a449e2c347194386dfabce6b4c0800847596dedf96641c4d0"
+        },
+        "inputs": {
+          "h5ad": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/prepared/paul2015_wt_input.h5ad",
+          "h5ad_sha256": "266e9b97c3413c0296823c1814107a8fbaff2923257641bf57c561fddfd4390e",
+          "base_grn": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "counts_layer": null
+        },
+        "backend": {
+          "name": "CellOracle",
+          "version": "0.20.0"
+        },
+        "software": {
+          "python": "3.10.22",
+          "anndata": "0.10.8",
+          "scanpy": "1.9.8",
+          "numpy": "1.26.4",
+          "pandas": "1.5.3"
+        },
+        "grn": {
+          "base_grn_path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "scope": "whole",
+          "grn_unit_column": null,
+          "alpha": 10.0,
+          "bagging_number": 20,
+          "min_grn_cells": 30,
+          "base_grn_gene_overlap": 9304,
+          "fitting_source": "base TF dictionary across all cells",
+          "filtered_grn_links": null,
+          "filtered_links_used_for_simulation": false,
+          "coefficient_index": "tables/simulation_grn_index.csv"
+        },
+        "independent_validation": "none",
+        "completed_utc": "2026-11-13T08:38:42.179712+00:00"
+      },
+      "validation": {
+        "input_status": "passed",
+        "simulation_status": "result_available",
+        "projection_status": "result_available",
+        "figure_status": "generated",
+        "independent_validation": "none",
+        "cells": 500,
+        "genes_input": 10757,
+        "group_column": "Plate_ID",
+        "group_labels": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "grn_unit_column": null,
+        "grn_units": [
+          "all_cells"
+        ],
+        "grn_scope": "whole",
+        "base_grn_gene_overlap": 9304,
+        "celloracle_cv_capacity": {
+          "status": "capacity_checked",
+          "backend_version": "0.20.0",
+          "eligible_genes": 1211,
+          "required_genes": 1000,
+          "rule": "expressed_cells>2 and 0<mean_raw_count<35; no values or genes changed"
+        },
+        "filtered_grn_links": null,
+        "fitted_grn_source": "base TF dictionary fitted across all cells",
+        "target_setting": {
+          "chosen_value": 0.0,
+          "choice": "ko_zero",
+          "imputed_min": 0.0,
+          "imputed_max": 1.7735152301501698
+        },
+        "delta_x_finite": true,
+        "target_gene_mean_delta": -0.5240621702525107,
+        "note": "delta_X is simulated_count minus imputed_count, both on CellOracle's internal imputed log1p(raw-count) scale; it is not log2FC or measured perturbation response",
+        "random_control": "delta_X row permutation with sign randomization before embedding projection; not a randomized GRN",
+        "mean_shift_magnitude": 0.5132651808095899,
+        "mean_random_shift_magnitude": 0.31100702525640955
+      }
+    },
+    "oe": {
+      "manifest": {
+        "schema_version": "1.0",
+        "created_utc": "2026-11-13T08:37:29.090591+00:00",
+        "status": "completed",
+        "backend": {
+          "name": "CellOracle",
+          "version": "0.20.0"
+        },
+        "task": "oe",
+        "target_gene": "Gata1",
+        "inputs": {
+          "h5ad": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/prepared/paul2015_wt_input.h5ad",
+          "h5ad_sha256": "266e9b97c3413c0296823c1814107a8fbaff2923257641bf57c561fddfd4390e",
+          "base_grn": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "counts_layer": null
+        },
+        "parameters": {
+          "counts_layer": null,
+          "target_gene": "Gata1",
+          "mode": "oe",
+          "group_col": "Plate_ID",
+          "grn_unit_col": null,
+          "oe_value": null,
+          "oe_percentile": 95.0,
+          "n_hvg": 1500,
+          "n_pcs": 20,
+          "n_neighbors": 50,
+          "n_propagation": 3,
+          "alpha": 10.0,
+          "bagging_number": 20,
+          "n_jobs": 2,
+          "min_grn_cells": 30,
+          "seed": 123
+        },
+        "software": {
+          "python": "3.10.22",
+          "anndata": "0.10.8",
+          "scanpy": "1.9.8",
+          "numpy": "1.26.4",
+          "pandas": "1.5.3"
+        },
+        "output_type": "network_simulation",
+        "independent_validation": "none",
+        "celloracle_internal_scale": "log1p(raw counts), then KNN smoothing into imputed_count; native simulated_count and delta_X retain that internal scale",
+        "genes_used": 1500,
+        "n_pcs_used": 20,
+        "filtered_grn_links": null,
+        "filtered_links_used_for_simulation": false,
+        "completed_utc": "2026-11-13T08:38:56.275580+00:00",
+        "outputs": [
+          "errors.jsonl",
+          "figures/figure_manifest.csv",
+          "figures/gene_effects.png",
+          "figures/oe_setting.png",
+          "figures/shift_distribution.png",
+          "figures/state_shift.png",
+          "manifest.json",
+          "provenance.json",
+          "raw/baseline_imputed_expression.csv.gz",
+          "raw/delta_X.csv.gz",
+          "raw/simulated_expression.csv.gz",
+          "raw/simulation_grn_coefficients_000.csv.gz",
+          "report.md",
+          "tables/cell_state_shift.csv.gz",
+          "tables/gene_effects.csv",
+          "tables/shift_by_group.csv",
+          "tables/simulation_grn_index.csv",
+          "tables/target_expression_setting.csv",
+          "validation.json"
+        ],
+        "scientific_status": "simulated_unvalidated"
+      },
+      "provenance": {
+        "schema_version": "1.0",
+        "status": "completed",
+        "created_utc": "2026-11-13T08:37:29.090591+00:00",
+        "script": {
+          "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/examples/ko_oe/celloracle_run.py",
+          "sha256": "a6b8e0948a8d0c2a449e2c347194386dfabce6b4c0800847596dedf96641c4d0"
+        },
+        "inputs": {
+          "h5ad": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/prepared/paul2015_wt_input.h5ad",
+          "h5ad_sha256": "266e9b97c3413c0296823c1814107a8fbaff2923257641bf57c561fddfd4390e",
+          "base_grn": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "counts_layer": null
+        },
+        "backend": {
+          "name": "CellOracle",
+          "version": "0.20.0"
+        },
+        "software": {
+          "python": "3.10.22",
+          "anndata": "0.10.8",
+          "scanpy": "1.9.8",
+          "numpy": "1.26.4",
+          "pandas": "1.5.3"
+        },
+        "grn": {
+          "base_grn_path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "scope": "whole",
+          "grn_unit_column": null,
+          "alpha": 10.0,
+          "bagging_number": 20,
+          "min_grn_cells": 30,
+          "base_grn_gene_overlap": 9304,
+          "fitting_source": "base TF dictionary across all cells",
+          "filtered_grn_links": null,
+          "filtered_links_used_for_simulation": false,
+          "coefficient_index": "tables/simulation_grn_index.csv"
+        },
+        "independent_validation": "none",
+        "completed_utc": "2026-11-13T08:38:56.275295+00:00"
+      },
+      "validation": {
+        "input_status": "passed",
+        "simulation_status": "result_available",
+        "projection_status": "result_available",
+        "figure_status": "generated",
+        "independent_validation": "none",
+        "cells": 500,
+        "genes_input": 10757,
+        "group_column": "Plate_ID",
+        "group_labels": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "grn_unit_column": null,
+        "grn_units": [
+          "all_cells"
+        ],
+        "grn_scope": "whole",
+        "base_grn_gene_overlap": 9304,
+        "celloracle_cv_capacity": {
+          "status": "capacity_checked",
+          "backend_version": "0.20.0",
+          "eligible_genes": 1211,
+          "required_genes": 1000,
+          "rule": "expressed_cells>2 and 0<mean_raw_count<35; no values or genes changed"
+        },
+        "filtered_grn_links": null,
+        "fitted_grn_source": "base TF dictionary fitted across all cells",
+        "target_setting": {
+          "imputed_min": 0.0,
+          "imputed_max": 1.7735152301501698,
+          "imputed_mean": 0.5240621702525107,
+          "chosen_value": 1.5566748437731766,
+          "choice": "percentile_95",
+          "cells_increased_at_setting": 475,
+          "cells_unchanged_at_setting": 0,
+          "cells_decreased_at_setting": 25,
+          "note": "CellOracle sets a fixed imputed log1p(raw-count) scale value; cells above it are decreased. This is not an experimental fold change."
+        },
+        "delta_x_finite": true,
+        "target_gene_mean_delta": 1.0326126735206658,
+        "note": "delta_X is simulated_count minus imputed_count, both on CellOracle's internal imputed log1p(raw-count) scale; it is not log2FC or measured perturbation response",
+        "random_control": "delta_X row permutation with sign randomization before embedding projection; not a randomized GRN",
+        "mean_shift_magnitude": 0.6204855901186347,
+        "mean_random_shift_magnitude": 0.330775689901915
+      }
+    }
+  },
+  "numeric_checks": {
+    "ko": {
+      "cells": 500,
+      "genes": 1500,
+      "all_values_finite": true,
+      "cell_gene_axes_exact": true,
+      "delta_identity_max_abs_error": 0.0,
+      "delta_values_checked": 750000,
+      "backend_version_verified": "0.20.0",
+      "internal_expression_scale_contract_verified": true,
+      "target_simulated_setting_max_abs_error": 0.0,
+      "target_table_matches_expression": true,
+      "saved_gene_effects_match_full_delta": true,
+      "projection_magnitudes_match_vectors": true
+    },
+    "oe": {
+      "cells": 500,
+      "genes": 1500,
+      "all_values_finite": true,
+      "cell_gene_axes_exact": true,
+      "delta_identity_max_abs_error": 0.0,
+      "delta_values_checked": 750000,
+      "backend_version_verified": "0.20.0",
+      "internal_expression_scale_contract_verified": true,
+      "target_simulated_setting_max_abs_error": 2.220446049250313e-16,
+      "target_table_matches_expression": true,
+      "saved_gene_effects_match_full_delta": true,
+      "projection_magnitudes_match_vectors": true
+    }
+  },
+  "matched_run_checks": {
+    "cell_ids_exact": true,
+    "umap_coordinates_exact": true,
+    "descriptive_groups_exact": true,
+    "cells": 500,
+    "source_accession": "GSE72857",
+    "source_identity_checked": true,
+    "wild_type_background_checked": true,
+    "original_input_hash_checked": true,
+    "fitted_grn_gene_axes_exact": true,
+    "fitted_grn_nonzero_pattern_exact": true,
+    "fitted_grn_coefficients_exact": false,
+    "fitted_grn_max_abs_difference": 2.7200464103316335e-15,
+    "fitted_grn_absolute_tolerance": 1e-12,
+    "fitted_grn_matches_within_tolerance": true,
+    "input_hashes_match": true,
+    "baseline_expression_exact": true,
+    "backend_versions_exact": true,
+    "expression_scale_contracts_exact": true
+  },
+  "target_setting": {
+    "ko": 0.0,
+    "oe": 1.5566748437731766,
+    "oe_choice": "percentile_95",
+    "oe_direction_counts": {
+      "increase": 475,
+      "decrease": 25
+    }
+  },
+  "backend_source_audit": {
+    "file": "backend-code-hashes.json",
+    "package": "celloracle",
+    "version": "0.20.0",
+    "source_file_count": 65,
+    "all_source_files_match_record": true,
+    "aggregate_algorithm": "SHA256 of UTF-8 concatenation of sorted path + NUL + lowercase file SHA256 + LF",
+    "aggregate_sha256": "568a905ed7a0313da587bc75e08ccafff8fa1d67c2536f26e805e62b878f0c64"
+  },
+  "environment_file": "environment-linux.json",
+  "code_hashes": {
+    "scripts/prepare_paul2015_case.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/scripts/prepare_paul2015_case.py",
+      "bytes": 13935,
+      "sha256": "79442d6f823081c64ef43265e044abb90130ea9b366c85e07d75211c157c69c2"
+    },
+    "examples/ko_oe/celloracle_run.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/examples/ko_oe/celloracle_run.py",
+      "bytes": 38239,
+      "sha256": "a6b8e0948a8d0c2a449e2c347194386dfabce6b4c0800847596dedf96641c4d0"
+    },
+    "scripts/cases.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/scripts/cases.py",
+      "bytes": 18091,
+      "sha256": "8e5462e10dcd45bf9c0cf50dbbb623d2bafacef7672a0e6bde9538e0e8382d6f"
+    },
+    "scripts/plot_celloracle_case.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/scripts/plot_celloracle_case.py",
+      "bytes": 28291,
+      "sha256": "e5dd3b666a574559f84ec1b339fd42c53fd533c396c44a456967754fe083f88c"
+    },
+    "tests/test_plot_celloracle_case.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/tests/test_plot_celloracle_case.py",
+      "bytes": 3817,
+      "sha256": "ae9da1b05ab88098fdd2357d173df5bf2a697c67976a03861080f32bf599874c"
+    },
+    "local-runs/gallery-celloracle-20261113/run_logged.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/run_logged.py",
+      "bytes": 1001,
+      "sha256": "8db10f67348e1ea48eb2edbf8702921aea162a56fd459c53bd34da065aa4e9a4"
+    },
+    "local-runs/gallery-celloracle-20261113/collect_environment.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/collect_environment.py",
+      "bytes": 2508,
+      "sha256": "009d1ed38327677bec3d5ac87fd69db371046f1ba12f7da979dc45cd781be008"
+    },
+    "local-runs/gallery-celloracle-20261113/freeze_evidence.py": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/freeze_evidence.py",
+      "bytes": 7054,
+      "sha256": "8520c2cd71bf5e2b1e3b6cfb9e47a20ac1f39496e2145755b517431b5dd64639"
+    }
+  },
+  "complete_model_output_hashes": {
+    "ko": {
+      "manifest.json": {
+        "bytes": 2402,
+        "sha256": "0045b9703ec2a3ed12b0456d1baf6aa7d6169eee420979a58675e676f787a0b1"
+      },
+      "validation.json": {
+        "bytes": 1423,
+        "sha256": "3295e83218d101366a81f86c90e65dbd45a14580086e149f9557cfff156b6b49"
+      },
+      "provenance.json": {
+        "bytes": 1921,
+        "sha256": "069a44a24bb49dd2e8329028a3963cebb5e0372a46abb8f017f092309266d79b"
+      },
+      "raw/baseline_imputed_expression.csv.gz": {
+        "bytes": 927376,
+        "sha256": "d13acba95e5068df4203c05d712e61b1f4caa7593a8d09f3201746babd3d59d7"
+      },
+      "raw/simulated_expression.csv.gz": {
+        "bytes": 4573276,
+        "sha256": "a67f217a23ee89b8f66ca2dd8f80581fc6c31af6ee9d543392ac9810a5582ad5"
+      },
+      "raw/delta_X.csv.gz": {
+        "bytes": 4470913,
+        "sha256": "881eb57a34530f7790796b21a9b3eaf7dff89ce77db741cac3cf6bf09e121501"
+      },
+      "raw/simulation_grn_coefficients_000.csv.gz": {
+        "bytes": 293670,
+        "sha256": "c2de2e030ad851383477ce91438d5af8a289632f62f668ae030455bf5efa79bb"
+      },
+      "tables/cell_state_shift.csv.gz": {
+        "bytes": 38944,
+        "sha256": "792de2d275cb1c68db6cc3a2a4ead39fb6b49787082fafe3b8decb5d8ba2a608"
+      },
+      "tables/gene_effects.csv": {
+        "bytes": 83236,
+        "sha256": "558ed1364ac414e7eec8d42578257ce38e036a9054552f3df2a84800acef38c6"
+      },
+      "tables/target_expression_setting.csv": {
+        "bytes": 14297,
+        "sha256": "019310086c6f39a0c99c760348b0ab22218818884ab2d2c0d632709fb515a196"
+      }
+    },
+    "oe": {
+      "manifest.json": {
+        "bytes": 2432,
+        "sha256": "527dea374f1939bb9aec3d5b767f1d5f18c101ba90eeb88cf0ae642632d09093"
+      },
+      "validation.json": {
+        "bytes": 1743,
+        "sha256": "fad85b79ae1801af9e4fa086dd8007f8dbee549da7ba18351cf40ca0a83ca06a"
+      },
+      "provenance.json": {
+        "bytes": 1921,
+        "sha256": "bd4218158d6dc1b7dfac861dbe457fc373f672dd8abfaaeb318b355c6b0c7f89"
+      },
+      "raw/baseline_imputed_expression.csv.gz": {
+        "bytes": 927376,
+        "sha256": "0f4a4c30c85ada10f74d2f98b41548102e82f9cc11c6f6296cf4f7146d8344dc"
+      },
+      "raw/simulated_expression.csv.gz": {
+        "bytes": 4441529,
+        "sha256": "4eeeb34343699b6fb7d51e4fde45acf64d8f9b51461e9078ff3881a2bf3d725a"
+      },
+      "raw/delta_X.csv.gz": {
+        "bytes": 4493074,
+        "sha256": "2f2f2714e78998297ecbd93f6da6621bc3b6853c7d51fde2c1397840dcdf05db"
+      },
+      "raw/simulation_grn_coefficients_000.csv.gz": {
+        "bytes": 293803,
+        "sha256": "536e713505920567004799e79b0a4082cfc3d32756d55be08f6d4a76e0be236e"
+      },
+      "tables/cell_state_shift.csv.gz": {
+        "bytes": 39626,
+        "sha256": "2cd85b9039b00ef5a65c2162e4240b64c36dca53572a77bae70282608e397e99"
+      },
+      "tables/gene_effects.csv": {
+        "bytes": 83880,
+        "sha256": "9d40cdd12b6030f16c1c3910a246e1772385f92915bf22de3d984021c0ff5a3a"
+      },
+      "tables/target_expression_setting.csv": {
+        "bytes": 21797,
+        "sha256": "984603dffbcfe0b77d96f145ec175c46f00890af9caa2683239fd5844a6d7c25"
+      }
+    }
+  },
+  "commands": [
+    {
+      "name": "fetch-umi",
+      "command": [
+        "python",
+        "scripts/cases.py",
+        "fetch",
+        "celloracle-paul2015-gata1",
+        "--asset",
+        "umi",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/downloads/umi"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:34:43.521338+00:00",
+      "finished_utc": "2026-11-13T08:34:52.933765+00:00",
+      "elapsed_seconds": 9.412438025999563,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/fetch-umi.log",
+      "log_sha256": "cc9eafc93d78d3256bfd13f4a22d2469ee298b6292e4fcc71cf562e71a1fd45b",
+      "log_text": "已下载 16413252 字节：/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/umi/GSE72857_umitab.txt.gz\n记录：local-runs/gallery-celloracle-20261113/downloads/umi/fetch_record.json\n未解压、未准备数据、未执行模型、未做科学验证。\n"
+    },
+    {
+      "name": "fetch-design",
+      "command": [
+        "python",
+        "scripts/cases.py",
+        "fetch",
+        "celloracle-paul2015-gata1",
+        "--asset",
+        "design",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/downloads/design"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:34:43.538015+00:00",
+      "finished_utc": "2026-11-13T08:34:50.535648+00:00",
+      "elapsed_seconds": 6.997635767999782,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/fetch-design.log",
+      "log_sha256": "2470633f817f436892df345267c8f95588c700cc853e4e691da475af7c82a062",
+      "log_text": "已下载 115876 字节：/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/design/GSE72857_experimental_design.txt.gz\n记录：local-runs/gallery-celloracle-20261113/downloads/design/fetch_record.json\n未解压、未准备数据、未执行模型、未做科学验证。\n"
+    },
+    {
+      "name": "fetch-mouse-grn",
+      "command": [
+        "python",
+        "scripts/cases.py",
+        "fetch",
+        "celloracle-paul2015-gata1",
+        "--asset",
+        "mouse-grn",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/downloads/mouse-grn"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:34:43.560205+00:00",
+      "finished_utc": "2026-11-13T08:34:52.420549+00:00",
+      "elapsed_seconds": 8.860348199000327,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/fetch-mouse-grn.log",
+      "log_sha256": "9bee71b3ab551447797a750c3df826dfc4391323dc639438470f6fc60cfb73dc",
+      "log_text": "已下载 4596514 字节：/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet\n记录：local-runs/gallery-celloracle-20261113/downloads/mouse-grn/fetch_record.json\n未解压、未准备数据、未执行模型、未做科学验证。\n"
+    },
+    {
+      "name": "fetch-samples",
+      "command": [
+        "python",
+        "scripts/cases.py",
+        "fetch",
+        "celloracle-paul2015-gata1",
+        "--asset",
+        "samples",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/downloads/samples"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:34:43.632676+00:00",
+      "finished_utc": "2026-11-13T08:34:49.653268+00:00",
+      "elapsed_seconds": 6.020600909999757,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/fetch-samples.log",
+      "log_sha256": "23d3bdf9269bbab3cc0fde2154f7cc16dcb00385e2287abf0bdf08f654cc5035",
+      "log_text": "已下载 5888 字节：/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/downloads/samples/GSE72857_family.soft.gz\n记录：local-runs/gallery-celloracle-20261113/downloads/samples/fetch_record.json\n未解压、未准备数据、未执行模型、未做科学验证。\n"
+    },
+    {
+      "name": "python-install",
+      "command": [
+        "uv",
+        "python",
+        "install",
+        "3.10"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "UV_HTTP_TIMEOUT": "120"
+      },
+      "started_utc": "2026-11-13T08:34:43.868635+00:00",
+      "finished_utc": "2026-11-13T08:34:52.726098+00:00",
+      "elapsed_seconds": 8.857473199000196,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/python-install.log",
+      "log_sha256": "aaf8854c46ff6f7b75d4189c8ba858bb490104e8bdf8c09a9db369e1a0a1da66",
+      "log_text": "Downloading cpython-3.10.22-linux-x86_64-gnu (download) (28.0MiB)\n Downloaded cpython-3.10.22-linux-x86_64-gnu (download)\nInstalled Python 3.10.22 in 8.81s\n + cpython-3.10.22-linux-x86_64-gnu (python3.10)\n"
+    },
+    {
+      "name": "environment-create",
+      "command": [
+        "uv",
+        "venv",
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env",
+        "--python",
+        "3.10",
+        "--seed"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:34:56.109580+00:00",
+      "finished_utc": "2026-11-13T08:35:11.931253+00:00",
+      "elapsed_seconds": 15.821686326999952,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/environment-create.log",
+      "log_sha256": "2f29b4f5f2122132eb903040d2ccc262d0030f1eaf75194c9cb53d8cdd1d039d",
+      "log_text": "Using CPython 3.10.22\nCreating virtual environment with seed packages at: /workspace/scratch/87abe0956112/gallery-celloracle-env\nwarning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.\n         If the cache and target directories are on different filesystems, hardlinking may not be supported.\n         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.\n + packaging==26.3\n + pip==26.3\n + setuptools==84.2.1\n + wheel==0.48.0\n"
+    },
+    {
+      "name": "dependencies-core",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "setuptools<81",
+        "wheel",
+        "Cython==3.0.12",
+        "numpy==1.26.4",
+        "pandas==1.5.3",
+        "scipy==1.11.4",
+        "matplotlib==3.6.3",
+        "scikit-learn==1.3.2",
+        "numba==0.59.1",
+        "scanpy==1.9.8",
+        "anndata==0.10.8",
+        "umap-learn==0.5.7"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "UV_HTTP_TIMEOUT": "120"
+      },
+      "started_utc": "2026-11-13T08:35:12.443315+00:00",
+      "finished_utc": "2026-11-13T08:35:28.075504+00:00",
+      "elapsed_seconds": 15.632206654999663,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/dependencies-core.log",
+      "log_sha256": "c4f656c33d1304de7c18c688e20d9385415c62900f404aaaee3cb2f9ec3095ed",
+      "log_text": "Using Python 3.10.22 environment at: /workspace/scratch/87abe0956112/gallery-celloracle-env\nResolved 44 packages in 7.98s\nDownloading h5py (4.8MiB)\nDownloading pillow (6.6MiB)\nDownloading networkx (1.6MiB)\nDownloading scipy (34.8MiB)\nDownloading pandas (11.5MiB)\n Downloaded networkx\nDownloading setuptools (1.0MiB)\nDownloading kiwisolver (1.6MiB)\nDownloading fonttools (5.0MiB)\nDownloading scikit-learn (10.3MiB)\nDownloading cython (3.5MiB)\nDownloading scanpy (1.9MiB)\nDownloading statsmodels (11.5MiB)\nDownloading numpy (17.4MiB)\nDownloading numba (3.5MiB)\nDownloading matplotlib (11.3MiB)\nDownloading llvmlite (41.8MiB)\n Downloaded setuptools\n Downloaded pillow\n Downloaded kiwisolver\n Downloaded scanpy\n Downloaded h5py\n Downloaded pandas\n Downloaded statsmodels\n Downloaded numpy\n Downloaded matplotlib\n Downloaded scipy\n Downloaded fonttools\n Downloaded scikit-learn\n Downloaded numba\n Downloaded cython\n Downloaded llvmlite\nPrepared 42 packages in 4.52s\nUninstalled 1 package in 9ms\nwarning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.\n         If the cache and target directories are on different filesystems, hardlinking may not be supported.\n         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.\nInstalled 42 packages in 2.66s\n + anndata==0.10.8\n + array-api-compat==1.16.0\n + cloudpickle==3.1.2\n + contourpy==1.3.2\n + cycler==0.12.1\n + cython==3.0.12\n + exceptiongroup==1.3.1\n + fonttools==4.65.0\n + formulaic==1.2.2\n + h5py==3.16.0\n + interface-meta==2.0.1\n + joblib==1.6.0\n + kiwisolver==1.5.1\n + llvmlite==0.42.0\n + matplotlib==3.6.3\n + narwhals==2.28.0\n + natsort==8.4.0\n + networkx==3.4.2\n + numba==0.59.1\n + numpy==1.26.4\n + pandas==1.5.3\n + patsy==1.0.3\n + pillow==12.3.0\n + pynndescent==0.7.0\n + pyparsing==3.3.3\n + python-dateutil==3.0.0\n + pytz==2026.6\n + scanpy==1.9.8\n + scikit-learn==1.3.2\n + scipy==1.11.4\n + seaborn==0.13.2\n + session-info==1.0.1\n - setuptools==84.2.1\n + setuptools==80.10.2\n + six==1.17.0\n + statsmodels==0.15.0\n + stdlib-list==0.12.0\n + threadpoolctl==3.8.0\n + tqdm==4.70.1\n + typing-extensions==4.16.0\n + tzdata==2026.6\n + umap-learn==0.5.7\n + wrapt==2.5.2\n"
+    },
+    {
+      "name": "dependencies-celloracle",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "--no-build-isolation",
+        "celloracle==0.20.0",
+        "numpy==1.26.4",
+        "pandas==1.5.3",
+        "scipy==1.11.4",
+        "matplotlib==3.6.3",
+        "scikit-learn==1.3.2",
+        "numba==0.59.1",
+        "scanpy==1.9.8",
+        "anndata==0.10.8",
+        "umap-learn==0.5.7",
+        "setuptools<81"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "CFLAGS": "-Wno-error=implicit-int -Wno-error=int-conversion",
+        "UV_HTTP_TIMEOUT": "120"
+      },
+      "started_utc": "2026-11-13T08:35:35.668238+00:00",
+      "finished_utc": "2026-11-13T08:36:06.021583+00:00",
+      "elapsed_seconds": 30.353685082000084,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/dependencies-celloracle.log",
+      "log_sha256": "e5bda91d55cb71f09bef52f15597dae5fd0fc0d50e93cc1595fc34e7920bee02",
+      "log_text": "Using Python 3.10.22 environment at: /workspace/scratch/87abe0956112/gallery-celloracle-env\nResolved 179 packages in 17.94s\n   Building gimmemotifs==0.17.2\nDownloading pysam (3.8MiB)\nDownloading notebook (5.4MiB)\nDownloading widgetsnbextension (2.1MiB)\nDownloading mysql-connector-python (18.5MiB)\nDownloading igraph (5.4MiB)\nDownloading debugpy (2.9MiB)\nDownloading jedi (4.7MiB)\nDownloading biopython (3.1MiB)\nDownloading pygments (1.2MiB)\nDownloading babel (9.7MiB)\nDownloading htseq (1.9MiB)\nDownloading jupyterlab (16.5MiB)\nDownloading pybedtools (14.1MiB)\nDownloading goatools (15.1MiB)\nDownloading logomaker (12.6MiB)\n   Building velocyto==0.17.17\nDownloading pyarrow (47.7MiB)\nDownloading louvain (1.0MiB)\nDownloading celloracle (11.8MiB)\n   Building loompy==3.0.8\n   Building biofluff==3.0.4\n      Built loompy==3.0.8\n   Building feather-format==0.4.1\n Downloaded pygments\n Downloaded louvain\n      Built feather-format==0.4.1\n Downloaded htseq\n Downloaded widgetsnbextension\n      Built biofluff==3.0.4\n Downloaded biopython\n Downloaded debugpy\n Downloaded pysam\n      Built velocyto==0.17.17\n      Built gimmemotifs==0.17.2\n Downloaded celloracle\n Downloaded pybedtools\n Downloaded jupyterlab\n Downloaded mysql-connector-python\n Downloaded logomaker\n Downloaded igraph\n Downloaded notebook\n Downloaded babel\n Downloaded jedi\n Downloaded goatools\n Downloaded pyarrow\nPrepared 136 packages in 8.53s\nwarning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.\n         If the cache and target directories are on different filesystems, hardlinking may not be supported.\n         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.\nInstalled 136 packages in 3.72s\n + anyio==4.16.0\n + appdirs==1.4.4\n + argon2-cffi==25.1.0\n + argon2-cffi-bindings==26.2.0\n + arrow==1.4.0\n + asttokens==3.0.2\n + async-lru==2.4.0\n + attrs==26.1.0\n + babel==2.18.0\n + beautifulsoup4==4.15.0\n + biofluff==3.0.4\n + biopython==1.88\n + biothings-client==0.5.1\n + bleach==6.4.0\n + celloracle==0.20.0\n + certifi==2026.10.23\n + cffi==2.1.1\n + charset-normalizer==3.5.2\n + click==8.5.1\n + colorama==0.4.6\n + comm==0.2.3\n + configparser==7.2.0\n + debugpy==1.8.22\n + decorator==5.3.1\n + defusedxml==0.7.1\n + diskcache==5.6.3\n + et-xmlfile==2.0.0\n + executing==2.3.0\n + fastjsonschema==2.22.3\n + feather-format==0.4.1\n + filelock==4.1.0\n + fqdn==1.6.0\n + ftpretty==0.4.0\n + genomepy==0.16.4\n + gimmemotifs==0.17.2\n + goatools==1.6.9\n + h11==0.16.0\n + htseq==2.1.2\n + httpcore==1.0.9\n + httpx==0.28.1\n + idna==3.20\n + igraph==1.0.0\n + ipykernel==7.3.0\n + ipython==8.39.0\n + ipywidgets==8.1.9\n + isoduration==20.11.0\n + iteround==1.0.4\n + jedi==0.20.1\n + jinja2==3.1.6\n + json5==0.17.3\n + jsonpointer==3.12\n + jsonschema==4.26.0\n + jsonschema-specifications==2025.9.1\n + jupyter==1.1.1\n + jupyter-builder==1.3.0\n + jupyter-client==8.10.0\n + jupyter-console==6.6.3\n + jupyter-core==5.9.1\n + jupyter-events==0.12.1\n + jupyter-lsp==2.3.1\n + jupyter-server==2.21.1\n + jupyter-server-terminals==0.5.4\n + jupyterlab==4.6.6\n + jupyterlab-pygments==0.3.0\n + jupyterlab-server==2.28.1\n + jupyterlab-widgets==3.0.17\n + lark==1.3.1\n + logomaker==0.8.7\n + loguru==0.8.0\n + loompy==3.0.8\n + louvain==0.7.1\n + markdown-it-py==4.3.0\n + markupsafe==3.0.4\n + matplotlib-inline==0.2.2\n + mdurl==0.1.2\n + mistune==3.4.0\n + mygene==3.2.2\n + mysql-connector-python==8.4.0\n + nbclient==0.11.0\n + nbconvert==7.17.2\n + nbformat==5.11.1\n + nest-asyncio2==1.7.4\n + notebook==7.6.5\n + notebook-shim==0.2.4\n + numpy-groupies==0.14.3\n + openpyxl==3.1.5\n + overrides==7.7.0\n + palettable==3.3.3\n + pandocfilters==1.5.1\n + parso==0.8.7\n + pexpect==4.9.0\n + platformdirs==4.12.4\n + prometheus-client==0.26.0\n + prompt-toolkit==3.0.53\n + psutil==7.2.2\n + ptyprocess==0.7.0\n + pure-eval==0.2.4\n + pyarrow==25.0.1\n + pybedtools==0.12.1\n + pybigwig==0.3.29\n + pycparser==3.11\n + pydot==4.0.1\n + pyfaidx==0.9.2.2\n + pygments==2.21.0\n + pysam==0.24.1\n + python-json-logger==4.2.0\n + pyyaml==6.0.3\n + pyzmq==27.3.0\n + qnorm==1.0.0\n + referencing==0.37.0\n + requests==2.34.2\n + rfc3339-validator==0.1.4\n + rfc3986-validator==0.1.1\n + rfc3987-syntax==1.1.0\n + rich==15.0.0\n + rpds-py==0.30.0\n + send2trash==2.2.0\n + soupsieve==2.10\n + stack-data==0.6.3\n + terminado==0.18.1\n + texttable==1.7.3\n + tinycss2==1.5.1\n + tomli==2.5.0\n + tornado==6.5.10\n + traitlets==5.16.1\n + uri-template==1.3.0\n + urllib3==2.8.0\n + velocyto==0.17.17\n + wcwidth==0.9.4\n + webcolors==25.10.0\n + webencodings==0.6.1\n + websocket-client==1.9.2\n + widgetsnbextension==4.0.16\n + xdg==6.0.0\n + xlsxwriter==3.3.1\n + xxhash==4.1.0\n"
+    },
+    {
+      "name": "input-prepare",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "scripts/prepare_paul2015_case.py",
+        "--counts",
+        "local-runs/gallery-celloracle-20261113/downloads/umi/GSE72857_umitab.txt.gz",
+        "--design",
+        "local-runs/gallery-celloracle-20261113/downloads/design/GSE72857_experimental_design.txt.gz",
+        "--samples",
+        "local-runs/gallery-celloracle-20261113/downloads/samples/GSE72857_family.soft.gz",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/prepared",
+        "--max-cells",
+        "500",
+        "--min-counts",
+        "1000",
+        "--min-genes",
+        "500",
+        "--seed",
+        "123"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:35:35.689409+00:00",
+      "finished_utc": "2026-11-13T08:36:13.956075+00:00",
+      "elapsed_seconds": 38.26673561999996,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/input-prepare.log",
+      "log_sha256": "35e61cb63fb6cb1d1632eaff5a21ed0fb1f31612d6a3925a2e05552821a2f32a",
+      "log_text": "{\n  \"case_id\": \"celloracle-paul2015-gata1\",\n  \"source_kind\": \"GSE72857_original_UMI_and_design\",\n  \"source_cells\": 10368,\n  \"source_genes\": 27297,\n  \"candidate_cells\": 3040,\n  \"eligible_cells\": 2342,\n  \"selected_cells\": 500,\n  \"selected_expressed_genes\": 10757,\n  \"excluded_multiname_genes\": 2109,\n  \"candidate_counts_before_exclusion\": 9946777,\n  \"candidate_counts_excluded_multiname\": 1311971,\n  \"selected_counts_excluded_multiname\": 284322,\n  \"selected_counts_before_exclusion\": 2149673,\n  \"selected_counts_retained\": 1865351,\n  \"selected_target_positive_cells\": 224,\n  \"raw_counts_passed\": true,\n  \"background_verified_in_GEO\": true,\n  \"model_status\": \"not_run\",\n  \"independent_validation\": \"not_assessed\",\n  \"numeric_check_scope\": \"all genes and count values in the 3040-well selected background before QC; other experimental backgrounds are not scanned\"\n}\n"
+    },
+    {
+      "name": "dependency-check",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:37:03.008844+00:00",
+      "finished_utc": "2026-11-13T08:37:04.225878+00:00",
+      "elapsed_seconds": 1.2170430259998284,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/dependency-check.log",
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "log_text": "No broken requirements found.\n"
+    },
+    {
+      "name": "import-check",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "-c",
+        "import celloracle as co; import velocyto, gimmemotifs, pybedtools; print(co.__version__); co.check_python_requirements()"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:37:04.462847+00:00",
+      "finished_utc": "2026-11-13T08:37:23.859765+00:00",
+      "elapsed_seconds": 19.396960757000215,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/import-check.log",
+      "log_sha256": "16340f69035281f1bf7c89e7497144be5c8b865014a04661572a7967f82eb2ef",
+      "log_text": "/workspace/scratch/87abe0956112/gallery-celloracle-env/lib/python3.10/site-packages/louvain/__init__.py:54: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  from pkg_resources import get_distribution, DistributionNotFound\n2026-11-13 17:37:22,489 - INFO - Creating new config.\n2026-11-13 17:37:22,493 - INFO - Using included version of AMD.\n2026-11-13 17:37:22,493 - INFO - Using included version of BioProspector.\n2026-11-13 17:37:22,493 - INFO - Using included version of ChIPMunk.\n2026-11-13 17:37:22,493 - WARNING - DiNAMO not found. To include it you will have to install it.\n2026-11-13 17:37:22,493 - WARNING - DREME not found. To include it you will have to install it.\n2026-11-13 17:37:22,494 - WARNING - GADEM not found. To include it you will have to install it.\n2026-11-13 17:37:22,494 - INFO - Using included version of HMS.\n2026-11-13 17:37:22,494 - WARNING - Homer not found. To include it you will have to install it.\n2026-11-13 17:37:22,494 - INFO - Using included version of Improbizer.\n2026-11-13 17:37:22,494 - INFO - Using included version of MDmodule.\n2026-11-13 17:37:22,494 - WARNING - MEME not found. To include it you will have to install it.\n2026-11-13 17:37:22,494 - WARNING - MEMEW not found. To include it you will have to install it.\n2026-11-13 17:37:22,494 - INFO - Using included version of MotifSampler.\n2026-11-13 17:37:22,496 - INFO - Using included version of Posmo.\n2026-11-13 17:37:22,497 - WARNING - ProSampler not found. To include it you will have to install it.\n2026-11-13 17:37:22,497 - WARNING - RPMCMC not found. To include it you will have to install it.\n2026-11-13 17:37:22,497 - WARNING - Trawler not found. To include it you will have to install it.\n2026-11-13 17:37:22,497 - WARNING - Weeder not found. To include it you will have to install it.\n2026-11-13 17:37:22,497 - WARNING - XXmotif not found. To include it you will have to install it.\n2026-11-13 17:37:22,497 - WARNING - Yamda not found. To include it you will have to install it.\n2026-11-13 17:37:22,498 - INFO - Configuration file: /home/agent/.config/gimmemotifs/gimmemotifs.cfg\n0.20.0\n"
+    },
+    {
+      "name": "model-ko",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "examples/ko_oe/celloracle_run.py",
+        "--h5ad",
+        "local-runs/gallery-celloracle-20261113/prepared/paul2015_wt_input.h5ad",
+        "--base-grn",
+        "local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+        "--target-gene",
+        "Gata1",
+        "--group-col",
+        "Plate_ID",
+        "--n-hvg",
+        "1500",
+        "--n-pcs",
+        "20",
+        "--n-neighbors",
+        "50",
+        "--n-jobs",
+        "2",
+        "--seed",
+        "123",
+        "--mode",
+        "ko",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/ko"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:37:29.002881+00:00",
+      "finished_utc": "2026-11-13T08:38:43.595189+00:00",
+      "elapsed_seconds": 74.59241500600001,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/model-ko.log",
+      "log_sha256": "11920c9533368c802982875a980f96875a97ef86762c98b7cd3ababe2799ecaf",
+      "log_text": "/workspace/scratch/87abe0956112/gallery-celloracle-env/lib/python3.10/site-packages/louvain/__init__.py:54: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  from pkg_resources import get_distribution, DistributionNotFound\nCompleted CellOracle simulation: /workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/ko\n"
+    },
+    {
+      "name": "model-oe",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "examples/ko_oe/celloracle_run.py",
+        "--h5ad",
+        "local-runs/gallery-celloracle-20261113/prepared/paul2015_wt_input.h5ad",
+        "--base-grn",
+        "local-runs/gallery-celloracle-20261113/downloads/mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+        "--target-gene",
+        "Gata1",
+        "--group-col",
+        "Plate_ID",
+        "--n-hvg",
+        "1500",
+        "--n-pcs",
+        "20",
+        "--n-neighbors",
+        "50",
+        "--n-jobs",
+        "2",
+        "--seed",
+        "123",
+        "--mode",
+        "oe",
+        "--oe-percentile",
+        "95",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/oe"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:37:29.017857+00:00",
+      "finished_utc": "2026-11-13T08:38:58.288949+00:00",
+      "elapsed_seconds": 89.27135629199984,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/model-oe.log",
+      "log_sha256": "622e77c100241d15932e8e54eaf76ae7c76074d23d0552134c59f18629c54c4b",
+      "log_text": "/workspace/scratch/87abe0956112/gallery-celloracle-env/lib/python3.10/site-packages/louvain/__init__.py:54: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  from pkg_resources import get_distribution, DistributionNotFound\nCompleted CellOracle simulation: /workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/oe\n"
+    },
+    {
+      "name": "environment-audit",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "local-runs/gallery-celloracle-20261113/collect_environment.py"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:37:56.399210+00:00",
+      "finished_utc": "2026-11-13T08:37:56.609053+00:00",
+      "elapsed_seconds": 0.2098523300001034,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/environment-audit.log",
+      "log_sha256": "dc6fd13c0fda8330edab93f56b9f52440280a5a8a7a0acd7819c5e0ddde92e0b",
+      "log_text": "{\n  \"packages\": 181,\n  \"python\": \"3.10.22\",\n  \"source_file_count\": 65,\n  \"all_source_files_match_record\": true,\n  \"aggregate_sha256\": \"568a905ed7a0313da587bc75e08ccafff8fa1d67c2536f26e805e62b878f0c64\"\n}\n"
+    },
+    {
+      "name": "plot-attempt-01",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "scripts/plot_celloracle_case.py",
+        "--ko-run",
+        "local-runs/gallery-celloracle-20261113/ko",
+        "--oe-run",
+        "local-runs/gallery-celloracle-20261113/oe",
+        "--output-dir",
+        "cases/gallery/celloracle",
+        "--target-gene",
+        "Gata1",
+        "--per-direction",
+        "8",
+        "--arrows",
+        "240",
+        "--seed",
+        "123",
+        "--dpi",
+        "180"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:39:01.301385+00:00",
+      "finished_utc": "2026-11-13T08:39:06.668850+00:00",
+      "elapsed_seconds": 5.367495317999783,
+      "exit_code": 1,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/plot-attempt-01.log",
+      "log_sha256": "091237d38cb0643843091b65930f15cd5fbcbad3ef99974aea61e1bb4ca0f505",
+      "log_text": "Traceback (most recent call last):\n  File \"/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/scripts/plot_celloracle_case.py\", line 398, in <module>\n    raise SystemExit(main())\n  File \"/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/scripts/plot_celloracle_case.py\", line 337, in main\n    raise ValueError(\"KO/OE fitted GRN coefficients differ\")\nValueError: KO/OE fitted GRN coefficients differ\n"
+    },
+    {
+      "name": "plot-attempt-02",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "scripts/plot_celloracle_case.py",
+        "--ko-run",
+        "local-runs/gallery-celloracle-20261113/ko",
+        "--oe-run",
+        "local-runs/gallery-celloracle-20261113/oe",
+        "--output-dir",
+        "cases/gallery/celloracle",
+        "--target-gene",
+        "Gata1",
+        "--per-direction",
+        "8",
+        "--arrows",
+        "240",
+        "--seed",
+        "123",
+        "--dpi",
+        "180"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:40:23.747786+00:00",
+      "finished_utc": "2026-11-13T08:40:31.062812+00:00",
+      "elapsed_seconds": 7.315033292999942,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/plot-attempt-02.log",
+      "log_sha256": "bbe6fb71fbec9ae02c579630cedf5b1533b807ac18572add909e15a95b034fcf",
+      "log_text": "{\n  \"output_dir\": \"/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle\",\n  \"matched_run_checks\": {\n    \"cell_ids_exact\": true,\n    \"umap_coordinates_exact\": true,\n    \"descriptive_groups_exact\": true,\n    \"cells\": 500,\n    \"source_accession\": \"GSE72857\",\n    \"source_identity_checked\": true,\n    \"wild_type_background_checked\": true,\n    \"original_input_hash_checked\": true,\n    \"fitted_grn_gene_axes_exact\": true,\n    \"fitted_grn_nonzero_pattern_exact\": true,\n    \"fitted_grn_coefficients_exact\": false,\n    \"fitted_grn_max_abs_difference\": 2.7200464103316335e-15,\n    \"fitted_grn_absolute_tolerance\": 1e-12,\n    \"fitted_grn_matches_within_tolerance\": true,\n    \"input_hashes_match\": true,\n    \"baseline_expression_exact\": true,\n    \"backend_versions_exact\": true,\n    \"expression_scale_contracts_exact\": true\n  },\n  \"oe_target_direction_counts\": {\n    \"increase\": 475,\n    \"decrease\": 25\n  },\n  \"figures\": [\n    {\n      \"filename\": \"state_shifts.png\",\n      \"common_quiver_scale\": 1.1431227391258616,\n      \"arrow_reference_projection_units\": 0.5,\n      \"points_per_panel\": 500,\n      \"arrows_per_panel\": 240,\n      \"axis_limits\": {\n        \"lower\": [\n          -7.375271422244732,\n          3.0352689383799984\n        ],\n        \"upper\": [\n          9.62229685934194,\n          15.666315792750357\n        ]\n      },\n      \"color_semantics\": \"background cells gray; KO blue; OE teal; randomized vectors gray; no cell-type labels\"\n    },\n    {\n      \"filename\": \"intervention_effects.png\",\n      \"effect_x_limits\": [\n        -2.2066762005679568,\n        2.2066762005679568\n      ],\n      \"selection\": \"Up to 8 strictly positive and 8 strictly negative signed mean delta_X per run; ties by gene symbol\",\n      \"target_excluded_from_ranking\": \"Gata1\",\n      \"target_cells_shown\": 500,\n      \"unit\": \"CellOracle imputed log1p(raw-count) scale\"\n    }\n  ]\n}\n"
+    },
+    {
+      "name": "plot-integrity-tests",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_plot_celloracle_case.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:40:23.806917+00:00",
+      "finished_utc": "2026-11-13T08:40:24.672862+00:00",
+      "elapsed_seconds": 0.865953840999282,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/plot-integrity-tests.log",
+      "log_sha256": "8b6887317394749fa40af94539e4eabec3445c3fc6f62725ee0d35143a0ffe13",
+      "log_text": "test_grn_roundoff_is_reported_but_material_difference_is_rejected (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_ranks_signed_changes_and_excludes_forced_target (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_rejects_nonfinite_or_inconsistent_delta (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_rejects_permuted_expression_axis_even_when_values_look_valid (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_shared_map_rejects_cell_or_coordinate_mismatch (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.034s\n\nOK\n"
+    },
+    {
+      "name": "plot-attempt-03",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "scripts/plot_celloracle_case.py",
+        "--ko-run",
+        "local-runs/gallery-celloracle-20261113/ko",
+        "--oe-run",
+        "local-runs/gallery-celloracle-20261113/oe",
+        "--output-dir",
+        "cases/gallery/celloracle",
+        "--target-gene",
+        "Gata1",
+        "--per-direction",
+        "8",
+        "--arrows",
+        "240",
+        "--seed",
+        "123",
+        "--dpi",
+        "180"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:40:57.416758+00:00",
+      "finished_utc": "2026-11-13T08:41:04.635348+00:00",
+      "elapsed_seconds": 7.2186198649997095,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/plot-attempt-03.log",
+      "log_sha256": "bbe6fb71fbec9ae02c579630cedf5b1533b807ac18572add909e15a95b034fcf",
+      "log_text": "{\n  \"output_dir\": \"/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle\",\n  \"matched_run_checks\": {\n    \"cell_ids_exact\": true,\n    \"umap_coordinates_exact\": true,\n    \"descriptive_groups_exact\": true,\n    \"cells\": 500,\n    \"source_accession\": \"GSE72857\",\n    \"source_identity_checked\": true,\n    \"wild_type_background_checked\": true,\n    \"original_input_hash_checked\": true,\n    \"fitted_grn_gene_axes_exact\": true,\n    \"fitted_grn_nonzero_pattern_exact\": true,\n    \"fitted_grn_coefficients_exact\": false,\n    \"fitted_grn_max_abs_difference\": 2.7200464103316335e-15,\n    \"fitted_grn_absolute_tolerance\": 1e-12,\n    \"fitted_grn_matches_within_tolerance\": true,\n    \"input_hashes_match\": true,\n    \"baseline_expression_exact\": true,\n    \"backend_versions_exact\": true,\n    \"expression_scale_contracts_exact\": true\n  },\n  \"oe_target_direction_counts\": {\n    \"increase\": 475,\n    \"decrease\": 25\n  },\n  \"figures\": [\n    {\n      \"filename\": \"state_shifts.png\",\n      \"common_quiver_scale\": 1.1431227391258616,\n      \"arrow_reference_projection_units\": 0.5,\n      \"points_per_panel\": 500,\n      \"arrows_per_panel\": 240,\n      \"axis_limits\": {\n        \"lower\": [\n          -7.375271422244732,\n          3.0352689383799984\n        ],\n        \"upper\": [\n          9.62229685934194,\n          15.666315792750357\n        ]\n      },\n      \"color_semantics\": \"background cells gray; KO blue; OE teal; randomized vectors gray; no cell-type labels\"\n    },\n    {\n      \"filename\": \"intervention_effects.png\",\n      \"effect_x_limits\": [\n        -2.2066762005679568,\n        2.2066762005679568\n      ],\n      \"selection\": \"Up to 8 strictly positive and 8 strictly negative signed mean delta_X per run; ties by gene symbol\",\n      \"target_excluded_from_ranking\": \"Gata1\",\n      \"target_cells_shown\": 500,\n      \"unit\": \"CellOracle imputed log1p(raw-count) scale\"\n    }\n  ]\n}\n"
+    },
+    {
+      "name": "plot-integrity-tests-final",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_plot_celloracle_case.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {},
+      "started_utc": "2026-11-13T08:41:43.502869+00:00",
+      "finished_utc": "2026-11-13T08:41:44.330825+00:00",
+      "elapsed_seconds": 0.8279667299993889,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/plot-integrity-tests-final.log",
+      "log_sha256": "faa35779cfce04d5e212a2b5ae2f4d44fe0d5c67b8f06aa203c055a00587233d",
+      "log_text": "test_existing_output_is_rejected_without_reading_runs_or_overwriting (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_grn_roundoff_is_reported_but_material_difference_is_rejected (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_ranks_signed_changes_and_excludes_forced_target (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_rejects_nonfinite_or_inconsistent_delta (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_rejects_permuted_expression_axis_even_when_values_look_valid (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\ntest_shared_map_rejects_cell_or_coordinate_mismatch (test_plot_celloracle_case.PlotCellOracleIntegrityTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.022s\n\nOK\n"
+    },
+    {
+      "name": "plot-final",
+      "command": [
+        "/workspace/scratch/87abe0956112/gallery-celloracle-env/bin/python",
+        "scripts/plot_celloracle_case.py",
+        "--ko-run",
+        "local-runs/gallery-celloracle-20261113/ko",
+        "--oe-run",
+        "local-runs/gallery-celloracle-20261113/oe",
+        "--output-dir",
+        "local-runs/gallery-celloracle-20261113/plots-final",
+        "--target-gene",
+        "Gata1",
+        "--per-direction",
+        "8",
+        "--arrows",
+        "240",
+        "--seed",
+        "123",
+        "--dpi",
+        "180"
+      ],
+      "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research",
+      "environment": {
+        "MPLBACKEND": "Agg"
+      },
+      "started_utc": "2026-11-13T08:41:43.517712+00:00",
+      "finished_utc": "2026-11-13T08:41:54.848561+00:00",
+      "elapsed_seconds": 11.330833621999773,
+      "exit_code": 0,
+      "log": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/logs/plot-final.log",
+      "log_sha256": "e8ff34b0b229bcb7bd1431a28ef29b741bd62d60f20e8d6ce13ab45ed9372bf2",
+      "log_text": "{\n  \"output_dir\": \"/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-celloracle-20261113/plots-final\",\n  \"matched_run_checks\": {\n    \"cell_ids_exact\": true,\n    \"umap_coordinates_exact\": true,\n    \"descriptive_groups_exact\": true,\n    \"cells\": 500,\n    \"source_accession\": \"GSE72857\",\n    \"source_identity_checked\": true,\n    \"wild_type_background_checked\": true,\n    \"original_input_hash_checked\": true,\n    \"fitted_grn_gene_axes_exact\": true,\n    \"fitted_grn_nonzero_pattern_exact\": true,\n    \"fitted_grn_coefficients_exact\": false,\n    \"fitted_grn_max_abs_difference\": 2.7200464103316335e-15,\n    \"fitted_grn_absolute_tolerance\": 1e-12,\n    \"fitted_grn_matches_within_tolerance\": true,\n    \"input_hashes_match\": true,\n    \"baseline_expression_exact\": true,\n    \"backend_versions_exact\": true,\n    \"expression_scale_contracts_exact\": true\n  },\n  \"oe_target_direction_counts\": {\n    \"increase\": 475,\n    \"decrease\": 25\n  },\n  \"figures\": [\n    {\n      \"filename\": \"state_shifts.png\",\n      \"common_quiver_scale\": 1.1431227391258616,\n      \"arrow_reference_projection_units\": 0.5,\n      \"points_per_panel\": 500,\n      \"arrows_per_panel\": 240,\n      \"axis_limits\": {\n        \"lower\": [\n          -7.375271422244732,\n          3.0352689383799984\n        ],\n        \"upper\": [\n          9.62229685934194,\n          15.666315792750357\n        ]\n      },\n      \"color_semantics\": \"background cells gray; KO blue; OE teal; randomized vectors gray; no cell-type labels\"\n    },\n    {\n      \"filename\": \"intervention_effects.png\",\n      \"effect_x_limits\": [\n        -2.2066762005679568,\n        2.2066762005679568\n      ],\n      \"selection\": \"Up to 8 strictly positive and 8 strictly negative signed mean delta_X per run; ties by gene symbol\",\n      \"target_excluded_from_ranking\": \"Gata1\",\n      \"target_cells_shown\": 500,\n      \"unit\": \"CellOracle imputed log1p(raw-count) scale\"\n    }\n  ]\n}\n"
+    }
+  ],
+  "plot_attempt_history": [
+    {
+      "name": "plot-attempt-01",
+      "exit_code": 1,
+      "finding": "The initial exact-coefficient equality guard rejected independent fits; the actual maximum absolute coefficient difference was 2.7200464103316335e-15 with identical axes and nonzero structure. No model result was changed."
+    },
+    {
+      "name": "plot-attempt-02",
+      "exit_code": 0,
+      "finding": "Numeric checks passed at explicit 1e-12 absolute GRN tolerance. Visual inspection detected a legend/title overlap and weak randomized-arrow contrast."
+    },
+    {
+      "name": "plot-attempt-03",
+      "exit_code": 0,
+      "finding": "Layout overlap fixed and randomized arrow visibility improved; both images visually inspected."
+    },
+    {
+      "name": "plot-final",
+      "exit_code": 0,
+      "finding": "Final code rejects any existing output path; rendered into a new local-runs/plots-final directory, then explicitly copied only reviewed assets to the gallery. PNG hashes equal the visually inspected prior render."
+    }
+  ],
+  "gallery_copy_record": [
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/state_shifts.png",
+      "destination": "cases/gallery/celloracle/state_shifts.png",
+      "previous_destination_sha256": "a5347e15f7de7b15dcc0e12ccb76301ab83072a4de45923282f21a11c865e9fc",
+      "source_sha256": "a5347e15f7de7b15dcc0e12ccb76301ab83072a4de45923282f21a11c865e9fc",
+      "copied_hash_verified": true
+    },
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/intervention_effects.png",
+      "destination": "cases/gallery/celloracle/intervention_effects.png",
+      "previous_destination_sha256": "74eb69b8b09336c4b3b98e8ee85d8261a8861773d6ca82eb6a2dd255c9993e9b",
+      "source_sha256": "74eb69b8b09336c4b3b98e8ee85d8261a8861773d6ca82eb6a2dd255c9993e9b",
+      "copied_hash_verified": true
+    },
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/cell_state_shift_source.csv.gz",
+      "destination": "cases/gallery/celloracle/cell_state_shift_source.csv.gz",
+      "previous_destination_sha256": "351e7b74c71b47d5307886bbed03173cf0c2a114bfda35d41978b3a90dac851e",
+      "source_sha256": "9ac451d2e1b9f28cab95de4abf0bd0f7d7d20d9f18c018c18b48044207262f18",
+      "copied_hash_verified": true
+    },
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/all_gene_effects_source.csv.gz",
+      "destination": "cases/gallery/celloracle/all_gene_effects_source.csv.gz",
+      "previous_destination_sha256": "628aaa1602a1c38ee411c97bd92e33b901ec680f6782b42f775099463cb22d20",
+      "source_sha256": "612f77c8485d354e5ad98296a3c065451b236d7acf86aadff0a1c66c35ca6571",
+      "copied_hash_verified": true
+    },
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/downstream_effects_source.csv",
+      "destination": "cases/gallery/celloracle/downstream_effects_source.csv",
+      "previous_destination_sha256": "f22c8535b27a77ef5f0b62db9f98ecbb04de8b7c00cf9b2972a6c989d9c5c998",
+      "source_sha256": "f22c8535b27a77ef5f0b62db9f98ecbb04de8b7c00cf9b2972a6c989d9c5c998",
+      "copied_hash_verified": true
+    },
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/target_setting_source.csv",
+      "destination": "cases/gallery/celloracle/target_setting_source.csv",
+      "previous_destination_sha256": "3bdaffb633f2fc3db96b2a1c5b71a8b566f3cabdd60e75424e1276cedfdd460f",
+      "source_sha256": "3bdaffb633f2fc3db96b2a1c5b71a8b566f3cabdd60e75424e1276cedfdd460f",
+      "copied_hash_verified": true
+    },
+    {
+      "source": "local-runs/gallery-celloracle-20261113/plots-final/plot_summary.json",
+      "destination": "cases/gallery/celloracle/plot_summary.json",
+      "previous_destination_sha256": "989d64a352380899186a224f0933bf75e8e99cb2bb90a951c55e6370c42303aa",
+      "source_sha256": "d7c812b8fe24d531487317e01d56ba53800e27de26c5c8fe8a5459594149a9e2",
+      "copied_hash_verified": true
+    }
+  ],
+  "visual_review": [
+    {
+      "file": "state_shifts.png",
+      "sha256": "a5347e15f7de7b15dcc0e12ccb76301ab83072a4de45923282f21a11c865e9fc",
+      "width_pixels": 2232,
+      "height_pixels": 1710,
+      "dpi": [
+        180.00979999999998,
+        180.00979999999998
+      ],
+      "bytes": 474522,
+      "inspected_with": "view_image",
+      "review": "Full image inspected; no clipped titles, labels or legend overlap; shared scales visible. Final fresh-directory render has identical PNG bytes to the visually reviewed render."
+    },
+    {
+      "file": "intervention_effects.png",
+      "sha256": "74eb69b8b09336c4b3b98e8ee85d8261a8861773d6ca82eb6a2dd255c9993e9b",
+      "width_pixels": 2232,
+      "height_pixels": 1728,
+      "dpi": [
+        180.00979999999998,
+        180.00979999999998
+      ],
+      "bytes": 287708,
+      "inspected_with": "view_image",
+      "review": "Full image inspected; no clipped titles, labels or legend overlap; shared scales visible. Final fresh-directory render has identical PNG bytes to the visually reviewed render."
+    }
+  ],
+  "tests": {
+    "command_name": "plot-integrity-tests-final",
+    "count": 6,
+    "result": "passed",
+    "scope": "Plotting risk guards: existing output preservation, cell/gene axis order, nonfinite and inconsistent deltas, shared-coordinate integrity, target exclusion and signed selection, GRN roundoff versus material differences. Small unit fixtures are not used as case data."
+  },
+  "scientific_limitations": [
+    "Network simulation on a 500-cell single-mouse demonstration subset, not observed Gata1 perturbation data or independent biological validation.",
+    "One GRN across the selected cells; no trusted cell-type or trajectory annotation is used.",
+    "Excluding 2109 ambiguous multi-name gene rows removes 284322 / 2149673 counts in selected cells.",
+    "The fixed OE P95 setting raises 475 and lowers 25 target-gene baselines; it is not a uniform fold-change.",
+    "delta_X is on the CellOracle internal imputed log1p(raw-count) scale and must not be called measured log2FC.",
+    "Single randomized delta_X projection is a descriptive reference on the fitted GRN, not a randomized GRN or significance test.",
+    "Some optional external motif-discovery tools are absent; this run imports a pinned promoter prior and never executes de novo motif discovery."
+  ],
+  "primary_sources": [
+    {
+      "title": "Paul et al. Cell 2015: Transcriptional Heterogeneity and Lineage Commitment in Myeloid Progenitors",
+      "doi": "https://doi.org/10.1016/j.cell.2015.11.013",
+      "pubmed": "https://pubmed.ncbi.nlm.nih.gov/26627738/"
+    },
+    {
+      "title": "Kamimoto et al. Nature 2023: Dissecting cell identity via network inference and in silico gene perturbation",
+      "doi": "https://doi.org/10.1038/s41586-022-05688-9",
+      "pubmed": "https://pubmed.ncbi.nlm.nih.gov/36755098/"
+    },
+    {
+      "title": "GSE72857 public source data",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72857"
+    }
+  ],
+  "gallery_artifact_hashes": {
+    "README.md": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/README.md",
+      "bytes": 11659,
+      "sha256": "12e2aee3447cf71aa8a39e08a10433f4928fe9d2548a6e99818970e93f93d911"
+    },
+    "all_gene_effects_source.csv.gz": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/all_gene_effects_source.csv.gz",
+      "bytes": 66173,
+      "sha256": "612f77c8485d354e5ad98296a3c065451b236d7acf86aadff0a1c66c35ca6571"
+    },
+    "backend-code-hashes.json": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/backend-code-hashes.json",
+      "bytes": 18141,
+      "sha256": "a4505ff8310934d70cc7030d2b1e593df27474417b4d94bf477fea69b06ababd"
+    },
+    "cell_state_shift_source.csv.gz": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/cell_state_shift_source.csv.gz",
+      "bytes": 78679,
+      "sha256": "9ac451d2e1b9f28cab95de4abf0bd0f7d7d20d9f18c018c18b48044207262f18"
+    },
+    "downstream_effects_source.csv": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/downstream_effects_source.csv",
+      "bytes": 2286,
+      "sha256": "f22c8535b27a77ef5f0b62db9f98ecbb04de8b7c00cf9b2972a6c989d9c5c998"
+    },
+    "environment-linux.json": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/environment-linux.json",
+      "bytes": 5683,
+      "sha256": "5e7a6b853d5355b030ba6b21252e201861bab16da6bb51ac31a693ddcd28e63e"
+    },
+    "intervention_effects.png": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/intervention_effects.png",
+      "bytes": 287708,
+      "sha256": "74eb69b8b09336c4b3b98e8ee85d8261a8861773d6ca82eb6a2dd255c9993e9b"
+    },
+    "plot_summary.json": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/plot_summary.json",
+      "bytes": 18254,
+      "sha256": "d7c812b8fe24d531487317e01d56ba53800e27de26c5c8fe8a5459594149a9e2"
+    },
+    "state_shifts.png": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/state_shifts.png",
+      "bytes": 474522,
+      "sha256": "a5347e15f7de7b15dcc0e12ccb76301ab83072a4de45923282f21a11c865e9fc"
+    },
+    "target_setting_source.csv": {
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/cases/gallery/celloracle/target_setting_source.csv",
+      "bytes": 39883,
+      "sha256": "3bdaffb633f2fc3db96b2a1c5b71a8b566f3cabdd60e75424e1276cedfdd460f"
+    }
+  }
+}

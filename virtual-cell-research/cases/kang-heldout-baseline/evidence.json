@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "case_id": "kang-heldout-baseline",
+  "stage": "prepared",
+  "model_status": "not_run",
+  "model_status_scope": "No virtual-cell backend invoked; a simple leave-one-donor-out training-mean estimator was actually fitted and evaluated.",
+  "baseline_status": "executed",
+  "evaluation_status": "completed",
+  "validation_status": "not_assessed",
+  "independent_validation": "not_assessed",
+  "execution": {
+    "exit_code": 0,
+    "platform": "Linux CPU",
+    "evaluator_started_utc": "2026-11-13T06:22:49.874970+00:00",
+    "evaluator_completed_utc": "2026-11-13T06:22:50.497326+00:00",
+    "portable_command": "python scripts/kang_holdout_baseline.py --observed-run local-runs/kang-observed --output-dir local-runs/kang-heldout-baseline",
+    "python": "3.12.14",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.18.1",
+      "matplotlib": "3.10.8"
+    }
+  },
+  "implementation": {
+    "scripts/evaluate_predictions.py": "77e5908008d50996299c2f79de40b0774a3f6f0e28a19c57918eb0ad8e63fccd",
+    "scripts/kang_holdout_baseline.py": "79f7953dfa1f50de065b88835b1d8c911682cf5c38fed7cf82b802bbe7a5c122"
+  },
+  "source_case": "kang-ifnb-pbmc",
+  "source_resources": {
+    "control_matrix": {
+      "file_name": "GSM2560248_2.1.mtx.gz",
+      "bytes": 28545918,
+      "sha256": "32add28a0b3397d9ef3f220b7a6a55e98e60fe7b66fe48d0986d634df8ca0013",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_2.1.mtx.gz"
+    },
+    "stimulated_matrix": {
+      "file_name": "GSM2560249_2.2.mtx.gz",
+      "bytes": 29050932,
+      "sha256": "8aecc98a7ac4957bbc2570f87ebe8ce97332a5bcdbf557d40bd5aabfd287bdc5",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_2.2.mtx.gz"
+    },
+    "genes": {
+      "file_name": "GSE96583_batch2.genes.tsv.gz",
+      "bytes": 277054,
+      "sha256": "93aa4e9b530ef9d6411ca129b416324c5cc1cc5a01a1fa6ed4f4a845480ed3ca",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.genes.tsv.gz"
+    },
+    "metadata": {
+      "file_name": "GSE96583_batch2.total.tsne.df.tsv.gz",
+      "bytes": 756342,
+      "sha256": "1d57e72e92ca8695250e88cc0f1c3fa8c0be1175d974f8b427c58f1274dc6c09",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.total.tsne.df.tsv.gz"
+    },
+    "control_barcodes": {
+      "file_name": "GSM2560248_barcodes.tsv.gz",
+      "bytes": 52904,
+      "sha256": "d58d8d55cbe4a12757207784b3bc9227bf200c9100ca15131176e9f8159c955e",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_barcodes.tsv.gz"
+    },
+    "stimulated_barcodes": {
+      "file_name": "GSM2560249_barcodes.tsv.gz",
+      "bytes": 52366,
+      "sha256": "9bb38e080dfae81036fbcd9902c6c6254a4466aa85f70705479be3b2d6679d55",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_barcodes.tsv.gz"
+    }
+  },
+  "observed_artifacts_verified": {
+    "qc.json": {
+      "sha256": "31598cacad92b97c02e0d595b682d7ee26173edb0113d7c23bde5c404457501c",
+      "bytes": 2119
+    },
+    "raw/paired_responses.npz": {
+      "sha256": "772a862626a8a66362aee4e697e338d11e5d6ec1dd1f493e02f881de3c0a2245",
+      "bytes": 571729
+    },
+    "raw/pseudobulk_counts.npz": {
+      "sha256": "0eff09b30c1adab38250ccdeddae9347b1e5969d48db36504fff42201f717796",
+      "bytes": 2348268
+    },
+    "tables/donor_pairs.csv": {
+      "sha256": "a18421e980800cdec58842291bb4ba280b5a38c29e2e473527a5620c3dbdc2ac",
+      "bytes": 862
+    },
+    "tables/pseudobulk_index.csv": {
+      "sha256": "1523ac53530c217e7db4111caf3302d4b6ce63ccc7ab70abe77ba6f6db7c238f",
+      "bytes": 6902
+    },
+    "tables/genes.csv": {
+      "sha256": "e131b9b1d6e321102b6add92f34db8a094ff4e659faf7a2f5d924f0ae4f78225",
+      "bytes": 886260
+    }
+  },
+  "data": {
+    "donors": [
+      "101",
+      "1015",
+      "1016",
+      "1039",
+      "107",
+      "1244",
+      "1256",
+      "1488"
+    ],
+    "paired_biological_units": 8,
+    "genes": 35635,
+    "response_values": 285080,
+    "genes_zero_response_in_all_8_donors": 20815,
+    "scale": "log2(1+CPM_stim) - log2(1+CPM_ctrl), full-source-gene library denominator",
+    "background": "CD14+ Monocytes; eight lupus donors; IFN-beta 6h"
+  },
+  "fitting": {
+    "estimator": "leave_one_donor_out_training_mean",
+    "folds": [
+      {
+        "fold_id": "leave_out_101",
+        "held_out_donor": "101",
+        "training_donors": [
+          "1015",
+          "1016",
+          "1039",
+          "107",
+          "1244",
+          "1256",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "ac4d772511fe0d61b5511064cf13d528489ed40b51329a1121df85c0ede47e38"
+      },
+      {
+        "fold_id": "leave_out_1015",
+        "held_out_donor": "1015",
+        "training_donors": [
+          "101",
+          "1016",
+          "1039",
+          "107",
+          "1244",
+          "1256",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "c651a99ece1b7cb9d0deb64991dcf184098c89644591ad130f79a6dde611e7e7"
+      },
+      {
+        "fold_id": "leave_out_1016",
+        "held_out_donor": "1016",
+        "training_donors": [
+          "101",
+          "1015",
+          "1039",
+          "107",
+          "1244",
+          "1256",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "670db00a1c66dbd49234985a660d7c7392638f6175b8f45aa0883d3582d9700f"
+      },
+      {
+        "fold_id": "leave_out_1039",
+        "held_out_donor": "1039",
+        "training_donors": [
+          "101",
+          "1015",
+          "1016",
+          "107",
+          "1244",
+          "1256",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "b4e61dfb7f291b32293ad1c7d3b9a11b819a547d8c07fb10a23fa076c389e974"
+      },
+      {
+        "fold_id": "leave_out_107",
+        "held_out_donor": "107",
+        "training_donors": [
+          "101",
+          "1015",
+          "1016",
+          "1039",
+          "1244",
+          "1256",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "ae97f5e42b01c21aca14afa78032b01ba989c60431bd0ef368b207f1fe9762d3"
+      },
+      {
+        "fold_id": "leave_out_1244",
+        "held_out_donor": "1244",
+        "training_donors": [
+          "101",
+          "1015",
+          "1016",
+          "1039",
+          "107",
+          "1256",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "8e060eec0a471dbe748dc1f48248a283af7ee89f161cf07bb6df6660d379a0c7"
+      },
+      {
+        "fold_id": "leave_out_1256",
+        "held_out_donor": "1256",
+        "training_donors": [
+          "101",
+          "1015",
+          "1016",
+          "1039",
+          "107",
+          "1244",
+          "1488"
+        ],
+        "training_response_float64_le_sha256": "3e8609f65e4f09ca4b8e158ff42e4e449902b1f8548fc23ec8642d2e39697b92"
+      },
+      {
+        "fold_id": "leave_out_1488",
+        "held_out_donor": "1488",
+        "training_donors": [
+          "101",
+          "1015",
+          "1016",
+          "1039",
+          "107",
+          "1244",
+          "1256"
+        ],
+        "training_response_float64_le_sha256": "d47fe0080cd4015493697ac259c3c3af066d3e4323d70eeb4e5b71229fae5778"
+      }
+    ],
+    "hyperparameters_tuned": false,
+    "source_response_reconstruction_max_abs_error": 0.0,
+    "training_process": "Each donor-condition library is normalized using its own full-source gene sum. No population-fitted normalization or response fitting uses held-out donor."
+  },
+  "metrics": {
+    "prediction": {
+      "rmse": 0.620646539572983,
+      "mae": 0.288463006341604,
+      "pearson": 0.6733644273480993,
+      "direction_agreement_nonzero_observed": 0.7449255934920528,
+      "units": 8,
+      "pearson_defined_units": 8
+    },
+    "no_change": {
+      "rmse": 0.8377138751197386,
+      "mae": 0.365417353832609,
+      "pearson": null,
+      "direction_agreement_nonzero_observed": 0.0,
+      "units": 8,
+      "pearson_defined_units": 0
+    },
+    "rmse_gain_over_no_change": 0.2170673355467556
+  },
+  "checks": {
+    "all_original_responses_exact": true,
+    "all_predictions_equal_seven_donor_mean": true,
+    "gene_ids_exact": true,
+    "sample_ids_exact": true,
+    "all_8_folds_have_7_training_1_evaluation": true,
+    "no_heldout_donor_in_its_training_set": true,
+    "per_unit_model_rmse_exact_with_tolerance": true,
+    "per_unit_zero_rmse_exact_with_tolerance": true,
+    "unit_equal_mean_rmse_matches": true,
+    "zero_correlations_undefined": true,
+    "all_8_donors_better_than_zero_rmse": true,
+    "report_links_resolve": true
+  },
+  "report_links_checked": 13,
+  "figure": {
+    "file": "holdout_metrics_preview.svg",
+    "source": "evaluation/tables/unit_metrics.csv",
+    "sha256": "da0c58eceead78b454fc543653897a47243c2c0d134de11510574db891826bb8",
+    "verified_visually": true
+  },
+  "full_run_artifacts_not_bundled": {
+    "figure_manifest.json": {
+      "bytes": 142,
+      "sha256": "bf20c0f82d34b20bac03df6aaad8c6bd0b774b1641ed6f6e66409ac7ee2cb019"
+    },
+    "holdout_metrics.svg": {
+      "bytes": 14932,
+      "sha256": "da0c58eceead78b454fc543653897a47243c2c0d134de11510574db891826bb8"
+    },
+    "holdout_metrics.png": {
+      "bytes": 62655,
+      "sha256": "e08332a516f534a6fd6ad8c133955418d73d46bccfb61ba130558472329b09e8"
+    },
+    "report.md": {
+      "bytes": 1098,
+      "sha256": "d34dd3b0a04c74a00d155d159b97de66a052a20c223fe669e6549e9d707e0ed0"
+    },
+    "fitting.json": {
+      "bytes": 4373,
+      "sha256": "ab871e9ea3859564e85533033bf2a839411c6221da5dc9ac64bebc21587f021d"
+    },
+    "evaluation-input/observed.csv.gz": {
+      "bytes": 580319,
+      "sha256": "5cc1cd6f3c857c65b25b3a07283caec0782ec7a1ad1b46d07969125f124cfd19"
+    },
+    "evaluation-input/metadata.csv": {
+      "bytes": 269,
+      "sha256": "47a8d778774444dda249f50b6bcd48573ea6e216cf672ee4cb177e9f70ee2a18"
+    },
+    "evaluation-input/split_membership.csv": {
+      "bytes": 2392,
+      "sha256": "bc1d5dacdd729cd6e8603b67d38c6290dd16a7df11b560ce858963941b3f23ac"
+    },
+    "evaluation-input/predicted.csv.gz": {
+      "bytes": 1154132,
+      "sha256": "18c742e07ce36f6fb78c002e528f177d749f3590e9d099f3d0702a6bd6864b3d"
+    },
+    "evaluation-input/settings.json": {
+      "bytes": 746,
+      "sha256": "9b306938b427b44ddafc0d490cc5516db2edfc6e8ba8d9e8c1dcc040b73a82a9"
+    },
+    "evaluation/qc.json": {
+      "bytes": 1884,
+      "sha256": "bd7c02fc2b0bcc45bb7f3c6df4749b102f238ac76b37578ebaf4fc954dcf811a"
+    },
+    "evaluation/evaluation.json": {
+      "bytes": 4173,
+      "sha256": "3d66456ccb6c1ef152de95acb4a76fb4d6258fa5f33a02805a88d82b2329ff3a"
+    },
+    "evaluation/errors.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evaluation/report.md": {
+      "bytes": 2318,
+      "sha256": "24213413b69d46d574020961a7c0ed4fa9f831374d36315b1a13af464e95c5ac"
+    },
+    "evaluation/provenance.json": {
+      "bytes": 2899,
+      "sha256": "0eec4c9994f608097a1d7b18e2bcbfa2a0f7ff6377e810e84dead7cb733049ac"
+    },
+    "evaluation/raw/aligned_responses.npz": {
+      "bytes": 2597063,
+      "sha256": "1bfed92b5e16da0f36b95d5ffec682a9172c4f8d25630406ea9f11c38627ff98"
+    },
+    "evaluation/tables/profile_metrics.csv": {
+      "bytes": 1571,
+      "sha256": "88dfb69fab8b2a667d935d1174c351ff112b6aff3665387a084e3c1125460368"
+    },
+    "evaluation/tables/evaluation_metadata.csv": {
+      "bytes": 269,
+      "sha256": "47a8d778774444dda249f50b6bcd48573ea6e216cf672ee4cb177e9f70ee2a18"
+    },
+    "evaluation/tables/gene_index.csv": {
+      "bytes": 605804,
+      "sha256": "54c488a9169daf6a3707b87829c280cbe3cc6f45664fbce2a6fee0cde7911752"
+    },
+    "evaluation/tables/unit_metrics.csv": {
+      "bytes": 1384,
+      "sha256": "4f8338dd0a8470cbc223252d1b79e104710be61dbac8672f44f3e53377fde04d"
+    }
+  },
+  "tests": {
+    "synthetic_behavior_tests": 21,
+    "actual_case_is_separate_from_test_fixtures": true
+  },
+  "limitations": [
+    "This is baseline cross-validation within one experiment, not external/independent biological validation of CellOracle, PRnet or other virtual-cell backends.",
+    "Training sets overlap across folds; eight folds are not eight independent experiments.",
+    "Condition-specific source libraries remain confounded with stimulation; donor holdout does not remove this effect.",
+    "All 35635 genes are retained, including shared zeros; aggregate performance does not imply every responding gene is predicted accurately.",
+    "The original 8 lupus donors, 6h stimulation, source singlet annotations, pseudobulk conventions and source-vs-paper cell-count discrepancy are inherited from the observed case.",
+    "No p-values, confidence intervals, causal or efficacy claims."
+  ],
+  "standalone_evaluator_check": {
+    "cli_exit_code": 0,
+    "full_aligned_arrays_exact": true,
+    "metadata_and_status_exact": true,
+    "metrics_within_1e_14": true,
+    "max_metric_absolute_difference": 8.881784197001252e-16,
+    "note": "Separate CLI run used a different thread environment; floating reduction results are compared with a declared numeric tolerance, not treated as bitwise identical."
+  }
+}

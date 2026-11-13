@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "case_id": "kang-ifnb-pbmc",
+  "observed_analysis_status": "completed",
+  "model_status": "not_run",
+  "independent_validation": "not_assessed",
+  "execution_utc": "2026-11-13T04:05:20.115693+00:00",
+  "sources": {
+    "control_matrix": {
+      "file_name": "GSM2560248_2.1.mtx.gz",
+      "bytes": 28545918,
+      "sha256": "32add28a0b3397d9ef3f220b7a6a55e98e60fe7b66fe48d0986d634df8ca0013",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_2.1.mtx.gz"
+    },
+    "stimulated_matrix": {
+      "file_name": "GSM2560249_2.2.mtx.gz",
+      "bytes": 29050932,
+      "sha256": "8aecc98a7ac4957bbc2570f87ebe8ce97332a5bcdbf557d40bd5aabfd287bdc5",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_2.2.mtx.gz"
+    },
+    "genes": {
+      "file_name": "GSE96583_batch2.genes.tsv.gz",
+      "bytes": 277054,
+      "sha256": "93aa4e9b530ef9d6411ca129b416324c5cc1cc5a01a1fa6ed4f4a845480ed3ca",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.genes.tsv.gz"
+    },
+    "metadata": {
+      "file_name": "GSE96583_batch2.total.tsne.df.tsv.gz",
+      "bytes": 756342,
+      "sha256": "1d57e72e92ca8695250e88cc0f1c3fa8c0be1175d974f8b427c58f1274dc6c09",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.total.tsne.df.tsv.gz"
+    },
+    "control_barcodes": {
+      "file_name": "GSM2560248_barcodes.tsv.gz",
+      "bytes": 52904,
+      "sha256": "d58d8d55cbe4a12757207784b3bc9227bf200c9100ca15131176e9f8159c955e",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_barcodes.tsv.gz"
+    },
+    "stimulated_barcodes": {
+      "file_name": "GSM2560249_barcodes.tsv.gz",
+      "bytes": 52366,
+      "sha256": "9bb38e080dfae81036fbcd9902c6c6254a4466aa85f70705479be3b2d6679d55",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_barcodes.tsv.gz"
+    }
+  },
+  "method": {
+    "script": "../../scripts/observed_kang_case.py",
+    "script_sha256_at_execution": "64643454e1d43823bd7042d03e1878bc8b0328c86c5a16d4b2ccf7de2367453f",
+    "matrix_orientation": "genes_by_cells",
+    "count_contract": "finite nonnegative integer UMI counts; all stored entries scanned",
+    "cell_filter": "source multiplets equals singlet",
+    "identity": "sample accession plus original barcode",
+    "metadata_mapping": "source-specific stim duplicate barcode gets one literal 1 appended in published merged metadata; full coverage checked",
+    "unassigned_annotation": "literal NA retained as unassigned source group; excluded from chosen annotated-cell-type pairing",
+    "grouping": [
+      "donor",
+      "condition",
+      "source_cell_label"
+    ],
+    "normalization": "log2(1 + 1000000 * pseudobulk_gene_counts / pseudobulk_all_gene_counts)",
+    "response_operation": "stim_minus_ctrl_within_same_donor_and_cell_type",
+    "replicate_unit": "donor",
+    "donor_weighting": "equal",
+    "selected_cell_type": "CD14+ Monocytes",
+    "minimum_cells_per_donor_condition": 20,
+    "statistics": "descriptive_only_no_pvalues",
+    "all_source_genes_in_library_denominator": true
+  },
+  "qc": {
+    "status": "completed",
+    "source_cells": 29065,
+    "source_genes": 35635,
+    "source_donors": [
+      "101",
+      "1015",
+      "1016",
+      "1039",
+      "107",
+      "1244",
+      "1256",
+      "1488"
+    ],
+    "included_singlets": 24679,
+    "excluded_by_status": {
+      "doublet": 3169,
+      "ambs": 1217
+    },
+    "metadata_id_disambiguations": 313,
+    "source_unassigned_cell_labels": 9,
+    "included_singlets_with_unassigned_cell_label": 6,
+    "duplicated_gene_symbols": 2697,
+    "group_count": 129,
+    "selected_cell_type": "CD14+ Monocytes",
+    "minimum_cells_per_donor_condition": 20,
+    "paired_donors": 8,
+    "pair_exclusions": [],
+    "selected_ctrl_cells": 2785,
+    "selected_stim_cells": 2600,
+    "matrix_audit": [
+      {
+        "sample": "GSM2560248",
+        "condition": "ctrl",
+        "shape_genes_by_cells": [
+          35635,
+          14619
+        ],
+        "stored_entries": 8732747,
+        "source_total_umi": 23540929,
+        "included_singlets": 12315,
+        "excluded_cells": 2304,
+        "included_singlet_umi": 18586487,
+        "aggregated_umi": 18586487,
+        "zero_library_cells": 0,
+        "raw_count_values_checked": true
+      },
+      {
+        "sample": "GSM2560249",
+        "condition": "stim",
+        "shape_genes_by_cells": [
+          35635,
+          14446
+        ],
+        "stored_entries": 8838098,
+        "source_total_umi": 25059996,
+        "included_singlets": 12364,
+        "excluded_cells": 2082,
+        "included_singlet_umi": 20095163,
+        "aggregated_umi": 20095163,
+        "zero_library_cells": 0,
+        "raw_count_values_checked": true
+      }
+    ],
+    "all_included_umi_conserved": true,
+    "scale": "log2(1 + 1000000 * pseudobulk_gene_counts / pseudobulk_all_gene_counts)",
+    "response_operation": "stim_minus_ctrl_within_same_donor_and_cell_type",
+    "replicate_unit": "donor",
+    "donor_weighting": "equal",
+    "model_status": "not_run",
+    "independent_validation": "not_assessed",
+    "statistics": "descriptive_only_no_pvalues",
+    "biological_qc": "source_annotations_and_singlet_filter_only; no_new_mitochondrial_or_doublet_QC",
+    "batch_limitation": "two_condition_specific_source_libraries; shared_library_effects_are_not_removed"
+  },
+  "verification": {
+    "source_gene_axis_exact": true,
+    "all_source_cell_labels_exact": true,
+    "all_source_cell_umi_exact": true,
+    "all_pseudobulk_groups_exactly_reconstructed": true,
+    "pseudobulk_groups_checked": 129,
+    "pseudobulk_values_checked": 4596915,
+    "all_full_donor_differences_exact": true,
+    "paired_values_checked": 285080,
+    "paired_max_error": 0,
+    "figure_values_checked": 96,
+    "figure_max_error": 1.7763568394002505e-15,
+    "equal_donor_summary_checked": true,
+    "report_relative_links_resolve": 12,
+    "model_status": "not_run",
+    "independent_validation": "not_assessed"
+  },
+  "verification_method": "Independently invert source metadata barcode aliases, match original cell labels/UMI totals, regroup raw source matrices by original donor/condition/label using direct sparse column sums, compare all 129x35635 integer values; reconstruct all paired normalized differences and 96 plotted values.",
+  "execution": {
+    "kind": "cli",
+    "argv_source": "sys.argv",
+    "argv": [
+      "scripts/observed_kang_case.py",
+      "--input-dir",
+      "local-runs/kang-source-20261113",
+      "--output-dir",
+      "local-runs/kang-observed-final-20261113",
+      "--cell-type",
+      "CD14+ Monocytes",
+      "--min-cells",
+      "20"
+    ],
+    "working_directory": "directory containing SKILL.md",
+    "interpreter_absolute_path_recorded_in_full_provenance": true
+  },
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.18.1",
+      "matplotlib": "3.10.8"
+    }
+  },
+  "behavior_tests": {
+    "command": "python -m unittest discover -s tests -p test_kang_case.py -v",
+    "tests_passed": 11,
+    "fixtures": "explicit synthetic fixtures, not experimental observations"
+  },
+  "figure": {
+    "file": "donor_response_preview.svg",
+    "sha256": "599a9781c1de8020135f8ae222a05417f06bb20e7cfc6da7e485b429f17aa232",
+    "bytes": 86598,
+    "donors": 8,
+    "genes": 12,
+    "selection": "top_12_genes_by_absolute_equal_donor_mean_difference; gene_ID_breaks_ties",
+    "embedded_raster_image": false,
+    "interpretation": "descriptive; not significance, prediction or efficacy ranking"
+  },
+  "full_run_artifacts_not_bundled": {
+    "figure_manifest.json": {
+      "bytes": 335,
+      "sha256": "dc6e06a820a3bc927427fb167fd8aa1d87da120629d2c9ea60b5ee293532980d"
+    },
+    "figures/donor_response.png": {
+      "bytes": 85897,
+      "sha256": "32e90feb6d9dd951620502ce1f82902b166537b4b876d40b2a57bbf1c7b331a8"
+    },
+    "figures/donor_response.svg": {
+      "bytes": 86598,
+      "sha256": "599a9781c1de8020135f8ae222a05417f06bb20e7cfc6da7e485b429f17aa232"
+    },
+    "qc.json": {
+      "bytes": 2119,
+      "sha256": "31598cacad92b97c02e0d595b682d7ee26173edb0113d7c23bde5c404457501c"
+    },
+    "raw/paired_responses.npz": {
+      "bytes": 571729,
+      "sha256": "772a862626a8a66362aee4e697e338d11e5d6ec1dd1f493e02f881de3c0a2245"
+    },
+    "raw/pseudobulk_counts.npz": {
+      "bytes": 2348268,
+      "sha256": "0eff09b30c1adab38250ccdeddae9347b1e5969d48db36504fff42201f717796"
+    },
+    "report.md": {
+      "bytes": 3390,
+      "sha256": "b11e7b43cb9f420606e98df209516e5a32a3b46dd8b23dfc3a9897672feda2db"
+    },
+    "tables/cell_index.csv.gz": {
+      "bytes": 1203260,
+      "sha256": "a179993b88c86a82a33cdacfcd8349e736ca73844f09c1762788637ab8edeb95"
+    },
+    "tables/donor_pairs.csv": {
+      "bytes": 862,
+      "sha256": "a18421e980800cdec58842291bb4ba280b5a38c29e2e473527a5620c3dbdc2ac"
+    },
+    "tables/figure_data.csv": {
+      "bytes": 5911,
+      "sha256": "b50b58a414cd8de9559dcd253101763873221eb8922273471aac493184f4fbea"
+    },
+    "tables/gene_summary.csv": {
+      "bytes": 2147206,
+      "sha256": "78262bc1127d3671e8cd93c59ffdd20794d62eb6a9bff8c48c70a5f3fccbc6f8"
+    },
+    "tables/genes.csv": {
+      "bytes": 886260,
+      "sha256": "e131b9b1d6e321102b6add92f34db8a094ff4e659faf7a2f5d924f0ae4f78225"
+    },
+    "tables/paired_responses.csv.gz": {
+      "bytes": 580209,
+      "sha256": "2de1a856f08ce7720623d132870d3f3520caabe00791836634ba1057c15a591c"
+    },
+    "tables/pseudobulk_index.csv": {
+      "bytes": 6902,
+      "sha256": "1523ac53530c217e7db4111caf3302d4b6ce63ccc7ab70abe77ba6f6db7c238f"
+    }
+  },
+  "limitations": [
+    "Uses source annotations and singlet labels; no additional mitochondrial, doublet or cell-type QC was run.",
+    "A min_cells threshold of 20 is an explicit teaching parameter, not a universal sample-quality or power guarantee.",
+    "Condition-specific source libraries may carry shared batch effects; donor pairing does not establish an isolated causal stimulus effect.",
+    "No learned model was trained or run, and overlap with model training corpora was not assessed.",
+    "GEO source-file licenses were not separately verified; code MIT and other derivative-file licenses are not assigned to these source files.",
+    "Only a small derived vector preview and evidence summaries are bundled; complete matrices and generated response outputs are acquired/recreated locally."
+  ],
+  "references": [
+    {
+      "title": "GEO GSE96583",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583"
+    },
+    {
+      "title": "Original Kang et al. study",
+      "url": "https://doi.org/10.1038/nbt.4042"
+    }
+  ]
+}

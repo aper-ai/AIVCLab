@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "task": "ko",
+  "backend": "CellOracle",
+  "input_file": "../../local-runs/paul2015-input/Paul_etal_v202204.h5ad",
+  "analysis_dir": "../../local-runs/paul2015-analysis",
+  "species": "mouse",
+  "targets": ["Gata1"],
+  "input_scale": "raw_counts",
+  "counts_layer": "raw_count",
+  "scan_h5ad_values": true
+}

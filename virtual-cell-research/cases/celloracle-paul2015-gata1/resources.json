@@ -1,0 +1,46 @@
+[
+  {
+    "id": "umi",
+    "file_name": "GSE72857_umitab.txt.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_umitab.txt.gz",
+    "format": "tsv.gz",
+    "bytes": 16413252,
+    "sha256": "6f45b72b935493181f0f9fdb7343181a5eeca63d0d39ba2a2a8439ac34f08e74",
+    "license_status": "not_separately_specified_for_data_resource",
+    "license_url": null,
+    "role": "Original gene-by-well molecule counts"
+  },
+  {
+    "id": "design",
+    "file_name": "GSE72857_experimental_design.txt.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_experimental_design.txt.gz",
+    "format": "tsv.gz",
+    "bytes": 115876,
+    "sha256": "b547a49285a59476e194d77c9a34a9747628ee465736227d840a6aac5f3a5f68",
+    "license_status": "not_separately_specified_for_data_resource",
+    "license_url": null,
+    "role": "Well-to-mouse, batch and experimental-background mapping"
+  },
+  {
+    "id": "samples",
+    "file_name": "GSE72857_family.soft.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/soft/GSE72857_family.soft.gz",
+    "format": "soft.gz",
+    "bytes": 5888,
+    "sha256": "9dac928a12f462739c0c92f3562acedff4813b2a2acdcf3aa2bee9e62cd6b440",
+    "license_status": "not_separately_specified_for_data_resource",
+    "license_url": null,
+    "role": "GEO primary sample genotype, source and genome-build verification"
+  },
+  {
+    "id": "mouse-grn",
+    "file_name": "mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+    "url": "https://raw.githubusercontent.com/morris-lab/CellOracle/7948870a3b70f7d228e54734e1fa9ed3291fc23b/celloracle/data/promoter_base_GRN/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+    "format": "parquet",
+    "bytes": 4596514,
+    "sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+    "license_status": "not_separately_specified_for_data_resource",
+    "license_url": null,
+    "role": "CellOracle official mm9 promoter prior"
+  }
+]

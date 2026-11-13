@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "case_id": "celloracle-paul2015-gata1",
+  "condition": "Gata1 overexpression at explicitly selected internal percentile 95",
+  "model_status": "executed",
+  "validation_status": "not_assessed",
+  "scientific_status": "simulated_unvalidated",
+  "resources": "resources.json",
+  "input_preparation_evidence": "evidence.json",
+  "runtime_environment": "environment-linux.json",
+  "backend_source_hashes": "backend-code-hashes.json",
+  "inputs": {
+    "prepared_h5ad_sha256": "ef6a9063f4c8b0b497d11179b4a0e7880faf1b139fa1e1636bb99c6603be3175",
+    "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+    "cells": 500,
+    "model_genes": 1500
+  },
+  "execution": {
+    "script": "../../examples/ko_oe/celloracle_run.py",
+    "script_sha256": "a6b8e0948a8d0c2a449e2c347194386dfabce6b4c0800847596dedf96641c4d0",
+    "started_utc": "2026-11-13T06:17:53.135746+00:00",
+    "finished_utc": "2026-11-13T06:18:43.852120+00:00",
+    "elapsed_seconds": 50.71643941600087,
+    "exit_code": 0,
+    "platform": "Linux x86_64 CPU",
+    "python": "3.10.22",
+    "backend": {
+      "name": "CellOracle",
+      "version": "0.20.0"
+    },
+    "parameters": {
+      "counts_layer": null,
+      "target_gene": "Gata1",
+      "mode": "oe",
+      "group_col": "Plate_ID",
+      "grn_unit_col": null,
+      "oe_value": null,
+      "oe_percentile": 95.0,
+      "n_hvg": 1500,
+      "n_pcs": 20,
+      "n_neighbors": 50,
+      "n_propagation": 3,
+      "alpha": 10.0,
+      "bagging_number": 20,
+      "n_jobs": 2,
+      "min_grn_cells": 30,
+      "seed": 123
+    },
+    "thread_limits": {
+      "OMP_NUM_THREADS": 1,
+      "OPENBLAS_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1
+    },
+    "purpose": "Documented reference OE at the 95th percentile of imputed target expression; not a default setting for user experiments."
+  },
+  "target_setting": {
+    "imputed_min": 0.0,
+    "imputed_max": 1.7735152301501698,
+    "imputed_mean": 0.5240621702525107,
+    "chosen_value": 1.5566748437731766,
+    "choice": "percentile_95",
+    "cells_increased_at_setting": 475,
+    "cells_unchanged_at_setting": 0,
+    "cells_decreased_at_setting": 25,
+    "note": "CellOracle sets a fixed imputed log1p(raw-count) scale value; cells above it are decreased. This is not an experimental fold change."
+  },
+  "numerical_verification": {
+    "identity_axes_exact": true,
+    "all_expression_values_finite": true,
+    "delta_values_checked": 750000,
+    "delta_max_abs_error": 1.1102230246251565e-15,
+    "target_simulated_max_abs_error": 2.220446049250313e-16,
+    "setting_table_matches_baseline_and_fixed_setting": true,
+    "cells_increased_at_setting": 475,
+    "cells_decreased_at_setting": 25,
+    "tolerance": {
+      "rtol": 1e-12,
+      "atol": 2e-15
+    }
+  },
+  "descriptive_projection": {
+    "mean_shift_magnitude": 0.6204855901186345,
+    "mean_random_shift_magnitude": 0.330775689901915,
+    "random_control": "delta_X row permutation with sign randomization before embedding projection; not a randomized GRN",
+    "interpretation": "One randomized projection is a technical comparison, not significance, biological specificity or accuracy."
+  },
+  "figure": {
+    "file": "oe_state_shift_preview.png",
+    "sha256": "6dea6b7fe0178a394e59bae704d55ed28c6d4ea399bff23f2751673e7265015a",
+    "bytes": 350507,
+    "source_output": "figures/state_shift.png",
+    "colors": "Plate_ID, a technical plate label, not cell type"
+  },
+  "full_model_artifacts_not_bundled": {
+    "errors.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "figures/figure_manifest.csv": {
+      "sha256": "5c904e563fe14efa66c452ad74342abbd156ce0defb5072d738316cdbac4348b",
+      "bytes": 2593
+    },
+    "figures/gene_effects.png": {
+      "sha256": "4039985f57ab7cc992b28f216343c5a8de391e188deffa6c2647389de6aece1f",
+      "bytes": 67440
+    },
+    "figures/oe_setting.png": {
+      "sha256": "110e23f62d12611b5d9c651487d3378d8ce1d6ea366613812bf67fce55ace332",
+      "bytes": 39693
+    },
+    "figures/shift_distribution.png": {
+      "sha256": "2106eb38faa43f297c27be0471dff42e1d2dc5c9150872f8cfa4ebb150393e99",
+      "bytes": 50449
+    },
+    "figures/state_shift.png": {
+      "sha256": "6dea6b7fe0178a394e59bae704d55ed28c6d4ea399bff23f2751673e7265015a",
+      "bytes": 350507
+    },
+    "manifest.json": {
+      "sha256": "c8e0a89713fae3fdd68946c95108defad5cf7289c8a8320457b0878a5d7f87f7",
+      "bytes": 2308
+    },
+    "provenance.json": {
+      "sha256": "5d399971a01d1f1b6a6519f7329956c712bc10feeb5f7f77d8498be93e52b63c",
+      "bytes": 1727
+    },
+    "raw/baseline_imputed_expression.csv.gz": {
+      "sha256": "106c902fcaa36f7b53e9908485d078a0bb81b1e8036b1d6c6b64317c7fd95066",
+      "bytes": 927376
+    },
+    "raw/delta_X.csv.gz": {
+      "sha256": "3d1f4e0675edf61520b198673f7365c41fa27632724d83f0ab91586626fbbf8d",
+      "bytes": 4492926
+    },
+    "raw/simulated_expression.csv.gz": {
+      "sha256": "98ad577747197da98a2d05ca6d39f9e69016b7b7db5cdcd52ddf5e90b811a8c1",
+      "bytes": 4440921
+    },
+    "raw/simulation_grn_coefficients_000.csv.gz": {
+      "sha256": "9c4d329a11dec361398cd2053117cf4dc6201a5701d5e8dc35b81dc6fdd2978b",
+      "bytes": 293666
+    },
+    "report.md": {
+      "sha256": "bfeff2e188df5f8625d9d0c7a4fb4ff435ac4b50ea4be1b26115936d4e09e48a",
+      "bytes": 1064
+    },
+    "tables/cell_state_shift.csv.gz": {
+      "sha256": "b31f62c0faf37a5d8fea8004609de27eb336499b51fa476ba5464af403c03655",
+      "bytes": 39640
+    },
+    "tables/gene_effects.csv": {
+      "sha256": "8830adb88470a50ddf38f5b45c4932772d16cc5f02be942565f57b6071ccc1e5",
+      "bytes": 83941
+    },
+    "tables/shift_by_group.csv": {
+      "sha256": "0fab6852b4025bae50f292d9d01d6847ff8a13b365195805e9f5c0ae06be18bb",
+      "bytes": 840
+    },
+    "tables/simulation_grn_index.csv": {
+      "sha256": "e6a0bcb8976430031253bcfcec2cb998b5aec87c00f1f7ed73e62afd0a820052",
+      "bytes": 106
+    },
+    "tables/target_expression_setting.csv": {
+      "sha256": "984603dffbcfe0b77d96f145ec175c46f00890af9caa2683239fd5844a6d7c25",
+      "bytes": 21797
+    },
+    "validation.json": {
+      "sha256": "a721fb0153b4cacbac003a9ef9c46ab4cd0c2189a05a6112f1f5c731b27e96fd",
+      "bytes": 1743
+    }
+  },
+  "limitations": [
+    "Same one-mouse 500-cell reference subset and 1500 model genes as the KO case; no independent Gata1 OE observations for validation.",
+    "A fixed value at the 95th percentile increases 475 target values and decreases 25; not an intervention that raises every cell.",
+    "Setting uses internal imputed log1p(raw-count) scale, not an experimental fold increase or achievable expression level.",
+    "The source gene-name exclusion and whole-population GRN limitations documented for the KO case still apply.",
+    "Only Linux CPU execution is recorded; this does not certify Windows model installation."
+  ]
+}

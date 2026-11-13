@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "case_id": "prnet-ht115-demo",
+  "resource_id": "demo",
+  "observed_analysis_status": "completed",
+  "model_status": "not_run",
+  "independent_validation": "not_assessed",
+  "execution_utc": "2026-11-13T03:48:22.282319+00:00",
+  "source": {
+    "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+    "commit": "f19174bde3ed2633f54c7831799cc38c4ffc7a0d",
+    "bytes": 3136818,
+    "sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+    "kind": "official_PRnet_HT115_demo",
+    "species": "Homo sapiens",
+    "cell_background": "HT115",
+    "time": 6.0,
+    "time_unit": "h",
+    "scale": "source_native_processed_scale",
+    "data_license": "not_separately_specified_for_demo_file",
+    "repository_code_license": "Apache-2.0"
+  },
+  "method": {
+    "script": "../../scripts/observed_prnet_case.py",
+    "script_sha256_at_execution": "4159275ed97ee4296c6c1fa29697d8751ae7265f7fa99cbdcfdba7fa92b808da",
+    "operation": "source_X_treatment_minus_source_X_supplied_paired_control",
+    "pairing_reassigned": false,
+    "normalization_applied": false,
+    "condition_identity_fields": [
+      "pert_id",
+      "SMILES",
+      "cell_id",
+      "cell_type",
+      "pert_dose",
+      "pert_dose_unit",
+      "pert_time",
+      "pert_time_unit",
+      "rna_plate"
+    ],
+    "statistics": "descriptive_only_no_pvalues_no_efficacy_ranking"
+  },
+  "counts": {
+    "profiles": 681,
+    "genes": 978,
+    "treated_profiles": 661,
+    "control_profiles": 20,
+    "condition_count": 661,
+    "treated_pert_ids": 354,
+    "treated_names": 349,
+    "cross_rna_plate_treated_profiles": 338
+  },
+  "profiles_per_condition": {
+    "1": 661
+  },
+  "observed_difference": {
+    "shape": [
+      661,
+      978
+    ],
+    "minimum": -11.286800384521484,
+    "maximum": 10.113800048828125,
+    "all_values_reconstructed_exactly_from_exported_source_and_original_pairs": true
+  },
+  "qc": {
+    "status": "passed_with_warnings",
+    "profiles": 681,
+    "genes": 978,
+    "treated_profiles": 661,
+    "control_profiles": 20,
+    "condition_count": 661,
+    "treated_pert_ids": 354,
+    "treated_names": 349,
+    "all_required_fields_present": true,
+    "finite_X": true,
+    "finite_observed_delta": true,
+    "unique_profile_and_gene_ids": true,
+    "all_supplied_pairs_exist": true,
+    "all_supplied_pairs_reference_controls": true,
+    "paired_cell_and_time_match": true,
+    "cross_rna_plate_treated_profiles": 338,
+    "warnings": [
+      {
+        "code": "cross_rna_plate_pairing",
+        "profiles": 338,
+        "action": "kept_source_pairing_without_reassignment"
+      },
+      {
+        "code": "name_has_multiple_source_smiles",
+        "names": 5,
+        "action": "conditions_use_pert_id_smiles_dose_time_cell_and_plate"
+      }
+    ],
+    "ambiguous_names": [
+      {
+        "pert_iname": "curcumin",
+        "source_smiles": [
+          "COc1ccc(/C=C/C(=O)CC(=O)\\C=C\\c2cccc(O)c2OC)cc1O",
+          "COc1ccc(C=CC(=O)CC(=O)C=Cc2cccc(O)c2OC)cc1O"
+        ],
+        "pert_ids": [
+          "BRD-K69690935",
+          "BRD-K74148702"
+        ],
+        "profile_count": 4
+      },
+      {
+        "pert_iname": "dexamethasone",
+        "source_smiles": [
+          "CC1CC2C3CCC4=CC(=O)C=CC4(C)C3(F)C(O)CC2(C)C1(O)C(=O)CO",
+          "C[C@@H]1CC2C3CCC4=CC(=O)C=CC4(C)[C@]3(F)[C@@H](O)CC2(C)[C@]1(O)C(=O)CO"
+        ],
+        "pert_ids": [
+          "BRD-A35108200",
+          "BRD-A69951442"
+        ],
+        "profile_count": 4
+      },
+      {
+        "pert_iname": "manumycin-a",
+        "source_smiles": [
+          "CCCC[C@@H](C)/C=C(\\C)/C=C(\\C)/C(=O)NC1=C[C@@](O)(\\C=C\\C=C\\C=C\\C(=O)NC2C(=O)CCC2=O)[C@@H]3O[C@@H]3C1=O",
+          "CCCC[C@@H](C)\\C=C(C)\\C=C(/C)C(=O)NC1=C[C@@](O)(\\C=C\\C=C\\C=C\\C(=O)NC2C(=O)CCC2=O)[C@@H]2OC2C1=O"
+        ],
+        "pert_ids": [
+          "BRD-A77216878",
+          "BRD-K78599730"
+        ],
+        "profile_count": 4
+      },
+      {
+        "pert_iname": "parthenolide",
+        "source_smiles": [
+          "C\\C1=C/CC[C@@]2(C)O[C@H]2[C@H]2OC(=O)C(=C)[C@@H]2CC1",
+          "C\\C1=C\\CC[C@@]2(C)O[C@@H]2[C@H]2OC(=O)C(=C)[C@@H]2CC1"
+        ],
+        "pert_ids": [
+          "BRD-K81651477",
+          "BRD-K98548675"
+        ],
+        "profile_count": 3
+      },
+      {
+        "pert_iname": "sirolimus",
+        "source_smiles": [
+          "COC1CC(CC(C)C2CC(=O)C(C)\\C=C(C)\\C(O)C(OC)C(=O)C(C)CC(C)\\C=C\\C=C\\C=C(C)\\C(CC3CCC(C)C(O)(O3)C(=O)C(=O)N3CCCCC3C(=O)O2)OC)CCC1O",
+          "CO[C@@H]1CC(CC(C)[C@@H]2CC(=O)[C@H](C)\\C=C(C)\\[C@@H](O)[C@@H](OC)C(=O)[C@@H](C)C[C@H](C)\\C=C\\C=C\\C=C(C)/[C@H](C[C@@H]3CC[C@@H](C)[C@@](O)(O3)C(=O)C(=O)N3CCCC[C@H]3C(=O)O2)OC)CC[C@H]1O"
+        ],
+        "pert_ids": [
+          "BRD-A23770159",
+          "BRD-A79768653"
+        ],
+        "profile_count": 4
+      }
+    ],
+    "chemical_equivalence_assessment": "not_performed",
+    "scale": "source_native_processed_scale",
+    "model_status": "not_run",
+    "independent_validation": "not_assessed"
+  },
+  "figure": {
+    "file": "observed_response_preview.svg",
+    "source_output": "figures/observed_response.svg",
+    "sha256": "0a7dd8f51fe9dbf6d1ecebce52b43e33a8200c1a69107590a77f37d6aa8bca49",
+    "bytes": 88527,
+    "format": "SVG vector paths and text",
+    "embedded_raster_image": false,
+    "conditions": 8,
+    "genes": 12,
+    "selection": "first_8_condition_ids_sorted_then_top_12_genes_by_mean_absolute_observed_delta",
+    "interpretation": "descriptive_only_not_prediction_or_efficacy_ranking",
+    "data_source": "tables/figure_data.csv in a full local run"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "anndata": "0.13.4",
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.18.1",
+      "h5py": "3.16.0",
+      "matplotlib": "3.10.8"
+    },
+    "interpreter_basename": "python",
+    "actual_sys_executable_record": "provenance.json in the full local run"
+  },
+  "behavior_tests": {
+    "entrypoint": "unittest",
+    "argv": [
+      "discover",
+      "-s",
+      "virtual-cell-research/tests",
+      "-p",
+      "test_observed_case.py",
+      "-v"
+    ],
+    "tests_passed": 10,
+    "fixtures": "explicitly_marked_synthetic_no_model_inference",
+    "interpreter_record": "same interpreter as this full local run; see provenance.json:sys_executable"
+  },
+  "full_run_artifacts_not_bundled": {
+    "figure_manifest.json": {
+      "bytes": 292,
+      "sha256": "2926a66509abd1ba5cc07f266c8ff3cfdbb99d1e91fa3851b7e8d5653564b707"
+    },
+    "figures/observed_response.png": {
+      "bytes": 129750,
+      "sha256": "70b1bb247c62bf17431788eda134cb9f4836f79852096709086e2652aaacd206"
+    },
+    "figures/observed_response.svg": {
+      "bytes": 88527,
+      "sha256": "0a7dd8f51fe9dbf6d1ecebce52b43e33a8200c1a69107590a77f37d6aa8bca49"
+    },
+    "qc.json": {
+      "bytes": 2895,
+      "sha256": "87bbe3da76f704b610503619361c1a6f41b50edae2ada0ed104f63cee2c3247f"
+    },
+    "raw/observed_responses.npz": {
+      "bytes": 2574953,
+      "sha256": "3909641130e6d832063ac8710fe79d11dd6b9b5c507b7731cb7a4d8ef3780b88"
+    },
+    "raw/source_profiles.npz": {
+      "bytes": 1947980,
+      "sha256": "a5ce5d89ff86d5e73f511f24a17a7f71250bc6c4a416d1f57660c0719a350591"
+    },
+    "report.md": {
+      "bytes": 3933,
+      "sha256": "4644a0f3537a88745406505f537a93e11dbe3e6cd218ba603352050549374071"
+    },
+    "tables/condition_index.csv": {
+      "bytes": 264419,
+      "sha256": "79352664b20e677c10b93451984af87db75670c9fcb53d445da21c6a588525f3"
+    },
+    "tables/condition_mean_responses.csv.gz": {
+      "bytes": 4373841,
+      "sha256": "9c486d5d774a0dc9e6eccca3496794a1726fa2479890be33967a77532020fbdc"
+    },
+    "tables/condition_summary.csv": {
+      "bytes": 147730,
+      "sha256": "14e373071c2684babfe1a302e7c433bf5d6a08c28ba0e8485e4ead1549c4689b"
+    },
+    "tables/figure_data.csv": {
+      "bytes": 10755,
+      "sha256": "e05a3a3c5a129bceaa4a8d4fd22c5a9d0d6c3803d7c362920efa0041341572c5"
+    },
+    "tables/observed_responses.csv.gz": {
+      "bytes": 4365524,
+      "sha256": "d9492e41c691a8a03750625c4ecc164f3ec3eefd005e17566ac221234bf0c285"
+    },
+    "tables/source_genes.csv": {
+      "bytes": 44778,
+      "sha256": "1d4505a87d1ce8d479e672e108368a2ba2fb63fc8e3b5687c15100dc03abe784"
+    },
+    "tables/source_profiles.csv": {
+      "bytes": 234138,
+      "sha256": "c14806a03356409edcd4de077b7edb9a8e5f474734682c69b59a08880416f307"
+    },
+    "tables/top_observed_genes.csv": {
+      "bytes": 561246,
+      "sha256": "11c2ecec69a03125f79964f36e260275616dd2359d96f4fb2d224d8f2d73b8c6"
+    }
+  },
+  "notes": [
+    "Source expression data and full output matrices are not bundled in this case directory.",
+    "Output artifact hashes describe this observed run; SVG metadata and library versions can change byte-level output across runs.",
+    "The supplied demo_split=test field does not establish independence from any pretrained model.",
+    "All 661 plate-specific conditions in this source have one treated profile; no significance or biological replicate claims are made."
+  ],
+  "references": [
+    {
+      "title": "Fixed official demo data",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad"
+    },
+    {
+      "title": "Official PRnet repository",
+      "url": "https://github.com/Perturbation-Response-Prediction/PRnet"
+    },
+    {
+      "title": "PRnet original paper",
+      "url": "https://doi.org/10.1038/s41467-024-53457-1"
+    },
+    {
+      "title": "Public L1000 redistribution guidance",
+      "url": "https://clue.io/connectopedia/data_redistribution"
+    }
+  ],
+  "invocation": {
+    "kind": "cli",
+    "entrypoint": "main",
+    "argv": [
+      "virtual-cell-research/scripts/observed_prnet_case.py",
+      "--input",
+      "../case-research/prnet_demo.h5ad",
+      "--output-dir",
+      "../case-research/observed-demo-run-linked"
+    ],
+    "argv_source": "sys.argv",
+    "working_directory_role": "repository_root",
+    "exact_interpreter_and_working_directory_record": "provenance.json in the full local run; absolute machine paths omitted from this portable evidence"
+  },
+  "refinement_checks": {
+    "all_report_relative_links_resolve": true,
+    "report_png_embedded": true,
+    "required_links_present": true,
+    "cli_kind_recorded": true,
+    "exact_cli_argv_recorded": true,
+    "sys_executable_recorded": true,
+    "working_directory_recorded": true,
+    "matplotlib_version_recorded": true,
+    "executed_script_hash_matches": true,
+    "all_646458_observed_values_reconstructed_exactly": true,
+    "all_96_figure_values_match_full_mean_response": true,
+    "missing_matplotlib_numeric_results_preserved": true,
+    "missing_matplotlib_provenance_preserved": true,
+    "missing_matplotlib_version_is_null": true,
+    "missing_matplotlib_figure_failed": true,
+    "missing_matplotlib_report_explains_failure": true,
+    "missing_matplotlib_no_broken_image_embed": true,
+    "missing_matplotlib_all_report_links_resolve": true,
+    "direct_api_kind_is_python_api": true,
+    "direct_api_has_no_fabricated_cli_argv": true,
+    "actual_interpreter_recorded": true,
+    "direct_api_parameters_recorded": true,
+    "context_reset_after_call": true
+  }
+}

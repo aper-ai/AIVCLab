@@ -1,0 +1,882 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "maintainer": "Aper AI contributors",
+  "recorded_on": "2026-11-13",
+  "source": {
+    "repository": "https://github.com/Pengzhi-Gao/aivc-skill",
+    "revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+    "license": "MIT",
+    "notice": "../NOTICE",
+    "license_file": "../LICENSE"
+  },
+  "interpretation": [
+    "This independently maintained product includes imported third-party implementation and documentation. A separate name does not imply exclusive original authorship.",
+    "retained/modified compares the recorded original Git blob with the project file at this audit; subsequent edits should update the ledger.",
+    "project_added means a new repository file, not ownership of any referenced scientific dataset, model, algorithm, or historical result.",
+    "Full expression matrices and model weights are fetched from their providers and are not bundled."
+  ],
+  "imported_files": [
+    {
+      "path": "LICENSE",
+      "source_path": "LICENSE",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "4f90f4001022d67efd9b91d7ac157aad4508c12a",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "README.md",
+      "source_path": "README.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "2c04d69016466770ebcd979460791ea5632269c8",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "SKILL.md",
+      "source_path": "SKILL.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "2eb1fd2c4ca77d183a9dfb2db7e19328bb043614",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "docs/audit-remediation.md",
+      "source_path": "docs/audit-remediation.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "f02b5ab9a769a87de6ae46015c09a2dae9a52c85",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "docs/design.md",
+      "source_path": "docs/design.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "c6a743cf81c062136adf5e0108e906dc01c8d8af",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "docs/environment-celloracle-windows.md",
+      "source_path": "docs/environment-celloracle-windows.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "9838628914086f5c6d4d8498e83cc38c42d85fba",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "docs/troubleshooting.md",
+      "source_path": "docs/troubleshooting.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "61ef5d186dab599513a863371331f32edbf912da",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/ko_oe/README.md",
+      "source_path": "examples/ko_oe/README.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "04ef003b6b2d8d8f8555f5e8771351deca3d1f1b",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/ko_oe/celloracle_run.py",
+      "source_path": "examples/ko_oe/celloracle_run.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "93dfa861a62d125b8d470d987a202a8b4accc4fb",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/ko_oe/geneformer_route.py",
+      "source_path": "examples/ko_oe/geneformer_route.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "bfad5bbdb644d13e18bd65f3349d167770f4ca00",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/README.md",
+      "source_path": "examples/lung_cancer/README.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "0d5600be90976f935344e8f18405ce3c92fc456e",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/build_fda_library.py",
+      "source_path": "examples/lung_cancer/drug_screen/build_fda_library.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "0f1e0f258913ce094d8a2ea0359288ad88bd72e6",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/common.py",
+      "source_path": "examples/lung_cancer/drug_screen/common.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "3f49f011f030ec2c9d491ceae3b86f86f8eff0c7",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/compare_backends.py",
+      "source_path": "examples/lung_cancer/drug_screen/compare_backends.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "2a25f9e2ea6482810e6f33de3ca266ddc116f16c",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/extend_rdkit_embeddings.py",
+      "source_path": "examples/lung_cancer/drug_screen/extend_rdkit_embeddings.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "98ff545b01518964455fdde47ae867b4a2ba4711",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/run_chempa.py",
+      "source_path": "examples/lung_cancer/drug_screen/run_chempa.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "c4cb7f1290b399e08af86fdfefc847a3f9fa3d9d",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/run_prnet.py",
+      "source_path": "examples/lung_cancer/drug_screen/run_prnet.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "3b3f949f7bcc6cd32e88daf3f1cf820e0773573e",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/run_unipert_g2cp.py",
+      "source_path": "examples/lung_cancer/drug_screen/run_unipert_g2cp.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "9f0db761ab92f1b74ef0f8afe01e8df5154a993b",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/drug_screen/solve_rdkit_norm.py",
+      "source_path": "examples/lung_cancer/drug_screen/solve_rdkit_norm.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "46badc3642daa9923fa83d651731a86a577de636",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/prepare_geo_scrna.py",
+      "source_path": "examples/lung_cancer/prepare_geo_scrna.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "13e691a72d685a70193dabdae45b831986e044c9",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/prepare_luad_bulk.py",
+      "source_path": "examples/lung_cancer/prepare_luad_bulk.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "77ae96d9946069d12015c882f3ab4254ca76e7a3",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/redraw_quiver.py",
+      "source_path": "examples/lung_cancer/redraw_quiver.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "7c502079b1261a41f2747cb905ebaab0cec114a3",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "archive/aivc-587579e7/reproduction-report.md",
+      "source_path": "examples/lung_cancer/reports/reproduction-report.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "7a33c253308a938f5f52b929e7c64f5f43f64419",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/run_celloracle_ko_oe.py",
+      "source_path": "examples/lung_cancer/run_celloracle_ko_oe.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "d18ee616c958d58e68c9c5b6cb0992670f5c3cab",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "examples/lung_cancer/screen_a549_prnet.py",
+      "source_path": "examples/lung_cancer/screen_a549_prnet.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "1d2f4d41953826586e7d8b6572e27d7faa230035",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/backend-environments.md",
+      "source_path": "references/backend-environments.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "32fee99011b3f94fa17fb16eca5758ff1f0368a2",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/downstream-results.md",
+      "source_path": "references/downstream-results.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "8e72841099e96780ff7233b4d886ab3bb8673b7b",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/drugreflector-workflow.md",
+      "source_path": "references/drugreflector-workflow.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "c428b0b8134821a9baddf579dc4e2afe5ee294f1",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/execution-playbook.md",
+      "source_path": "references/execution-playbook.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "8b483e62e56350fb88f15b6836771cbadd446f01",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/gears-workflow.md",
+      "source_path": "references/gears-workflow.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "b472c7c405a5461d1f0d406ff29004665a6071b4",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/input-contracts.md",
+      "source_path": "references/input-contracts.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "c6e6b513735361ce8ff719bee829821b497d5426",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/model-capabilities.md",
+      "source_path": "references/model-capabilities.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "ad6c9a30643e73f3883b76af4a9db115d8ac17d3",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/model-setup.md",
+      "source_path": "references/model-setup.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "e3222c179297c5ca6e70b0e613496978242bcf76",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "references/unicure-workflow.md",
+      "source_path": "references/unicure-workflow.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "4b542eeffcd948cedbe426f87841aa70f63a520d",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "scripts/package_skill.py",
+      "source_path": "scripts/package_skill.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "195cb7c342100066dd1448717482942088d175b5",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "tests/test_celloracle_route.py",
+      "source_path": "tests/test_celloracle_route.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "ce9722981437bf6cc032d4942d5e1f7e7bc93ec5",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "tests/test_geneformer_route.py",
+      "source_path": "tests/test_geneformer_route.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "9cc2a30054b56fd516c7c58e9d19cd27034edeb7",
+      "change_status": "retained",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "tests/test_result_contracts.py",
+      "source_path": "tests/test_result_contracts.py",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "dc975a484f36d8b60d341072cdd551145ae645a3",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    }
+  ],
+  "project_added_files": [
+    {
+      "path": "CONTRIBUTING.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "NOTICE",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "agents/openai.yaml",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "archive/aivc-587579e7/README.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "cases/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/adamson2016-k562-upr-crispri/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/donor_pairs.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/drug_response.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/drug_response.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/figure_data.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/metadata_refetch_verification.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/qc.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/sample_mapping.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/selected_gene_means.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/airway-gse52778-drug-response/sra_identity.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/catalog.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/backend-code-hashes.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/environment-linux.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/oe-evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/oe_state_shift_preview.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/resources.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/state_shift_preview.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-input-audit/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-input-audit/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-input-audit/request.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/all_gene_effects_source.csv.gz",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/backend-code-hashes.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/cell_state_shift_source.csv.gz",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/downstream_effects_source.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/environment-linux.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/intervention_effects.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/plot_summary.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/state_shifts.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/celloracle/target_setting_source.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/donor_pairs.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/donor_response_and_holdout.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/donor_response_and_holdout.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/figure_data.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/kang/unit_metrics.csv",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/environment-freeze.txt",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/execution_log.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/figure_source.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/predicted_response.png",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/prnet/predicted_response.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material and figures from actual analysis; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/gallery/review-notes.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case and figure review; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-heldout-baseline/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-heldout-baseline/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-heldout-baseline/holdout_metrics_preview.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-ifnb-pbmc/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-ifnb-pbmc/donor_response_preview.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-ifnb-pbmc/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/norman2019-k562-crispra/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-ht115-demo/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-ht115-demo/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-ht115-demo/observed_response_preview.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-reference-evaluation/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-reference-evaluation/environment.yml",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-reference-evaluation/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-reference-evaluation/reference_metrics_preview.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/replogle2022-k562-essential-crispri/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/sciplex3-chemical-dose/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "docs/methodology-and-scope.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "docs/source-ledger.json",
+      "change_status": "project_added",
+      "scope": "Source provenance ledger; not imported from the recorded baseline."
+    },
+    {
+      "path": "docs/source-provenance.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "docs/tool-verification.json",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/first-run.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/prediction-evaluation.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/result-reading.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "references/user-data.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "requirements-data.txt",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "requirements-tests.txt",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/cases.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/evaluate_predictions.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/explain_result.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/kang_holdout_baseline.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/observed_airway_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/observed_kang_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/observed_prnet_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/plot_celloracle_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/plot_kang_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/plot_prnet_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/preflight.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/prepare_paul2015_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/prepare_user_data.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/prnet_reference_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_airway_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_cases.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_celloracle_capacity.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_explain_result.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_kang_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_observed_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_package_skill.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_paul2015_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_plot_celloracle_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_plot_prnet_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_prediction_evaluation.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_preflight.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_prnet_reference.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_user_data.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    }
+  ]
+}

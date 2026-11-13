@@ -1,0 +1,17 @@
+geo_accession,geo_title,donor,treatment,source_treatment,cell_type,ercc_mix,experiment,run_accession,library_id,sra_donor,sra_treatment,sra_title,original_fastq_names,expression_column,source_column_index
+GSM1275862,N61311_untreated,N61311,Untreated,Untreated,airway smooth muscle cells,-,SRX384345,SRR1039508,LL01,N61311,Untreated,N61311_untreated,LL01_R1.fastq;LL01_R2.fastq,Untreated_LL01,11
+GSM1275863,N61311_Dex,N61311,Dex,Dexamethasone,airway smooth muscle cells,-,SRX384346,SRR1039509,LL02,N61311,Dex,N61311_Dex,LL02_R1.fastq;LL02_R2.fastq,Dex_LL02,2
+GSM1275864,N61311_Alb,N61311,Alb,Albuterol,airway smooth muscle cells,-,SRX384347,SRR1039510,LL03,N61311,Alb,N61311_Alb,LL03_R1.fastq;LL03_R2.fastq,Alb_LL03,5
+GSM1275865,N61311_Alb_Dex,N61311,Alb_Dex,Albuterol_Dexamethasone,airway smooth muscle cells,-,SRX384348,SRR1039511,LL04,N61311,Alb_Dex,N61311_Alb_Dex,LL04_R1.fastq;LL04_R2.fastq,Alb_Dex_LL04,13
+GSM1275866,N052611_untreated,N052611,Untreated,Untreated,airway smooth muscle cells,-,SRX384349,SRR1039512,LL05,N052611,Untreated,N052611_untreated,LL05_R1.fastq;LL05_R2.fastq,Untreated_LL05,9
+GSM1275867,N052611_Dex,N052611,Dex,Dexamethasone,airway smooth muscle cells,1,SRX384350,SRR1039513,LL06,N052611,Dex,N052611_Dex,LL06_R1.fastq;LL06_R2.fastq,Dex_LL06,1
+GSM1275868,N052611_Alb,N052611,Alb,Albuterol,airway smooth muscle cells,1,SRX384351,SRR1039514,LL07,N052611,Alb,N052611_Alb,LL07_R1.fastq;LL07_R2.fastq,Alb_LL07,4
+GSM1275869,N052611_Alb_Dex,N052611,Alb_Dex,Albuterol_Dexamethasone,airway smooth muscle cells,1,SRX384352,SRR1039515,LL08,N052611,Alb_Dex,N052611_Alb_Dex,LL08_R1.fastq;LL08_R2.fastq,Alb_Dex_LL08,12
+GSM1275870,N080611_untreated,N080611,Untreated,Untreated,airway smooth muscle cells,-,SRX384353,SRR1039516,LL09,N080611,Untreated,N080611_untreated,LL09_R1.fastq;LL09_R2.fastq,Untreated_LL09,8
+GSM1275871,N080611_Dex,N080611,Dex,Dexamethasone,airway smooth muscle cells,-,SRX384354,SRR1039517,LL10,N080611,Dex,N080611_Dex,LL10_R1.fastq;LL10_R2.fastq,Dex_LL10,3
+GSM1275872,N080611_Alb,N080611,Alb,Albuterol,airway smooth muscle cells,-,SRX384355,SRR1039518,LL11,N080611,Alb,N080611_Alb,LL11_R1.fastq;LL11_R2.fastq,Alb_LL11,6
+GSM1275873,N080611_Alb_Dex,N080611,Alb_Dex,Albuterol_Dexamethasone,airway smooth muscle cells,-,SRX384356,SRR1039519,LL12,N080611,Alb_Dex,N080611_Alb_Dex,LL12_R1.fastq;LL12_R2.fastq,Alb_Dex_LL12,14
+GSM1275874,N061011_untreated,N061011,Untreated,Untreated,airway smooth muscle cells,1,SRX384357,SRR1039520,LL13,N061011,Untreated,N061011_untreated,LL13_R1.fastq;LL13_R2.fastq,Untreated_LL13,10
+GSM1275875,N061011_Dex,N061011,Dex,Dexamethasone,airway smooth muscle cells,1,SRX384358,SRR1039521,LL14,N061011,Dex,N061011_Dex,LL14_R1.fastq;LL14_R2.fastq,Dex_LL14,0
+GSM1275876,N061011_Alb,N061011,Alb,Albuterol,airway smooth muscle cells,1,SRX384359,SRR1039522,LL15,N061011,Alb,N061011_Alb,LL15_R1.fastq;LL15_R2.fastq,Alb_LL15,7
+GSM1275877,N061011_Alb_Dex,N061011,Alb_Dex,Albuterol_Dexamethasone,airway smooth muscle cells,1,SRX384360,SRR1039523,LL16,N061011,Alb_Dex,N061011_Alb_Dex,LL16_R1.fastq;LL16_R2.fastq,Alb_Dex_LL16,15
