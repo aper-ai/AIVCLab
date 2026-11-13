@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="193" height="28" viewBox="0 0 193 28" role="img" aria-labelledby="badge-checks-title badge-checks-description">
+  <title id="badge-checks-title">Checks: Ubuntu + Windows</title>
+  <desc id="badge-checks-description">Check platforms configured: Ubuntu and Windows. This label does not report a current test result.</desc>
+  <rect x="0.5" y="0.5" width="192" height="27" rx="5" fill="#E9EFF7" stroke="#D7E1E7"/>
+  <path d="M5 0H67V28H5A5 5 0 0 1 0 23V5A5 5 0 0 1 5 0Z" fill="#233D4F"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle">
+    <text x="33.5" y="18.2" font-weight="700" fill="#FFFFFF">Checks</text>
+    <text x="130" y="18.2" fill="#355675">Ubuntu + Windows</text>
+  </g>
+</svg>

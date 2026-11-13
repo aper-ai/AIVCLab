@@ -53,4 +53,4 @@ python scripts/cases.py fetch prnet-ht115-demo --asset demo --output-dir local-r
 
 在 [catalog.json](catalog.json) 登记稳定 ID、任务、背景、原始来源、资源 URL/大小/哈希/许可、限制和验收产物；为案例添加简短 README。取得真实证据后再提升阶段，未实现的准备步骤明确保留。贡献步骤见 [CONTRIBUTING.md](../CONTRIBUTING.md)。
 
-来源数据按具体资源条款使用，不自动继承本项目代码的 MIT 许可。源码包包含目录、说明、脚本和少量实际教学证据；原始矩阵与模型权重由用户按需从原始提供方获取。
+来源数据按具体资源条款使用，不自动继承本项目的代码许可。源码包包含目录、说明、脚本和少量实际教学证据；原始矩阵与模型权重由用户按需从原始提供方获取。

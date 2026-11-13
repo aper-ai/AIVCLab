@@ -385,7 +385,7 @@ def run_case(input_dir, output_dir, invocation=None):
 
 供体与处理差异不能直接解释为临床疗效、药物协同或拮抗；本例没有为交互作用建立统计模型，没有 P 值、FDR、置信区间或模型预测。原作者的显著性结果也不作为本脚本重新获得的结论。`model_status: not_run`；`independent_validation: not_assessed`。
 
-来源：[GEO GSE52778]({SERIES_URL})、[原始研究 Himes 等，2014]({PAPER_URL})、[NCBI SRA SRP033351](https://www.ncbi.nlm.nih.gov/sra?term=SRP033351)。原论文为 CC BY；本次 GEO/SRA 源文件未核实单独数据许可，不能自动套用项目代码 MIT 许可。
+来源：[GEO GSE52778]({SERIES_URL})、[原始研究 Himes 等，2014]({PAPER_URL})、[NCBI SRA SRP033351](https://www.ncbi.nlm.nih.gov/sra?term=SRP033351)。原论文为 CC BY；本次 GEO/SRA 源文件未核实单独数据许可，不能自动套用项目代码许可。
 """
         (output / "report.md").write_text(report, encoding="utf-8")
         provenance = {"schema_version": 1, "case_id": CASE_ID, "created_at": datetime.now(timezone.utc).isoformat(),

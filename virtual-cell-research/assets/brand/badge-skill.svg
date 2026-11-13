@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="116" height="28" viewBox="0 0 116 28" role="img" aria-labelledby="badge-skill-title badge-skill-description">
+  <title id="badge-skill-title">Skill: Preview</title>
+  <desc id="badge-skill-description">Skill: Preview.</desc>
+  <rect x="0.5" y="0.5" width="115" height="27" rx="5" fill="#E7F3F2" stroke="#D7E1E7"/>
+  <path d="M5 0H49V28H5A5 5 0 0 1 0 23V5A5 5 0 0 1 5 0Z" fill="#233D4F"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle">
+    <text x="24.5" y="18.2" font-weight="700" fill="#FFFFFF">Skill</text>
+    <text x="82.5" y="18.2" fill="#24635F">Preview</text>
+  </g>
+</svg>

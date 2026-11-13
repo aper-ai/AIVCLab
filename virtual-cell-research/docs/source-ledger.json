@@ -8,22 +8,25 @@
     "revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
     "license": "MIT",
     "notice": "../NOTICE",
-    "license_file": "../LICENSE"
+    "license_file": "licenses/legacy-mit.md"
   },
   "interpretation": [
     "This independently maintained product includes imported third-party implementation and documentation. A separate name does not imply exclusive original authorship.",
     "retained/modified compares the recorded original Git blob with the project file at this audit; subsequent edits should update the ledger.",
     "project_added means a new repository file, not ownership of any referenced scientific dataset, model, algorithm, or historical result.",
-    "Full expression matrices and model weights are fetched from their providers and are not bundled."
+    "Full expression matrices and model weights are fetched from their providers and are not bundled.",
+    "Per-file source_repository overrides the primary imported-source repository when a separate standard license text is recorded.",
+    "The project_added category is provenance, not a grant of exclusive copyright or commercial relicensing rights. See docs/licensing.md and docs/licenses/mit-baseline.json for preserved MIT permissions."
   ],
   "imported_files": [
     {
       "path": "LICENSE",
-      "source_path": "LICENSE",
-      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
-      "source_git_blob": "4f90f4001022d67efd9b91d7ac157aad4508c12a",
-      "change_status": "modified",
-      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+      "source_repository": "https://github.com/polyformproject/polyform-licenses",
+      "source_path": "PolyForm-Noncommercial-1.0.0.md",
+      "source_revision": "1.0.0",
+      "source_git_blob": "5ecc88cfc4b1cff608ed640efe913c9dd97935c3",
+      "change_status": "retained",
+      "scope": "Official standard license text reproduced unchanged under its source reuse permission; adopted only for the scope in NOTICE and docs/licensing.md, not claimed as project-authored text."
     },
     {
       "path": "README.md",
@@ -38,6 +41,14 @@
       "source_path": "SKILL.md",
       "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
       "source_git_blob": "2eb1fd2c4ca77d183a9dfb2db7e19328bb043614",
+      "change_status": "modified",
+      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "archive/aivc-587579e7/reproduction-report.md",
+      "source_path": "examples/lung_cancer/reports/reproduction-report.md",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "7a33c253308a938f5f52b929e7c64f5f43f64419",
       "change_status": "modified",
       "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
     },
@@ -64,6 +75,14 @@
       "source_git_blob": "9838628914086f5c6d4d8498e83cc38c42d85fba",
       "change_status": "retained",
       "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
+    },
+    {
+      "path": "docs/licenses/legacy-mit.md",
+      "source_path": "LICENSE",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "4f90f4001022d67efd9b91d7ac157aad4508c12a",
+      "change_status": "modified",
+      "scope": "Original MIT notice and baseline project-additions notice preserved byte for byte from project commit 3d7c32bd3242a5c1d3093114a31b46a5e2e46c69; relocated without withdrawing existing permissions."
     },
     {
       "path": "docs/troubleshooting.md",
@@ -191,14 +210,6 @@
       "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
       "source_git_blob": "7c502079b1261a41f2747cb905ebaab0cec114a3",
       "change_status": "retained",
-      "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
-    },
-    {
-      "path": "archive/aivc-587579e7/reproduction-report.md",
-      "source_path": "examples/lung_cancer/reports/reproduction-report.md",
-      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
-      "source_git_blob": "7a33c253308a938f5f52b929e7c64f5f43f64419",
-      "change_status": "modified",
       "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
     },
     {
@@ -347,6 +358,36 @@
       "path": "archive/aivc-587579e7/README.md",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "assets/brand/badge-checks.svg",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
+      "path": "assets/brand/badge-license.svg",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
+      "path": "assets/brand/badge-python.svg",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
+      "path": "assets/brand/badge-skill.svg",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
+      "path": "assets/brand/header.svg",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
+      "path": "assets/brand/icon.svg",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
     },
     {
       "path": "cases/README.md",
@@ -689,6 +730,16 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
+      "path": "docs/licenses/mit-baseline.json",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
+      "path": "docs/licensing.md",
+      "change_status": "project_added",
+      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+    },
+    {
       "path": "docs/methodology-and-scope.md",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
@@ -878,5 +929,12 @@
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     }
-  ]
+  ],
+  "licensing_policy": {
+    "current_standard_license": "PolyForm-Noncommercial-1.0.0",
+    "scope_document": "licensing.md",
+    "legacy_mit_notice": "licenses/legacy-mit.md",
+    "legacy_baseline": "licenses/mit-baseline.json",
+    "existing_rights_preserved": true
+  }
 }

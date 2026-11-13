@@ -152,7 +152,7 @@
         "保留全部23273来源gene_id与原状态；图从10849个全条件status=OK且16profiles的FPKM均≥1的基因中，按Dex均值选正负各4个；这是描述性选图，不是无偏全基因性能。",
         "响应是log2(1+FPKM_treated)-log2(1+FPKM_untreated)，不称原始logFC；无P值、FDR、置信区间或药物交互作用检验。",
         "无虚拟细胞模型推断或独立模型验证；不能解释临床疗效、药物协同或拮抗。",
-        "GEO/SRA文件单独数据许可未核实；原论文CC BY和项目代码MIT不自动外推。",
+        "GEO/SRA文件单独数据许可未核实；原论文CC BY和项目代码许可不自动外推。",
         "SRA eutils XML的文件子节点顺序会变化；静态FPKM/GEO文件固定原始SHA256，动态SRA记录实际响应hash并强制固定16样本的规范化科学身份SHA256。"
       ],
       "expected_outputs": [

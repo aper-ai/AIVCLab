@@ -32,4 +32,4 @@ python scripts/plot_kang_case.py --observed-run local-runs/gallery-kang-observed
 
 这是**真实观测加简单均值基线**，没有运行 CellOracle、PRnet 或其他虚拟细胞模型。供体留出仍处于同一次实验；八折共享训练供体，两个条件来自条件特异文库，不能写成八次独立实验、跨队列验证或复杂模型得到独立验证。没有显著性检验、置信区间、疗效或因果推断。`baseline_status: executed`；`model_status: not_run`；`independent_validation: not_assessed`。
 
-来源为 [GEO GSE96583](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583) 和 [Kang 等原始研究](https://pmc.ncbi.nlm.nih.gov/articles/PMC5784859/)。当前固定注释与论文 singlet 数不同的已知记录、313 个 barcode 碰撞处理、来源 NA 细胞及重复 symbol 的处理，继续按 [原始观测案例](../../kang-ifnb-pbmc/README.md)说明。GEO 源数据的独立许可未单独核实，不能自动套用代码 MIT 许可。
+来源为 [GEO GSE96583](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583) 和 [Kang 等原始研究](https://pmc.ncbi.nlm.nih.gov/articles/PMC5784859/)。当前固定注释与论文 singlet 数不同的已知记录、313 个 barcode 碰撞处理、来源 NA 细胞及重复 symbol 的处理，继续按 [原始观测案例](../../kang-ifnb-pbmc/README.md)说明。GEO 源数据的独立许可未单独核实，不能自动套用代码许可。

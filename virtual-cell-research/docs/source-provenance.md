@@ -8,4 +8,6 @@
 
 案例采用另一层证据：数据提供者、URL/accession/DOI、具体资源许可、下载哈希、实际运行步骤及验证状态。完整矩阵与权重按需获取，教学文档中的小图和汇总只对应确实执行的步骤。
 
-变更时保留 [LICENSE](../LICENSE) 和 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md)，更新来源台账及相关案例证据。旧文件可以重构或替换；替换说明应描述实际实现变化，不能只凭改名声称从未复用。
+变更时保留 [当前许可](../LICENSE)、[原 MIT 许可](licenses/legacy-mit.md) 和 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md)，更新来源台账及相关案例证据。旧文件可以重构或替换；替换说明应描述实际实现变化，不能只凭改名声称从未复用。
+
+许可切换的范围见 [使用许可与商业授权](licensing.md)。[MIT 基准清单](licenses/mit-baseline.json) 固定原版本的文件与 Git blob；旧内容不会因被复制到新版而失去原 MIT 权利，文件整体改变也不表示其中旧部分全部转为新许可。

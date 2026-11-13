@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="icon-title icon-description">
+  <title id="icon-title">Virtual Cell Research icon</title>
+  <desc id="icon-description">An abstract teal cell boundary encloses a lavender nucleus and a small connected network on a navy square.</desc>
+  <rect width="128" height="128" rx="28" fill="#142C3E"/>
+  <path d="M88 25C105 35 110 52 106 72C103 93 87 108 66 108C45 109 27 97 22 79C16 60 21 40 37 28C51 17 72 16 88 25Z" fill="#1D394B" stroke="#71CEC3" stroke-width="4"/>
+  <path d="M45 38L64 63L88 47M64 63L86 87M64 63L38 83M88 47L86 87" fill="none" stroke="#729EA9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="64" cy="63" r="14" fill="#B8AED5"/>
+  <circle cx="45" cy="38" r="6" fill="#71CEC3" stroke="#1D394B" stroke-width="2"/>
+  <circle cx="88" cy="47" r="6" fill="#71CEC3" stroke="#1D394B" stroke-width="2"/>
+  <circle cx="86" cy="87" r="6" fill="#B8AED5" stroke="#1D394B" stroke-width="2"/>
+  <circle cx="38" cy="83" r="6" fill="#71CEC3" stroke="#1D394B" stroke-width="2"/>
+</svg>

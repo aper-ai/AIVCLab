@@ -1,4 +1,4 @@
 interface:
   display_name: "Virtual Cell Research"
-  short_description: "虚拟基因敲除、过表达与药物筛选，连接数据准备、模型分析和中文结果解读"
-  default_prompt: "请使用 $virtual-cell-research，根据我的表达数据和研究目标开展虚拟干预分析，检查输入、选择适用模型，并交付完整结果、图表和中文解读。"
+  short_description: "虚拟基因扰动与药物响应分析，整合模型适配、可复现工作流与结果评估"
+  default_prompt: "请使用 $virtual-cell-research，根据我的表达数据和研究目标开展虚拟干预分析，检查输入、选择适用模型，并交付完整结果、图表和结构化研究报告。"

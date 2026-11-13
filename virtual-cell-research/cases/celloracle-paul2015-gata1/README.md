@@ -157,4 +157,4 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLBACKEND=Agg \
 - 这是技术可运行且记录完整的模型模拟案例，独立预测验证仍为未评估。
 - 原研究：[Paul 等，Cell 2015](https://doi.org/10.1016/j.cell.2015.11.013)；[GSE72857](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72857)。可核对原始样本 [AB175](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM1873454) 和 [AB214](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM1873467) 的基因型、组织及 mm9 声明；本地 SOFT 覆盖全部入选 batch。
 - 模型：[CellOracle 论文](https://doi.org/10.1038/s41586-022-05688-9)、[官方安装说明](https://morris-lab.github.io/CellOracle.documentation/installation/index.html)、[PyPI 0.20.0](https://pypi.org/project/celloracle/0.20.0/)。模型算法归原作者；本项目新增原始数据准备、来源核对、可复现案例与适配边界检查。
-- [CellOracle 固定版本许可](https://github.com/morris-lab/CellOracle/blob/7948870a3b70f7d228e54734e1fa9ed3291fc23b/LICENSE)含非商业学术用途限制；原始表达数据与先验的单独数据许可未核实。源码包仅保留说明、小型真实结果图和证据，不打包原始矩阵或先验，不以本项目 MIT 许可替代它们的条款。
+- [CellOracle 固定版本许可](https://github.com/morris-lab/CellOracle/blob/7948870a3b70f7d228e54734e1fa9ed3291fc23b/LICENSE)含非商业学术用途限制；原始表达数据与先验的单独数据许可未核实。源码包仅保留说明、小型真实结果图和证据，不打包原始矩阵或先验，不以本项目的代码许可替代它们的条款。

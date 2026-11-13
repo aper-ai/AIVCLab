@@ -101,4 +101,4 @@ NPZ 使用 `numpy.load(path, allow_pickle=False)` 读取。不要按排序后的
 - [Qi 等，Nature Communications，2024](https://doi.org/10.1038/s41467-024-53457-1)
 - [作者公开数据存档](https://zenodo.org/records/14230870)
 
-PRnet 代码声明 Apache-2.0；权重和 demo 文件的单独许可尚未核实，不自动继承本 Skill 的 MIT。原始文件按需从提供方获取，模型理论和原始数据均不归本项目原创。
+PRnet 代码声明 Apache-2.0；权重和 demo 文件的单独许可尚未核实，不自动继承本 Skill 的代码许可。原始文件按需从提供方获取，模型理论和原始数据均不归本项目原创。

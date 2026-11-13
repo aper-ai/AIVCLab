@@ -127,4 +127,4 @@ python scripts/observed_airway_case.py --input-dir local-runs/airway-input --out
 - [SRA SRP033351](https://www.ncbi.nlm.nih.gov/sra?term=SRP033351)：实验、样本、run 和原始 FASTQ 文件名；完整获取 URL 在 evidence 的 `sources.sra_mapping.url`。
 - [Himes 等，PLOS ONE 2014，DOI 10.1371/journal.pone.0099625](https://doi.org/10.1371/journal.pone.0099625)：原论文，CC BY。本文的显著性分析与后续生物学验证不是本脚本重新获得的结果。
 
-GEO/SRA 源文件未单独核实数据许可；原论文的 CC BY 与本项目代码 MIT 许可分别记录，不自动扩展为这三份数据文件的专用许可。本例执行了来源数据读取和描述性分析；既不是原始测序重处理，也不是独立模型验证。
+GEO/SRA 源文件未单独核实数据许可；原论文的 CC BY 与本项目的代码许可分别记录，不自动扩展为这三份数据文件的专用许可。本例执行了来源数据读取和描述性分析；既不是原始测序重处理，也不是独立模型验证。
