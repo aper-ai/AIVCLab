@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / 'drug_screen'))
-from common import RunDir, load_disease_direction, top_response_table
+from common import RunDir, load_disease_direction, aggregate_drug_ranking, top_ranked_drugs, top_response_table
 PRNET = Path(r'D:/WorkBuddy/模型论文复现/PRnet/PRnet-repro')
 run = RunDir('a549_prnet_screen', base_dir=ROOT)
 RUN_ID = run.run_id
@@ -140,6 +140,8 @@ cond['cos_pred_vs_disease_common_genes'] = cos_all
 cond['corr_pred_vs_disease_common_genes'] = corr_all
 cond['reversal_score'] = reversal
 cond['ranking_status'] = deg['ranking_status']
+cond['condition_ranking_status'] = deg['ranking_status']
+cond['prediction_status'] = np.where(np.isfinite(pred_resp).all(axis=1), 'result_available', 'failed')
 
 # 内部一致性：预测响应与实测响应在同一基因空间上的相关
 agree = []
@@ -151,68 +153,58 @@ for i in range(pred_resp.shape[0]):
         agree.append(np.nan)
 cond['pred_obs_response_corr'] = agree
 
-cond.to_csv(TAB / 'a549_conditions.csv', index=False)
-
 # --------------------------------------------------------- 5. 药物层面汇总
-g = cond.loc[np.isfinite(cond['reversal_score'])].groupby('drug')
-drug = pd.DataFrame({
-    'n_conditions': g.size(),
+drug, drug_check = aggregate_drug_ranking(cond, pred_resp, reversal)
+g = cond.groupby('drug')
+details = pd.DataFrame({
     'n_doses': g['dose'].nunique(),
     'dose_min': g['dose'].min(),
     'dose_max': g['dose'].max(),
-    'reversal_score_mean': g['reversal_score'].mean(),
-    'reversal_score_max': g['reversal_score'].max(),
     'cos_pred_vs_disease_mean': g['cos_pred_vs_disease_common_genes'].mean(),
     'pred_resp_absmean_mean': g['pred_resp_absmean'].mean(),
     'pred_obs_response_corr_mean': g['pred_obs_response_corr'].mean(),
 }).reset_index()
-drug = drug.sort_values('reversal_score_mean', ascending=False).reset_index(drop=True)
-drug.insert(0, 'rank', np.arange(1, len(drug) + 1) if deg['ranking_status'] == 'available'
-            else pd.array([pd.NA] * len(drug), dtype='Int64'))
-drug['ranking_status'] = deg['ranking_status']
+drug = drug.merge(details, on='drug', how='left', validate='one_to_one')
 drug.to_csv(TAB / 'a549_drug_ranking.csv', index=False)
+cond['drug_ranking_status'] = cond['drug'].map(drug.set_index('drug')['drug_ranking_status'])
+cond.to_csv(TAB / 'a549_conditions.csv', index=False)
 
 # 排名靠前药物的逐基因预测响应
-top_drugs = drug['drug'].head(10).tolist()
-top_rows = cond[cond['drug'].isin(top_drugs)]
-idx = top_rows.index.to_numpy()
-per_gene = pd.DataFrame(pred_resp[idx], columns=genes)
-per_gene.insert(0, 'cov_drug_name', cond.loc[idx, 'cov_drug_name'].to_numpy())
-per_gene.insert(1, 'drug', cond.loc[idx, 'drug'].to_numpy())
-per_gene.insert(2, 'dose', cond.loc[idx, 'dose'].to_numpy())
+top_drugs = top_ranked_drugs(drug, n=10)
+per_gene = top_response_table(cond, pred_resp, genes, top_drugs, n=None)
 per_gene.to_csv(TAB / 'a549_top10_drug_per_gene_predicted_response.csv', index=False)
 
 # ------------------------------------------------------------------- 6. 图
-fig, ax = plt.subplots(figsize=(7.2, 5.4), dpi=140)
-top = drug.head(20).iloc[::-1]
-ax.barh(top['drug'], top['reversal_score_mean'], color='#3f6f9f')
-ax.set(xlabel='Reversal score  (-cos(predicted response, LUAD direction))',
-       title=f'PRnet / {CELL}: top 20 drugs by LUAD-signature reversal')
-ax.axvline(0, color='#444', lw=.8)
-if deg['ranking_status'] != 'available':
-    ax.set_title('Diagnostic only: ranking unresolved / unavailable')
-fig.tight_layout()
-fig.savefig(FIG / 'a549_drug_reversal_ranking.png')
-plt.close(fig)
+if drug_check['drug_ranking_status'] == 'available':
+    fig, ax = plt.subplots(figsize=(7.2, 5.4), dpi=140)
+    top = drug.loc[drug['drug'].isin(top_ranked_drugs(drug))].iloc[::-1]
+    ax.barh(top['drug'], top['reversal_score_mean'], color='#3f6f9f')
+    ax.set(xlabel='Reversal score  (-cos(predicted response, LUAD direction))',
+           title=f'PRnet / {CELL}: top-20 drug ranks by mean reversal (ties included)')
+    ax.axvline(0, color='#444', lw=.8)
+    fig.tight_layout()
+    fig.savefig(FIG / 'a549_drug_reversal_ranking.png')
+    plt.close(fig)
 
-fig, ax = plt.subplots(figsize=(6.4, 5.6), dpi=140)
-ax.scatter(cond['pred_obs_response_corr'], cond['reversal_score'], s=6,
-           c='#b94d48', alpha=.45)
-ax.set(xlabel='corr(predicted response, observed response) per condition',
-       ylabel='Reversal score',
-       title=f'PRnet / {CELL}: internal agreement vs reversal score')
-ax.axhline(0, color='#444', lw=.8)
-fig.tight_layout()
-fig.savefig(FIG / 'a549_agreement_vs_reversal.png')
-plt.close(fig)
+if np.isfinite(reversal).any():
+    fig, ax = plt.subplots(figsize=(6.4, 5.6), dpi=140)
+    ax.scatter(cond['pred_obs_response_corr'], cond['reversal_score'], s=6,
+               c='#b94d48', alpha=.45)
+    ax.set(xlabel='corr(predicted response, observed response) per condition',
+           ylabel='Reversal score',
+           title=f'PRnet / {CELL}: internal agreement vs reversal score')
+    ax.axhline(0, color='#444', lw=.8)
+    fig.tight_layout()
+    fig.savefig(FIG / 'a549_agreement_vs_reversal.png')
+    plt.close(fig)
 
-fig, ax = plt.subplots(figsize=(6.6, 5.6), dpi=140)
-ax.hist(cond['reversal_score'].dropna(), bins=60, color='#6b8f71')
-ax.set(xlabel='Reversal score', ylabel='conditions',
-       title=f'PRnet / {CELL}: reversal score distribution ({len(cond)} conditions)')
-fig.tight_layout()
-fig.savefig(FIG / 'a549_reversal_distribution.png')
-plt.close(fig)
+    fig, ax = plt.subplots(figsize=(6.6, 5.6), dpi=140)
+    ax.hist(cond['reversal_score'].dropna(), bins=60, color='#6b8f71')
+    ax.set(xlabel='Reversal score', ylabel='conditions',
+           title=f'PRnet / {CELL}: reversal score distribution ({len(cond)} conditions)')
+    fig.tight_layout()
+    fig.savefig(FIG / 'a549_reversal_distribution.png')
+    plt.close(fig)
 
 # -------------------------------------------------------------- 7. 交付元数据
 def sha(p):
@@ -231,8 +223,8 @@ validation = {
     'checkpoint_sha256_16': sha(CHECKPOINT),
     'task': 'drug',
     'cell_background': CELL,
-    'conditions_scored': int(len(cond)),
-    'drugs_scored': int(drug.shape[0]),
+    'conditions_scored': int(np.isfinite(reversal).sum()),
+    'drugs_scored': int((drug.n_scored_conditions > 0).sum()),
     'genes': int(len(genes)),
     'prediction_finite': finite,
     'prediction_row_std_mean': row_std,
@@ -244,7 +236,10 @@ validation = {
         'note': 'LINCS profiles; training/test overlap not established by relabeling the inference split',
     },
     'status': deg['prediction_status'],
-    'ranking_status': deg['ranking_status'],
+    'condition_ranking_status': deg['ranking_status'],
+    'drug_ranking_status': drug_check['drug_ranking_status'],
+    'ranking_status': drug_check['drug_ranking_status'],
+    'drug_ranking_check': drug_check,
     'degeneracy_check': deg,
     'validation_status': 'unvalidated',
     'independent_validation': 'none',
@@ -276,6 +271,6 @@ run.errors.extend(errors)
 
 run.finish(manifest, validation)
 print(json.dumps(validation, ensure_ascii=False, indent=2))
-print('\ntop 10 by reversal:')
-print(drug.head(10)[['rank', 'drug', 'n_conditions', 'reversal_score_mean',
+print('\ntop-10 drug ranks by reversal (ties included; empty when unresolved):')
+print(drug.loc[drug['drug'].isin(top_drugs)][['rank', 'drug', 'n_conditions', 'reversal_score_mean',
                      'pred_obs_response_corr_mean']].to_string(index=False))

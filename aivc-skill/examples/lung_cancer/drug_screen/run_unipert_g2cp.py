@@ -21,8 +21,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (RunDir, load_disease_direction, reversal_scores,  # noqa: E402
-                    degeneracy_check, top_response_table, sha16, LIBRARY)
+from common import (RunDir, load_disease_direction, aggregate_drug_ranking,  # noqa: E402
+                    top_ranked_drugs, top_response_table, sha16, LIBRARY)
 
 G2CP_ROOT = Path(r'D:/WorkBuddy/Work_推送/2610/261003 UniPert-G2CP')
 UNIPERT_DIR = G2CP_ROOT / 'official_unipert'
@@ -109,34 +109,35 @@ res = pd.DataFrame({
     'corr_pred_vs_disease': corr,
     'reversal_score': reversal,
 })
-res = res.merge(lib[['drug', 'smiles', 'mechanism', 'target']], on='drug', how='left')
+res = res.merge(lib[['drug', 'smiles', 'mechanism', 'target']], on='drug', how='left', validate='one_to_one')
 res.insert(0, 'condition_id', condition_meta['condition_id'].to_numpy())
 res['prediction_status'] = np.where(np.isfinite(resp).all(axis=1), 'result_available', 'failed')
 res['ranking_status'] = deg['ranking_status']
+res['condition_ranking_status'] = deg['ranking_status']
+
+drug, drug_check = aggregate_drug_ranking(res, resp, reversal)
+details = res.drop(columns=['ranking_status', 'condition_ranking_status'])
+drug = drug.merge(details, on='drug', how='left', validate='one_to_one')
+drug.to_csv(run.tables / 'drug_ranking.csv', index=False)
+res['drug_ranking_status'] = res['drug'].map(drug.set_index('drug')['drug_ranking_status'])
 res.to_csv(run.tables / 'conditions.csv', index=False)
 
-drug = res.loc[np.isfinite(res['reversal_score']) & (res['prediction_status'] == 'result_available')].sort_values('reversal_score', ascending=False).reset_index(drop=True)
-drug.insert(0, 'rank', np.arange(1, len(drug) + 1) if deg['ranking_status'] == 'available'
-            else pd.array([pd.NA] * len(drug), dtype='Int64'))
-drug['ranking_status'] = deg['ranking_status']
-drug.to_csv(run.tables / 'drug_ranking.csv', index=False)
-
-pg = top_response_table(res, resp, gene_space, drug['drug'].tolist())
+top_ids = top_ranked_drugs(drug)
+pg = top_response_table(res, resp, gene_space, top_ids, n=None)
 pg.to_csv(run.tables / 'top20_drug_per_gene_predicted_response.csv', index=False)
 
-if np.isfinite(reversal).any():
+if drug_check['drug_ranking_status'] == 'available':
     fig, ax = plt.subplots(figsize=(7.2, 5.6), dpi=140)
-    t = drug.head(20).iloc[::-1]
+    t = drug.loc[drug['drug'].isin(top_ids)].iloc[::-1]
     ax.barh(t['drug'], t['reversal_score'], color='#3f6f9f')
     ax.axvline(0, color='#444', lw=.8)
     ax.set(xlabel='Reversal score  (-cos(predicted response, LUAD direction))',
-           title='UniPert-G2CP / LINCS-A549: top 20 FDA drugs by LUAD-signature reversal')
-    if deg['ranking_status'] != 'available':
-        ax.set_title('Diagnostic only: ranking unresolved / unavailable')
+           title='UniPert-G2CP / LINCS-A549: top-20 drug ranks (ties included)')
     fig.tight_layout()
     fig.savefig(run.figures / 'drug_reversal_ranking.png')
     plt.close(fig)
 
+if np.isfinite(reversal).any():
     fig, ax = plt.subplots(figsize=(6.6, 5.2), dpi=140)
     ax.hist(res['reversal_score'].dropna(), bins=60, color='#6b8f71')
     ax.axvline(0, color='#444', lw=.8)
@@ -155,7 +156,7 @@ validation = {
     'accepts_user_baseline': False,
     'accepts_dose': False,
     'drugs_requested': int(len(lib)),
-    'drugs_scored': int(len(res)),
+    'drugs_scored': int((drug.n_scored_conditions > 0).sum()),
     'unipert_reps': int(len(reps)),
     'genes': len(gene_space),
     'control_cells': int(ctrl.n_obs),
@@ -168,7 +169,10 @@ validation = {
                    '本次运行用 np.random.seed 固定了抽样，但多次运行结果会有差异。'),
     'independent_validation': 'none',
     'status': deg['prediction_status'],
-    'ranking_status': deg['ranking_status'],
+    'condition_ranking_status': deg['ranking_status'],
+    'drug_ranking_status': drug_check['drug_ranking_status'],
+    'ranking_status': drug_check['drug_ranking_status'],
+    'drug_ranking_check': drug_check,
     'validation_status': 'unvalidated',
 }
 manifest = {
@@ -179,4 +183,5 @@ manifest = {
 }
 run.finish(manifest, validation)
 print(json.dumps(validation, ensure_ascii=False, indent=2))
-print(drug.head(10)[['rank', 'drug', 'reversal_score', 'mechanism']].to_string(index=False))
+print(drug.loc[drug['drug'].isin(top_ranked_drugs(drug, n=10))][
+    ['rank', 'drug', 'reversal_score', 'mechanism']].to_string(index=False))

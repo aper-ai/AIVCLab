@@ -78,6 +78,7 @@ def degeneracy_check(resp, scores, *, response_atol=1e-8, response_rtol=1e-6,
         'response_status': ('insufficient_conditions' if len(valid) < 2 else
                             'indistinguishable' if identical else 'varying'),
         'ranking_status': ranking,
+        'condition_ranking_status': ranking,
         'score_spread_across_conditions': spread,
         'max_per_gene_response_range': max_spread,
         'median_pairwise_response_cosine': median_cosine,
@@ -99,18 +100,22 @@ def load_baseline(gene_space, target_sum=1e4):
     """
     import scanpy as sc
     a = sc.read_h5ad(SCRNA)
-    sc.pp.normalize_total(a, target_sum=target_sum)
-    sc.pp.log1p(a)
-    X = a.X.toarray() if hasattr(a.X, 'toarray') else np.asarray(a.X)
-
     gene_space = list(gene_space)
+    if not gene_space or len(set(gene_space)) != len(gene_space):
+        raise ValueError('model gene IDs must be nonempty and unique')
+    if len(set(a.var_names)) != len(a.var_names):
+        raise ValueError('duplicate input gene IDs; resolve mapping before baseline projection')
     idx = {g: i for i, g in enumerate(a.var_names)}
     present = [g for g in gene_space if g in idx]
     missing = [g for g in gene_space if g not in idx]
     if missing:
         raise ValueError(f'{len(missing)} model input genes are unmeasured/unmapped; '
                          f'no validated imputation configured: {missing[:10]}')
-    M = X[:, [idx[g] for g in gene_space]].astype(np.float32)
+    sc.pp.normalize_total(a, target_sum=target_sum)
+    sc.pp.log1p(a)
+    # Normalize on the full transcriptome, then densify only model input genes.
+    projected = a.X[:, [idx[g] for g in gene_space]]
+    M = (projected.toarray() if hasattr(projected, 'toarray') else np.asarray(projected)).astype(np.float32)
 
     df = pd.DataFrame(M, index=a.obs_names, columns=gene_space)
     info = {
@@ -170,28 +175,106 @@ def reversal_scores(pred_response, disease):
     return cos, corr, -cos
 
 
+def aggregate_drug_ranking(conditions, response, scores, *, score_atol=1e-4):
+    """Reassess resolution after averaging conditions within each drug.
+
+    Every recorded condition must have a finite nonzero response and score for
+    its drug to receive a rank. Partial means remain diagnostic only. Equal
+    weight condition means are descriptive, not dose-response fits or efficacy.
+    Ties use competition ranks (1, 1, 3); each tied group's score span is at most
+    score_atol. Drug IDs only order presentation within a tie.
+    """
+    r, s = np.asarray(response, dtype=np.float64), np.asarray(scores, dtype=np.float64)
+    if 'drug' not in conditions or r.ndim != 2 or r.shape[0] != len(conditions) or s.shape != (len(conditions),):
+        raise ValueError('drug identities, response rows and condition scores must align')
+    if conditions['drug'].isna().any() or not conditions['drug'].map(lambda x: isinstance(x, str) and bool(x.strip())).all():
+        raise ValueError('drug IDs must be nonempty strings')
+    if not np.isfinite(score_atol) or score_atol < 0:
+        raise ValueError('score_atol must be finite and nonnegative')
+    quality = degeneracy_check(r, s, score_atol=score_atol)
+    usable = np.isfinite(r).all(axis=1) & (np.linalg.norm(r, axis=1) > 0) & np.isfinite(s)
+    frame = conditions[['drug']].reset_index(drop=True).copy()
+    frame['_score'] = np.where(usable, s, np.nan)
+    drug = frame.groupby('drug', sort=True).agg(
+        n_conditions=('_score', 'size'), n_scored_conditions=('_score', 'count'),
+        reversal_score_mean=('_score', 'mean'), reversal_score_max=('_score', 'max')).reset_index()
+    complete = (drug.n_scored_conditions == drug.n_conditions) & (drug.n_conditions > 0)
+    drug['score_status'] = np.where(complete, 'available', np.where(drug.n_scored_conditions > 0, 'partial', 'not_available'))
+    values = drug.loc[complete, 'reversal_score_mean'].to_numpy()
+    spread = float(np.ptp(values)) if len(values) else None
+    status = ('not_available' if not len(values) else
+              'insufficient_drugs' if len(values) < 2 else
+              'unresolved' if quality['response_status'] == 'indistinguishable' or spread <= score_atol
+              else 'available')
+    drug = drug.assign(_complete=complete).sort_values(
+        ['_complete', 'reversal_score_mean', 'drug'], ascending=[False, False, True],
+        kind='stable', na_position='last').reset_index(drop=True)
+    drug.insert(0, 'rank', pd.array([pd.NA] * len(drug), dtype='Int64'))
+    drug['rank_tie_size'] = 0
+    if status == 'available':
+        group_start, group_score = 0, None
+        for position in drug.index[drug['_complete']]:
+            score = drug.at[position, 'reversal_score_mean']
+            if group_score is None or group_score - score > score_atol:
+                group_start, group_score = int(position), score
+            drug.at[position, 'rank'] = group_start + 1
+        counts = drug['rank'].value_counts()
+        drug['rank_tie_size'] = drug['rank'].map(counts).fillna(0).astype(int)
+    drug['condition_ranking_status'] = quality['ranking_status']
+    drug['drug_ranking_status'] = np.where(drug['_complete'], status, 'not_available')
+    drug['ranking_status'] = drug['drug_ranking_status']  # compatibility: this is a drug table
+    drug = drug.drop(columns='_complete')
+    check = {
+        'ranking_status': status, 'drug_ranking_status': status,
+        'condition_ranking_status': quality['ranking_status'],
+        'score_spread_across_drugs': spread, 'score_atol': score_atol,
+        'n_drugs': len(drug), 'n_rank_eligible_drugs': int(complete.sum()),
+        'excluded_incomplete_drugs': drug.loc[drug.score_status != 'available', 'drug'].tolist(),
+        'aggregation': 'equal-weight mean of all recorded conditions per drug; no clinical dose interpretation',
+        'tie_rule': 'competition ranks; group max-minus-min <= score_atol; drug ID is presentation only',
+        'top_rule': 'include all drugs with rank <= cutoff, including ties at the boundary',
+    }
+    return drug, check
+
+
+def top_ranked_drugs(drug_ranking, n=20):
+    """Return candidate IDs only when drug-level priority is resolved; retain ties."""
+    if not isinstance(n, int) or n < 1:
+        raise ValueError('rank cutoff must be a positive integer')
+    required = {'drug', 'rank', 'drug_ranking_status'}
+    if not required.issubset(drug_ranking.columns):
+        raise ValueError('drug-level ranking fields are required')
+    rank = pd.to_numeric(drug_ranking['rank'], errors='coerce')
+    selected = drug_ranking.loc[(drug_ranking.drug_ranking_status == 'available') & rank.notna() & (rank <= n)]
+    return selected.sort_values(['rank', 'drug'], kind='stable')['drug'].tolist()
+
+
 def top_response_table(conditions, response, genes, ranked_drugs, n=20):
     """Select by drug ID in rank order, preserving all corresponding conditions."""
     r = np.asarray(response)
     if r.shape != (len(conditions), len(genes)):
         raise ValueError('condition/gene axes do not match response')
-    wanted = list(dict.fromkeys(ranked_drugs))[:n]
+    wanted = list(dict.fromkeys(ranked_drugs))
+    if n is not None:
+        wanted = wanted[:n]
     ids = conditions['drug'].astype(str).to_numpy()
     blocks = [np.flatnonzero(ids == str(drug)) for drug in wanted]
     if any(len(ix) == 0 for ix in blocks):
         raise ValueError('ranked drug absent from response condition index')
     selected = np.concatenate(blocks) if blocks else np.array([], dtype=int)
     meta = conditions.iloc[selected].reset_index(drop=True).copy()
-    cols = [c for c in ('condition_id', 'drug', 'dose_uM', 'time', 'cell_type') if c in meta]
+    cols = [c for c in ('condition_id', 'cov_drug_name', 'drug', 'dose_uM', 'dose',
+                       'time', 'pert_time', 'cell_type', 'cell') if c in meta]
     return pd.concat([meta[cols], pd.DataFrame(r[selected], columns=genes)], axis=1)
 
 
 def drug_result_tables(conditions, response, genes, scores, *, scoring_status,
-                       ranking_status, top_n=30):
+                       ranking_status, response_status=None, score_atol=1e-4, top_n=30):
     """Describe disease-direction reversal and top gene effects for every condition.
 
-    A positive negative-cosine score is a descriptive direction label, not
-    efficacy or statistical significance. Conditions remain separate by dose.
+    A resolved negative-cosine sign is a descriptive direction label, not
+    efficacy, statistical significance or candidate priority. Conditions remain
+    separate by dose; ranking ties and single-condition runs do not erase signs.
     """
     r = np.asarray(response, dtype=np.float64)
     s = np.asarray(scores, dtype=np.float64)
@@ -205,20 +288,28 @@ def drug_result_tables(conditions, response, genes, scores, *, scoring_status,
         raise ValueError('top_n must be positive')
     out = conditions.reset_index(drop=True).copy()
     out['reversal_score'] = s
+    quality = degeneracy_check(r, s, score_atol=score_atol)
+    collapsed = quality['response_status'] == 'indistinguishable' or response_status == 'indistinguishable'
+    out['condition_ranking_status'] = quality['ranking_status']
+    if 'drug_ranking_status' not in out:
+        out['drug_ranking_status'] = ranking_status
     finite = np.isfinite(r).all(axis=1)
     out['gene_response_status'] = np.where(finite, 'available', 'not_available')
+    if collapsed:
+        out.loc[finite, 'gene_response_status'] = 'diagnostic_only'
     out['recovery_status'] = 'indeterminate'
     out['recovery_reason'] = 'score_not_available'
     out.loc[~finite, 'recovery_reason'] = 'invalid_response'
     zero_response = finite & (np.linalg.norm(r, axis=1) == 0)
     out.loc[zero_response, 'recovery_reason'] = 'zero_response'
-    if scoring_status == 'descriptive_only' and ranking_status == 'available':
+    if scoring_status == 'descriptive_only' and not collapsed and response_status not in {'failed', 'not_available'}:
         usable = finite & ~zero_response & np.isfinite(s)
-        out.loc[usable & (s > 0), 'recovery_status'] = 'predicted_reversal'
-        out.loc[usable & (s <= 0), 'recovery_status'] = 'no_predicted_reversal'
+        out.loc[usable & (s > score_atol), 'recovery_status'] = 'predicted_reversal'
+        out.loc[usable & (s < -score_atol), 'recovery_status'] = 'no_predicted_reversal'
         out.loc[usable, 'recovery_reason'] = 'negative_cosine_sign_only'
-    elif ranking_status != 'available' and scoring_status == 'descriptive_only':
-        out.loc[finite & ~zero_response, 'recovery_reason'] = f'ranking_{ranking_status}'
+        out.loc[usable & (np.abs(s) <= score_atol), 'recovery_reason'] = 'within_score_tolerance'
+    elif scoring_status == 'descriptive_only':
+        out.loc[finite & ~zero_response, 'recovery_reason'] = 'response_indistinguishable' if collapsed else 'response_not_available'
     labels = {'predicted_reversal': '预测有疾病方向恢复',
               'no_predicted_reversal': '未见预测恢复方向',
               'indeterminate': '无法判定',
@@ -231,13 +322,15 @@ def drug_result_tables(conditions, response, genes, scores, *, scoring_status,
         order = order[np.abs(r[i, order]) > 0][:top_n]
         meta = out.iloc[i]
         for rank, j in enumerate(order, start=1):
-            row = {k: meta[k] for k in ('condition_id', 'drug', 'dose_uM', 'time', 'cell_type')
+            row = {k: meta[k] for k in ('condition_id', 'drug', 'dose_uM', 'dose', 'time',
+                                       'pert_time', 'cell_type', 'cell', 'gene_response_status')
                    if k in out.columns}
             row.update(rank=rank, gene=str(genes[j]), predicted_delta=float(r[i, j]),
                        abs_predicted_delta=float(abs(r[i, j])),
                        effect_direction='up' if r[i, j] > 0 else 'down')
             rows.append(row)
-    top_columns = [c for c in ('condition_id', 'drug', 'dose_uM', 'time', 'cell_type')
+    top_columns = [c for c in ('condition_id', 'drug', 'dose_uM', 'dose', 'time',
+                              'pert_time', 'cell_type', 'cell', 'gene_response_status')
                    if c in out.columns] + ['rank', 'gene', 'predicted_delta',
                                            'abs_predicted_delta', 'effect_direction']
     top = pd.DataFrame(rows, columns=top_columns)
@@ -258,6 +351,9 @@ def drug_result_tables(conditions, response, genes, scores, *, scoring_status,
         ['indeterminate', 'condition_dependent', 'predicted_reversal'],
         default='no_predicted_reversal')
     summary['recovery_label_zh'] = summary['recovery_status'].map(labels)
+    drug_status = out.groupby('drug')['drug_ranking_status'].agg(
+        lambda values: values.iloc[0] if values.nunique(dropna=False) == 1 else 'conflicting')
+    summary['drug_ranking_status'] = summary['drug'].map(drug_status)
     summary['top_gene_rows'] = summary['drug'].map(top.groupby('drug').size()).fillna(0).astype(int)
     return out, summary, top
 
@@ -345,6 +441,7 @@ class RunDir:
         q.loc[check['invalid_condition_indices'], 'prediction_status'] = 'failed'
         q['score_status'] = 'available'
         q.loc[check['unscored_condition_indices'], 'score_status'] = 'not_available'
+        q['condition_ranking_status'] = check['ranking_status']
         q.to_csv(self.tables / 'condition_quality.csv', index=False)
         for i in check['invalid_condition_indices']:
             self.errors.append({'condition_id': str(q.iloc[i]['condition_id']),
@@ -361,6 +458,8 @@ class RunDir:
         """Export all-drug status and per-condition top genes from saved predictions."""
         pack = self.raw / 'predictions.npz'
         conditions_path = self.tables / 'conditions.csv'
+        if not conditions_path.exists():
+            conditions_path = self.tables / 'a549_conditions.csv'
         if not pack.exists() or not conditions_path.exists():
             return None
         with np.load(pack, allow_pickle=False) as saved:
@@ -375,7 +474,9 @@ class RunDir:
         by_condition, by_drug, top_genes = drug_result_tables(
             conditions, response, genes,
             pd.to_numeric(conditions['reversal_score'], errors='coerce').to_numpy(),
-            scoring_status=scoring.get('status'), ranking_status=validation.get('ranking_status'))
+            scoring_status=scoring.get('status'),
+            ranking_status=validation.get('drug_ranking_status', validation.get('ranking_status')),
+            response_status=validation.get('response_status', validation.get('degeneracy_check', {}).get('response_status')))
         by_condition.to_csv(self.tables / 'drug_recovery_by_condition.csv', index=False)
         by_drug.to_csv(self.tables / 'drug_recovery_summary.csv', index=False)
         top_genes.to_csv(self.tables / 'drug_top30_genes.csv', index=False)
@@ -388,11 +489,13 @@ class RunDir:
         (self.tables / 'drug_result_rules.json').write_text(json.dumps({
             'recovery_metric': 'negative_cosine',
             'classification_scope': 'per condition; drug summary requires all conditions classified',
-            'predicted_reversal_rule': 'finite response and score > 0, scoring contract documented, ranking available',
-            'no_predicted_reversal_rule': 'finite response and score <= 0 under the same requirements',
+            'score_atol': 1e-4,
+            'predicted_reversal_rule': 'finite nonzero response and score > score_atol, documented scoring contract, no response collapse',
+            'no_predicted_reversal_rule': 'finite nonzero response and score < -score_atol under the same requirements',
             'condition_dependent_rule': 'classified conditions include both directions',
-            'indeterminate_rule': 'missing or invalid score/response, skipped scoring, or unresolved ranking',
-            'top_gene_rule': 'up to 30 nonzero finite genes per drug-condition, descending absolute predicted delta; stable ties',
+            'indeterminate_rule': 'missing/invalid/zero response, collapsed responses, skipped scoring, or abs(score) <= score_atol',
+            'ranking_scope': 'direction labels do not establish candidate priority; drug ranking is reassessed after aggregation',
+            'top_gene_rule': 'up to 30 nonzero finite genes per drug-condition, descending absolute predicted delta; stable ties; collapsed responses are diagnostic_only',
             'response_scale': scoring.get('contract', {}).get('response_scale'),
             'interpretation': 'descriptive predicted transcriptomic direction, not clinical efficacy or statistical significance',
         }, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -404,6 +507,7 @@ class RunDir:
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
         records = []
+        drug_ranking_status = validation.get('drug_ranking_status', validation.get('ranking_status'))
         base = {'task': 'drug', 'condition': 'multiple', 'backend': validation.get('backend'),
                 'output_type': 'expression', 'baseline_source': validation.get('cell_background'),
                 'visual_review': 'pending'}
@@ -444,13 +548,13 @@ class RunDir:
             if not rank_path.exists():
                 rank_path = self.tables / 'a549_drug_ranking.csv'
             if len(valid_idx):
-                if validation.get('ranking_status') == 'available' and rank_path.exists():
-                    ranked = pd.read_csv(rank_path)['drug'].tolist()
-                    table = top_response_table(meta.loc[finite].reset_index(drop=True), response[finite], genes, ranked)
+                if drug_ranking_status == 'available' and rank_path.exists():
+                    ranked = top_ranked_drugs(pd.read_csv(rank_path))
+                    table = top_response_table(meta.loc[finite].reset_index(drop=True), response[finite], genes, ranked, n=None)
                     rows = table.head(24)
                     matrix = rows[list(genes)].to_numpy()
                     labels = rows['condition_id'].astype(str).to_numpy()
-                    title = 'Predicted response: ranked candidates'
+                    title = 'Ranked candidate response examples (first 24 conditions; ties retained in source tables)'
                 else:
                     ix = valid_idx[np.argsort(-np.linalg.norm(response[valid_idx], axis=1), kind='stable')[:24]]
                     matrix, labels = response[ix], meta.iloc[ix]['condition_id'].astype(str).to_numpy()
@@ -485,10 +589,10 @@ class RunDir:
             source = ('a549_drug_ranking.csv' if p.stem.startswith('a549') else 'drug_ranking.csv') if rank else (
                 'a549_conditions.csv' if p.stem.startswith('a549') else 'conditions.csv')
             record(p.stem, 'generated', '../tables/' + source,
-                   'diagnostic_only' if validation.get('ranking_status') != 'available' else '',
+                   'diagnostic_only' if drug_ranking_status != 'available' else '',
                    'see scoring_metadata.json; plotting code retained in adapter')
         if not any('ranking' in row['figure_id'] for row in records):
-            record('drug_ranking', 'skipped', reason='no valid scoring contract / score')
+            record('drug_ranking', 'skipped', reason=f'drug_ranking_status={drug_ranking_status}; no published candidate priorities')
         if not any('distribution' in row['figure_id'] for row in records):
             record('score_distribution', 'skipped', reason='no valid scores')
         record('reversal_null', 'skipped', reason='no justified null model; descriptive scoring only')
@@ -542,12 +646,16 @@ class RunDir:
                 "[逐条件分数与状态](tables/drug_recovery_by_condition.csv) · "
                 "[每个药物条件的 Top 30 影响基因](tables/drug_top30_genes.csv) · "
                 "[判定规则](tables/drug_result_rules.json)。\n\n"
-                "恢复方向按负余弦分数符号作描述性分类：大于 0 表示预测表达变化与疾病方向相反。"
+                "恢复方向按负余弦分数作描述性分类：大于 1e-4 表示预测表达变化与疾病方向相反，"
+                "小于 -1e-4 表示未见逆转；绝对值不超过 1e-4 时标记数值方向无法判定。"
+                "容差只表示数值分辨率，不是生物学显著性阈值。单药或药物均分并列不抹去合法条件的方向；"
+                "响应塌缩、无效或未评分条件仍无法判定。方向清单不是候选优先级，药物名次需另查聚合后状态。"
                 "独立验证状态见上方记录；临床疗效需另有实验或临床证据。"
                 "Top 基因按模型尺度下预测变化的绝对值排序，同时保留上调或下调方向。\n\n")
         (self.root / 'report.md').write_text(
             f"# {self.run_id}\n\nBackend: {validation.get('backend')}\n\n"
-            f"Prediction: {validation.get('status')}; ranking: {validation.get('ranking_status')}; "
+            f"Prediction: {validation.get('status')}; condition ranking: {validation.get('condition_ranking_status', validation.get('degeneracy_check', {}).get('ranking_status'))}; "
+            f"drug ranking: {validation.get('drug_ranking_status', validation.get('ranking_status'))}; "
             f"validation: {validation.get('validation_status', 'unvalidated')}\n\n"
             "Full predictions: [archive](raw/predictions.npz), [conditions](raw/condition_index.csv).\n\n" +
             recovery_note +

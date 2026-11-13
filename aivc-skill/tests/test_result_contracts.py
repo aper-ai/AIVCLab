@@ -3,6 +3,7 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import types
 import unittest
 from unittest.mock import patch
 import numpy as np
@@ -62,6 +63,136 @@ class ResultContracts(unittest.TestCase):
         with self.assertRaises(ValueError):
             common.top_response_table(meta, r, ['g1', 'g2'], ['unknown'])
 
+    def test_condition_scores_can_resolve_while_drug_means_cancel(self):
+        conditions = pd.DataFrame({'drug': ['A', 'A', 'B', 'B'], 'dose_uM': [1, 10, 1, 10]})
+        response = np.array([[1., 0], [0, 1], [1, 0], [0, 1]])
+        score = common.reversal_scores(response, [1, -1])[2]
+        np.testing.assert_allclose(score, [-1 / np.sqrt(2), 1 / np.sqrt(2)] * 2)
+        drug, quality = common.aggregate_drug_ranking(conditions, response, score)
+        self.assertEqual(quality['condition_ranking_status'], 'available')
+        self.assertEqual(quality['drug_ranking_status'], 'unresolved')
+        np.testing.assert_allclose(drug.reversal_score_mean, [0., 0.], atol=0.)
+        self.assertTrue(drug['rank'].isna().all())
+        self.assertEqual(common.top_ranked_drugs(drug), [])
+        top = common.top_response_table(conditions, response, ['g1', 'g2'], common.top_ranked_drugs(drug), n=None)
+        self.assertTrue(top.empty)
+        self.assertEqual(top.columns.tolist(), ['drug', 'dose_uM', 'g1', 'g2'])
+
+    def test_tied_drugs_share_competition_rank_and_top_boundary(self):
+        conditions = pd.DataFrame({'drug': ['B', 'C', 'A']})
+        score = np.array([0.8, 0.4, 0.80005])
+        response = np.column_stack([-score, np.sqrt(1 - score ** 2)])
+        np.testing.assert_allclose(common.reversal_scores(response, [1, 0])[2], score)
+        drug, quality = common.aggregate_drug_ranking(conditions, response, score)
+        self.assertEqual(quality['drug_ranking_status'], 'available')
+        self.assertEqual(drug.set_index('drug')['rank'].to_dict(), {'A': 1, 'B': 1, 'C': 3})
+        self.assertEqual(drug.set_index('drug').rank_tie_size.to_dict(), {'A': 2, 'B': 2, 'C': 1})
+        selected = common.top_ranked_drugs(drug, n=1)
+        self.assertEqual(selected, ['A', 'B'])
+        top = common.top_response_table(conditions, response, ['g1', 'g2'], selected, n=None)
+        self.assertEqual(top.drug.tolist(), selected)
+        shuffled, _ = common.aggregate_drug_ranking(conditions.iloc[::-1], response[::-1], score[::-1])
+        self.assertEqual(shuffled.set_index('drug')['rank'].to_dict(), drug.set_index('drug')['rank'].to_dict())
+
+    def test_partial_drug_scores_stay_diagnostic_without_survivor_only_ranks(self):
+        conditions = pd.DataFrame({'drug': ['A', 'A', 'B', 'C']})
+        response = np.array([[-1., 1.], [np.nan, 1.], [-1., 0.], [1., 0.]])
+        score = common.reversal_scores(response, [1, -1])[2]
+        drug, quality = common.aggregate_drug_ranking(conditions, response, score)
+        by_id = drug.set_index('drug')
+        self.assertEqual(quality['excluded_incomplete_drugs'], ['A'])
+        self.assertEqual(by_id.loc['A', 'n_conditions'], 2)
+        self.assertEqual(by_id.loc['A', 'n_scored_conditions'], 1)
+        self.assertEqual(by_id.loc['A', 'score_status'], 'partial')
+        self.assertAlmostEqual(by_id.loc['A', 'reversal_score_mean'], 1.)
+        self.assertTrue(pd.isna(by_id.loc['A', 'rank']))
+        self.assertEqual(common.top_ranked_drugs(drug), ['B', 'C'])
+        conditions['condition_id'] = ['c0', 'c1', 'c2', 'c3']
+        conditions['drug_ranking_status'] = conditions.drug.map(by_id.drug_ranking_status)
+        by_condition, summary, _ = common.drug_result_tables(
+            conditions, response, ['g1', 'g2'], score, scoring_status='descriptive_only',
+            ranking_status=quality['drug_ranking_status'])
+        self.assertEqual(by_condition.drug_ranking_status.tolist(),
+                         ['not_available', 'not_available', 'available', 'available'])
+        self.assertEqual(summary.set_index('drug').loc['A', 'drug_ranking_status'], 'not_available')
+
+    def test_skipped_scoring_and_empty_screens_do_not_publish_drug_ranks(self):
+        for names, response, score in ((['A', 'B'], [[1., 0], [0, 1]], [np.nan, np.nan]),
+                                      ([], np.empty((0, 2)), [])):
+            with self.subTest(drugs=names):
+                drug, quality = common.aggregate_drug_ranking(pd.DataFrame({'drug': names}), response, score)
+                self.assertEqual(quality['drug_ranking_status'], 'not_available')
+                self.assertTrue(drug['rank'].isna().all())
+                self.assertEqual(common.top_ranked_drugs(drug), [])
+
+    def test_single_condition_direction_does_not_require_candidate_ranking(self):
+        conditions = pd.DataFrame({'condition_id': ['c0'], 'drug': ['A']})
+        for response, expected in (([[-1., 1.]], 'predicted_reversal'),
+                                   ([[1., -1.]], 'no_predicted_reversal')):
+            with self.subTest(expected=expected):
+                score = common.reversal_scores(response, [1, -1])[2]
+                self.assertAlmostEqual(abs(score[0]), 1.)
+                drug, quality = common.aggregate_drug_ranking(conditions, response, score)
+                self.assertEqual(quality['condition_ranking_status'], 'insufficient_conditions')
+                self.assertEqual(quality['drug_ranking_status'], 'insufficient_drugs')
+                self.assertTrue(drug['rank'].isna().all())
+                by_condition, summary, _ = common.drug_result_tables(
+                    conditions, response, ['g1', 'g2'], score, scoring_status='descriptive_only',
+                    ranking_status=quality['drug_ranking_status'])
+                self.assertEqual(by_condition.iloc[0].recovery_status, expected)
+                self.assertEqual(summary.iloc[0].recovery_status, expected)
+        near_zero, _, _ = common.drug_result_tables(
+            conditions, [[1., 1.]], ['g1', 'g2'], [0.00001],
+            scoring_status='descriptive_only', ranking_status='insufficient_drugs')
+        self.assertEqual(near_zero.iloc[0].recovery_status, 'indeterminate')
+        self.assertEqual(near_zero.iloc[0].recovery_reason, 'within_score_tolerance')
+
+    def test_equal_positive_scores_keep_direction_but_collapsed_responses_do_not(self):
+        conditions = pd.DataFrame({'condition_id': ['c0', 'c1'], 'drug': ['A', 'B']})
+        response = np.array([[-1., 1.], [-2., 2.]])
+        score = common.reversal_scores(response, [1, -1])[2]
+        np.testing.assert_allclose(score, [1., 1.])
+        drug, quality = common.aggregate_drug_ranking(conditions, response, score)
+        self.assertEqual(quality['drug_ranking_status'], 'unresolved')
+        by_condition, _, _ = common.drug_result_tables(
+            conditions, response, ['g1', 'g2'], score, scoring_status='descriptive_only',
+            ranking_status=quality['drug_ranking_status'])
+        self.assertEqual(by_condition.recovery_status.tolist(), ['predicted_reversal'] * 2)
+        collapsed, _, genes = common.drug_result_tables(
+            conditions, [[-1., 1.], [-1., 1.]], ['g1', 'g2'], [1., 1.],
+            scoring_status='descriptive_only', ranking_status='unresolved')
+        self.assertEqual(collapsed.recovery_status.tolist(), ['indeterminate'] * 2)
+        self.assertEqual(collapsed.recovery_reason.tolist(), ['response_indistinguishable'] * 2)
+        self.assertTrue((genes.gene_response_status == 'diagnostic_only').all())
+
+    def test_a549_export_reports_condition_and_drug_resolution_separately(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = common.RunDir('cancelled_means', base_dir=Path(tmp))
+            response = np.array([[1., 0], [0, 1], [1, 0], [0, 1]])
+            indexed = run.save_predictions(
+                pd.DataFrame({'drug': ['A', 'A', 'B', 'B'], 'dose': [1, 10, 1, 10]}),
+                ['g1', 'g2'], response, np.zeros(2), response)
+            score = common.reversal_scores(response, [1, -1])[2]
+            indexed['reversal_score'] = score
+            indexed.to_csv(run.tables / 'a549_conditions.csv', index=False)
+            drug, drug_check = common.aggregate_drug_ranking(indexed, response, score)
+            drug.to_csv(run.tables / 'a549_drug_ranking.csv', index=False)
+            (run.tables / 'scoring_metadata.json').write_text(json.dumps({'status': 'descriptive_only'}), encoding='utf-8')
+            run.finish({'backend': 'synthetic'}, {
+                'backend': 'synthetic', 'status': 'result_available',
+                'condition_ranking_status': 'available', 'drug_ranking_status': drug_check['drug_ranking_status'],
+                'ranking_status': drug_check['drug_ranking_status'], 'validation_status': 'unvalidated'})
+            summary = pd.read_csv(run.tables / 'drug_recovery_summary.csv')
+            self.assertEqual(summary.recovery_status.tolist(), ['condition_dependent'] * 2)
+            by_condition = pd.read_csv(run.tables / 'drug_recovery_by_condition.csv')
+            self.assertEqual(by_condition.dose.tolist(), [1, 10, 1, 10])
+            figures = pd.read_csv(run.figures / 'figure_manifest.csv').set_index('figure_id')
+            self.assertEqual(figures.loc['drug_ranking', 'status'], 'skipped')
+            self.assertIn('drug_ranking_status=unresolved', figures.loc['drug_ranking', 'reason'])
+            report = (run.root / 'report.md').read_text(encoding='utf-8')
+            self.assertIn('condition ranking: available; drug ranking: unresolved', report)
+            self.assertIn('validation: unvalidated', report)
+
     def test_drug_recovery_and_each_conditions_top_genes(self):
         genes = [f'g{i}' for i in range(35)]
         conditions = pd.DataFrame({
@@ -114,7 +245,7 @@ class ResultContracts(unittest.TestCase):
             top = pd.read_csv(run.tables / 'drug_top30_genes.csv')
             self.assertEqual(top.groupby('drug').size().to_dict(), {'A': 2, 'B': 2})
             self.assertIn('药物筛选结果', (run.root / 'report.md').read_text(encoding='utf-8'))
-            self.assertIn('tables/drug_top30_genes.csv', (run.root / 'report.md').read_text())
+            self.assertIn('tables/drug_top30_genes.csv', (run.root / 'report.md').read_text(encoding='utf-8'))
 
     def test_full_prediction_roundtrip_and_errors(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(common, 'ROOT', Path(tmp)):
@@ -141,7 +272,7 @@ class ResultContracts(unittest.TestCase):
             run = common.RunDir('test')
             result = run.score_response(np.array([[1, 2.]]), np.array([1, -1.]), 'backend')
             self.assertTrue(np.isnan(result[2]).all())
-            meta = json.loads((run.tables / 'scoring_metadata.json').read_text())
+            meta = json.loads((run.tables / 'scoring_metadata.json').read_text(encoding='utf-8'))
             self.assertEqual(meta['status'], 'skipped')
 
     def test_finish_exports_figures_and_strict_json(self):
@@ -160,7 +291,7 @@ class ResultContracts(unittest.TestCase):
             self.assertEqual(records.loc['reversal_null', 'status'], 'skipped')
             def reject_constant(s):
                 raise ValueError(s)
-            result = json.loads((run.root / 'validation.json').read_text(), parse_constant=reject_constant)
+            result = json.loads((run.root / 'validation.json').read_text(encoding='utf-8'), parse_constant=reject_constant)
             self.assertEqual(result['range'], [None, None])
             self.assertTrue((run.root / 'provenance.json').exists())
 
@@ -192,6 +323,47 @@ class ResultContracts(unittest.TestCase):
             self.assertEqual(count, 1)
             self.assertEqual(d[0], 0.)
             self.assertTrue(np.isnan(d[2]))
+
+    def test_baseline_normalizes_full_transcriptome_but_densifies_only_projected_genes(self):
+        events = []
+        matrix = np.array([[1., 1000., 3.], [4., 2000., 6.]])
+
+        class SparseInput:
+            def toarray(self):
+                raise AssertionError('full-transcriptome dense allocation is forbidden')
+
+            def __getitem__(self, key):
+                events.append(('project', key[1]))
+                return types.SimpleNamespace(toarray=lambda: matrix[key])
+
+        full = SparseInput()
+        data = types.SimpleNamespace(X=full, var_names=pd.Index(['g2', 'unused', 'g1']),
+                                     obs_names=pd.Index(['cell1', 'cell2']), n_obs=2, n_vars=3)
+
+        def normalize(adata, target_sum):
+            self.assertIs(adata.X, full)
+            events.append(('normalize_full', target_sum))
+
+        def log(adata):
+            self.assertIs(adata.X, full)
+            events.append(('log_full',))
+
+        scanpy = types.SimpleNamespace(read_h5ad=lambda path: data,
+                                       pp=types.SimpleNamespace(normalize_total=normalize, log1p=log))
+        with patch.dict('sys.modules', {'scanpy': scanpy}):
+            baseline, info = common.load_baseline(['g1', 'g2'])
+        self.assertEqual(events, [('normalize_full', 10000.), ('log_full',), ('project', [2, 0])])
+        np.testing.assert_array_equal(baseline.to_numpy(), [[3., 1.], [6., 4.]])
+        self.assertEqual(info['scrna_genes_total'], 3)
+
+    def test_duplicate_baseline_or_model_gene_ids_are_rejected(self):
+        for input_ids, model_ids, reason in ((['g1', 'g1'], ['g1'], 'duplicate input'),
+                                             (['g1', 'g2'], ['g1', 'g1'], 'model gene IDs')):
+            with self.subTest(input=input_ids, model=model_ids):
+                data = types.SimpleNamespace(var_names=pd.Index(input_ids))
+                scanpy = types.SimpleNamespace(read_h5ad=lambda path: data)
+                with patch.dict('sys.modules', {'scanpy': scanpy}), self.assertRaisesRegex(ValueError, reason):
+                    common.load_baseline(model_ids)
 
 
 if __name__ == '__main__':

@@ -28,7 +28,7 @@ GSE81089 有 218 个样本，按样本特征拆出 199 例肿瘤、19 例正常�
 
 对 63129 个基因做肿瘤对正常的 Welch t 检验加 BH 校正，得到 **2131 个差异基因**（FDR<0.05 且 |log2FC|>1）。再把结果投到 PRnet 的 978 个 landmark 基因空间上，覆盖 942 个，占 96.3%，其余 36 个在方向向量里记 0 并在运行记录里标注。
 
-![GSE81089 肿瘤对正常的差异表达](../figures/disease_direction_volcano.png)
+![GSE81089 肿瘤对正常的差异表达](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/disease_direction_volcano.png)
 
 单细胞侧用 **GSE198291**，LUAD 单细胞计数。原始 720 细胞，按每细胞至少 200 基因过滤后剩 703 个，22335 个基因。这份数据的 GEO 矩阵里没有细胞类型注释，`source_name` 有 24 个重复，改用矩阵列名做主键。组织来源标签有 9 类，后面当分组用。目标基因 STAT3 和 JUN 分别出现在 510 和 561 个细胞里。
 
@@ -51,9 +51,9 @@ KO 和 OE 走 CellOracle 0.20.0。基因集取 1502 个高变基因，STAT3 和 
 
 基因响应排序显示：STAT3 敲除后变化最大的是 STAT3 本身，随后是 S100A9、NQO1、MAGED2、TAF7、ACIN1；JUN 敲除后是 JUN、CCL3、RPN1、NR4A1、FN1，STAT3 也排在受影响基因里。
 
-![STAT3 敲除后的 Top 受影响基因](../figures/STAT3_ko_top_genes.png)
+![STAT3 敲除后的 Top 受影响基因](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/STAT3_ko_top_genes.png)
 
-![STAT3 敲除后的细胞状态位移向量场](../figures/STAT3_ko_quiver.png)
+![STAT3 敲除后的细胞状态位移向量场](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/STAT3_ko_quiver.png)
 
 ## 虚拟药筛
 
@@ -63,9 +63,9 @@ KO 和 OE 走 CellOracle 0.20.0。基因集取 1502 个高变基因，STAT3 和 
 
 预测响应取"预测表达减去配对对照"，再和 GSE81089 得到的疾病方向向量算夹角，逆转分数定义为负余弦，940 个有方向的 landmark 基因参与计算，分数范围 −0.137 到 +0.227。排在最前的是 APHA-compound-8（0.165）、rhizocarpic-acid（0.107）、orlistat（0.097）。模型质量方面，LINCS 里这些条件是有实测值的，预测响应和实测响应逐条件相关，**均值 0.705、中位数 0.718**。该指标记录模型在训练域内的内部一致性。
 
-![PRnet 在 A549 子集上的逆转分数排名](../figures/prnet_a549_drug_ranking.png)
+![PRnet 在 A549 子集上的逆转分数排名](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/prnet_a549_drug_ranking.png)
 
-![预测响应与实测响应的一致性](../figures/prnet_a549_pred_obs_agreement.png)
+![预测响应与实测响应的一致性](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/prnet_a549_pred_obs_agreement.png)
 
 第二轮按"用户的单细胞矩阵 + 一个药物库"的输入形态重做。药物库取自 Broad Institute 的药物重定位库，筛 `clinical_phase == "Launched"`，去掉没有可用结构的、按分子去重后入库 2333 个药物，每个药跑 0.1 / 1 / 10 µM 三个浓度，共 6999 个条件。三个后端一起跑。
 
@@ -81,9 +81,9 @@ KO 和 OE 走 CellOracle 0.20.0。基因集取 1502 个高变基因，STAT3 和 
 
 历史 UniPert-G2CP 评分前十名包括米托蒽醌、苏拉明、硫鸟嘌呤等。旧表保留作追溯，需按修正后的源数据与评分规则复核。
 
-![三个后端的逆转分数分布对比](../figures/reversal_by_backend.png)
+![三个后端的逆转分数分布对比](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/reversal_by_backend.png)
 
-![UniPert-G2CP 的前 20 名药物](../figures/unipert_g2cp_drug_ranking.png)
+![UniPert-G2CP 的前 20 名药物](https://raw.githubusercontent.com/Pengzhi-Gao/aivc-skill/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/figures/unipert_g2cp_drug_ranking.png)
 
 退化的原因能定位到具体环节。chemCPA 的剂量响应模块是一个带 BatchNorm 的 MLP，输出经 sigmoid 后只有 5e-4 量级，而 `combo_embedding = transformed × sigmoid`，药物对隐变量的贡献被压到 0.01 左右。使用模型自带的 A549 对照细胞与官方 `compute_prediction` 复算，5 个不同药物的响应两两相关 1.000000。**复算结果表明，该权重在当前环境下的药物效应接近 0。** PRnet 的情况不同，它在自带对照上正常，问题出在把用户矩阵当基线后，响应被一个与药物无关的共同成分主导。
 

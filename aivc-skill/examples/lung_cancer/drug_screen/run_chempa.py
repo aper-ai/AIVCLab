@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (RunDir, load_baseline, load_disease_direction,  # noqa: E402
-                    reversal_scores, degeneracy_check, top_response_table, sha16, DATA, CONDITIONS, LIBRARY)
+                    aggregate_drug_ranking, top_ranked_drugs, top_response_table, sha16, DATA, CONDITIONS, LIBRARY)
 
 CHEMPA = Path(r'D:/WorkBuddy/Work_推送/2610/261002 ChemCPA药物扰动/chemCPA_repro')
 PROJECT = CHEMPA / 'project_folder'
@@ -166,40 +166,38 @@ res['baseline_mean_expr'] = base_mean.mean()
 res.insert(0, 'condition_id', condition_meta['condition_id'].to_numpy())
 res['prediction_status'] = np.where(np.isfinite(resp).all(axis=1), 'result_available', 'failed')
 res['ranking_status'] = deg['ranking_status']
-res.to_csv(run.tables / 'conditions.csv', index=False)
+res['condition_ranking_status'] = deg['ranking_status']
 
-drug = res.loc[np.isfinite(res['reversal_score']) & (res['prediction_status'] == 'result_available')].groupby('drug').agg(
+drug, drug_check = aggregate_drug_ranking(res, resp, reversal)
+details = res.groupby('drug').agg(
     smiles=('smiles', 'first'),
-    n_conditions=('dose_uM', 'size'),
-    reversal_score_mean=('reversal_score', 'mean'),
-    reversal_score_max=('reversal_score', 'max'),
     cos_mean=('cos_pred_vs_disease', 'mean'),
     pred_response_absmean=('pred_response_l2', 'mean'),
-).reset_index().sort_values('reversal_score_mean', ascending=False).reset_index(drop=True)
-drug.insert(0, 'rank', np.arange(1, len(drug) + 1) if deg['ranking_status'] == 'available'
-            else pd.array([pd.NA] * len(drug), dtype='Int64'))
-drug['ranking_status'] = deg['ranking_status']
-drug = drug.merge(lib[['drug', 'mechanism', 'target']], on='drug', how='left')
+).reset_index()
+drug = drug.merge(details, on='drug', how='left', validate='one_to_one')
+drug = drug.merge(lib[['drug', 'mechanism', 'target']], on='drug', how='left', validate='one_to_one')
 drug.to_csv(run.tables / 'drug_ranking.csv', index=False)
+res['drug_ranking_status'] = res['drug'].map(drug.set_index('drug')['drug_ranking_status'])
+res.to_csv(run.tables / 'conditions.csv', index=False)
 
 # 逐药全基因预测响应（Top 20）
-pg = top_response_table(res, resp, gene_space, drug['drug'].tolist())
+top_ids = top_ranked_drugs(drug)
+pg = top_response_table(res, resp, gene_space, top_ids, n=None)
 pg.to_csv(run.tables / 'top20_drug_per_gene_predicted_response.csv', index=False)
 
 # ---------------------------------------------------------------- 图
-if np.isfinite(reversal).any():
+if drug_check['drug_ranking_status'] == 'available':
     fig, ax = plt.subplots(figsize=(7.2, 5.6), dpi=140)
-    t = drug.head(20).iloc[::-1]
+    t = drug.loc[drug['drug'].isin(top_ids)].iloc[::-1]
     ax.barh(t['drug'], t['reversal_score_mean'], color='#3f6f9f')
     ax.axvline(0, color='#444', lw=.8)
     ax.set(xlabel='Reversal score  (-cos(predicted response, LUAD direction))',
-           title=f'chemCPA / {CELL_TYPE}: top 20 FDA drugs by LUAD-signature reversal')
-    if deg['ranking_status'] != 'available':
-        ax.set_title('Diagnostic only: ranking unresolved / unavailable')
+           title=f'chemCPA / {CELL_TYPE}: top-20 drug ranks by mean reversal (ties included)')
     fig.tight_layout()
     fig.savefig(run.figures / 'drug_reversal_ranking.png')
     plt.close(fig)
 
+if np.isfinite(reversal).any():
     fig, ax = plt.subplots(figsize=(6.6, 5.2), dpi=140)
     ax.hist(res['reversal_score'].dropna(), bins=60, color='#6b8f71')
     ax.axvline(0, color='#444', lw=.8)
@@ -230,8 +228,8 @@ validation = {
     'input_scrna': str(Path(__file__).resolve().parent.parent /
                        'results/geo_gse198291/GSE198291_counts_qc200.h5ad'),
     'drug_library': str(LIBRARY),
-    'drugs_scored': int(drug.shape[0]),
-    'conditions_scored': int(len(res)),
+    'drugs_scored': int((drug.n_scored_conditions > 0).sum()),
+    'conditions_scored': int(np.isfinite(reversal).sum()),
     'genes': len(gene_space),
     'baseline_coverage': cov_info,
     'baseline_scale_check': {
@@ -255,11 +253,14 @@ validation = {
     'degeneracy_check': deg,
     'independent_validation': 'none',
     'status': deg['prediction_status'],
-    'ranking_status': deg['ranking_status'],
+    'condition_ranking_status': deg['ranking_status'],
+    'drug_ranking_status': drug_check['drug_ranking_status'],
+    'ranking_status': drug_check['drug_ranking_status'],
+    'drug_ranking_check': drug_check,
     'validation_status': 'unvalidated',
 }
-if deg['ranking_status'] != 'available':
-    validation['ranking_note'] = '评分区分度不足或无有效评分；保留预测，评分图仅供诊断。'
+if drug_check['drug_ranking_status'] != 'available':
+    validation['ranking_note'] = '药物聚合后的评分不可区分或可用药物不足；不发布候选名次，保留条件预测与诊断图。'
 manifest = {
     'task': 'drug',
     'backend': {'name': 'chemCPA', 'model_hash': MODEL_HASH},
@@ -273,4 +274,5 @@ manifest = {
 }
 run.finish(manifest, validation)
 print(json.dumps(validation, ensure_ascii=False, indent=2))
-print(drug.head(10)[['rank', 'drug', 'reversal_score_mean', 'mechanism']].to_string(index=False))
+print(drug.loc[drug['drug'].isin(top_ranked_drugs(drug, n=10))][
+    ['rank', 'drug', 'reversal_score_mean', 'mechanism']].to_string(index=False))

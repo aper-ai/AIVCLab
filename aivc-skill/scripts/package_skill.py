@@ -19,7 +19,7 @@ def build(root):
         rel = p.relative_to(root)
         if any(x in excluded for x in rel.parts[:-1]):
             continue
-        if rel.as_posix() in {'SKILL.md', 'README.md', 'LICENSE'} or (
+        if rel.as_posix() in {'SKILL.md', 'README.md', 'LICENSE', 'NOTICE', 'requirements-tests.txt'} or (
                 rel.parts[0] in folders and p.suffix in suffixes):
             sources[rel.as_posix()] = p.read_bytes()
     if 'SKILL.md' not in sources:

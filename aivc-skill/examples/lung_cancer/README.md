@@ -1,6 +1,6 @@
 # 示例：非小细胞肺癌（NSCLC）
 
-这是一轮完整的端到端测试，覆盖 AIVC-skill 的三条路线。数据全部来自 GEO，癌种为肺癌。测试机器为 32G 内存 / 8G 显存，三个分支都没有用满显存。
+这里保存上游的一轮肺癌研究示例及历史脚本。下述规模、耗时和环境均来自该次历史记录，不代表在当前机器或改进版本上重新完成了分析。首次使用自己的数据，优先阅读 [首次分析指南](../../references/first-run.md)，KO/OE 使用 [参数化入口](../ko_oe/README.md)。
 
 历史结果及勘误见 [`reports/reproduction-report.md`](reports/reproduction-report.md)。文中数字对应修复前的运行，修复后脚本的验收状态另行记录。
 
@@ -23,7 +23,9 @@
 
 CellOracle 环境的搭建（Windows 无 C 编译器时用 `ziglang` 编译 velocyto 的 Cython 模块）见 [`../../docs/environment-celloracle-windows.md`](../../docs/environment-celloracle-windows.md)。
 
-## 运行顺序
+## 历史示例的复现顺序
+
+先核验数据与所有模型资源路径，并在独立分析目录复现。以下命令是历史步骤清单，不能在未准备环境和权重时当成一键执行脚本。药筛先用少量条件检验映射、输出与质量记录，再考虑扩大范围。
 
 ```bash
 # 0. 把 GEO 原始文件放进 data/
@@ -55,7 +57,7 @@ python compare_backends.py
 
 药筛新运行保存完整预测包与条件索引。跨平台原始负余弦评分仍需核对尺度依据；缺少适用依据时交付预测，登记评分跳过原因。
 
-## 参考耗时
+## 上游历史耗时（不作为本机预计时间）
 
 | 步骤 | 耗时 |
 | --- | --- |
