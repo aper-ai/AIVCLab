@@ -3,6 +3,6 @@ __pycache__/
 build/
 dist/
 verification/
-aivc-skill/**/data/
-aivc-skill/**/results/
-aivc-skill/**/local-runs/
+virtual-cell-research/**/data/
+virtual-cell-research/**/results/
+virtual-cell-research/**/local-runs/

@@ -1,11 +1,11 @@
-name: Verify AIVC skill
+name: Verify Virtual Cell Research
 
 on:
   pull_request:
-    paths: ['aivc-skill/**', '.github/workflows/skill.yml']
+    paths: ['virtual-cell-research/**', '.github/workflows/skill.yml']
   push:
     branches: [main]
-    paths: ['aivc-skill/**', '.github/workflows/skill.yml']
+    paths: ['virtual-cell-research/**', '.github/workflows/skill.yml']
   workflow_dispatch:
 
 permissions:
@@ -26,7 +26,7 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
     defaults:
       run:
-        working-directory: aivc-skill
+        working-directory: virtual-cell-research
     env:
       MPLBACKEND: Agg
       PYTHONIOENCODING: utf-8
@@ -38,7 +38,9 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
-          cache-dependency-path: aivc-skill/requirements-tests.txt
+          cache-dependency-path: |
+            virtual-cell-research/requirements-tests.txt
+            virtual-cell-research/requirements-data.txt
       - name: Install fast-test dependencies
         run: python -m pip install -r requirements-tests.txt
       - name: Run contract and preflight tests
@@ -46,13 +48,16 @@ jobs:
       - name: Verify lightweight command entry points
         run: |
           python scripts/preflight.py --help
+          python scripts/cases.py validate
+          python scripts/cases.py --help
+          python scripts/observed_prnet_case.py --help
           python examples/ko_oe/celloracle_run.py --help
           python examples/ko_oe/geneformer_route.py --help
       - name: Build and verify the source-only skill package
         run: python scripts/package_skill.py
       - uses: actions/upload-artifact@v7
         with:
-          name: aivc-skill-${{ matrix.os }}
-          path: aivc-skill/dist/aivc.zip
+          name: virtual-cell-research-${{ matrix.os }}
+          path: virtual-cell-research/dist/virtual-cell-research.zip
           if-no-files-found: error
           retention-days: 14

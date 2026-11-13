@@ -1,0 +1,19 @@
+Virtual Cell Research — independently maintained by Aper AI contributors.
+
+This project maintains its own workflow, case catalogue, data inspection tools,
+observed-response tutorials, documentation and verification process. It does not
+require an upstream Skill service or checkout at runtime.
+
+Included third-party material:
+Some model adapters, result utilities, reference documents and historical
+examples were imported from Pengzhi-Gao/aivc-skill and are maintained here.
+Source: https://github.com/Pengzhi-Gao/aivc-skill
+Revision: 587579e7e004ccfa7079c794d7dd1948caa211f9
+Retrieved: 2026-11-13
+Original MIT copyright and permission notices are retained in LICENSE.
+Per-file provenance is recorded in docs/source-ledger.json.
+
+Third-party model implementations, datasets and historical scientific results
+are not claimed as this project's original work. Their terms and citations are
+recorded separately in THIRD_PARTY_NOTICES.md and the case catalogue.
+Original matrices and model weights are not included in the source package.

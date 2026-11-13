@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "case_id": "celloracle-paul2015-input-audit",
+  "checked_on": "2026-11-13",
+  "case_check_status": "completed",
+  "input_contract_passed": false,
+  "model_status": "not_run",
+  "independent_validation": "not_assessed",
+  "source": {
+    "url": "https://raw.githubusercontent.com/morris-lab/CellOracle/7948870a3b70f7d228e54734e1fa9ed3291fc23b/celloracle/data/anndata/Paul_etal_v202204.h5ad",
+    "repository_commit": "7948870a3b70f7d228e54734e1fa9ed3291fc23b",
+    "file_name": "Paul_etal_v202204.h5ad",
+    "bytes": 66291080,
+    "sha256": "518e62dc7207fe4ccae29c6cfeffada3f77bd58bd12effc8144abe1aadb28867",
+    "hash_verification": "recomputed_from_complete_local_file",
+    "download_reference": "../../local-runs/paul2015-input/Paul_etal_v202204.h5ad",
+    "data_license_status": "unknown",
+    "software_license_url": "https://github.com/morris-lab/CellOracle/blob/7948870a3b70f7d228e54734e1fa9ed3291fc23b/LICENSE"
+  },
+  "method": {
+    "request_reference": "request.json",
+    "checker_reference": "../../scripts/preflight.py",
+    "verification": "Executed the preflight CLI on the complete hash-verified file with the supplied request fields; only input_file and analysis_dir were relocated to temporary local paths for verification.",
+    "numeric_observations": "Separately called the same scan_h5ad_values function for X and layers/raw_count; scanned every dense value without modifying the file.",
+    "portability": "Machine-specific absolute paths and interpreter paths are omitted. Relative references describe the documented reproduction layout, not additional files bundled with this evidence."
+  },
+  "preflight": {
+    "exit_code": 2,
+    "expected_exit_code": 2,
+    "status": "blocked",
+    "prediction_status": "not_run",
+    "model_compatibility": "not_verified",
+    "requested_python_status": "unknown",
+    "blockers": [
+      {
+        "code": "matrix_invalid",
+        "message": "raw_counts requires nonnegative integer values; found 0 negative and 1327057 noninteger stored values; a layer name does not establish the data scale"
+      }
+    ],
+    "warnings": [
+      {
+        "code": "declared_scale",
+        "message": "species, input_scale and full-transcriptome status are declarations; numeric checks cannot prove preprocessing or biological context"
+      }
+    ],
+    "not_checked": [
+      {
+        "code": "python_unknown",
+        "message": "No model interpreter was selected; the checker interpreter path is omitted for portability and is not a backend compatibility recommendation.",
+        "required_for_preflight": true
+      },
+      {
+        "code": "base_grn",
+        "message": "configure resources.base_grn before the CellOracle route; nothing is downloaded",
+        "required_for_preflight": true
+      },
+      {
+        "code": "grn_compatibility",
+        "message": "GRN species/symbol overlap, target TF inclusion and fitting are not checked",
+        "required_for_preflight": false
+      },
+      {
+        "code": "model_execution",
+        "message": "interpreter execution, dependencies, CUDA, weights/tokenizer versions, model gene order, prediction and scientific validation were not checked",
+        "required_for_preflight": false
+      }
+    ]
+  },
+  "observed_input": {
+    "shape": [
+      2671,
+      1999
+    ],
+    "unique_obs_ids": true,
+    "unique_var_ids": true,
+    "targets_present": [
+      "Gata1"
+    ],
+    "obs_columns": [
+      "paul15_clusters",
+      "n_counts_all",
+      "n_counts",
+      "louvain",
+      "cell_type",
+      "louvain_annot",
+      "dpt_pseudotime"
+    ],
+    "var_columns": [
+      "n_counts"
+    ],
+    "matrices": {
+      "X": {
+        "shape": [
+          2671,
+          1999
+        ],
+        "dtype": "float32",
+        "encoding": "dense",
+        "stored_values_scanned": 5339329,
+        "nonfinite_values": 0,
+        "negative_values": 4152571,
+        "noninteger_values": 5339329,
+        "minimum_stored_value": -8.20423412322998,
+        "maximum_stored_value": 51.15575408935547,
+        "scope": "all stored numeric values; implicit sparse zeros are valid counts; sparse indices are not structurally audited"
+      },
+      "layers/raw_count": {
+        "shape": [
+          2671,
+          1999
+        ],
+        "dtype": "float32",
+        "encoding": "dense",
+        "stored_values_scanned": 5339329,
+        "nonfinite_values": 0,
+        "negative_values": 0,
+        "noninteger_values": 1327057,
+        "minimum_stored_value": 0.0,
+        "maximum_stored_value": 306.5843811035156,
+        "scope": "all stored numeric values; implicit sparse zeros are valid counts; sparse indices are not structurally audited"
+      }
+    }
+  },
+  "interpretation": {
+    "tested_assumption": "The selected layers/raw_count values are nonnegative integer raw counts.",
+    "result": "rejected",
+    "reason": "layers/raw_count has 1327057 noninteger values; the layer name does not prove original UMI counts.",
+    "model_failure": false,
+    "next_step": "Verify original-count provenance and prepare compatible input, or separately implement and validate the official preprocessed Oracle/Links route. Do not round processed values into purported original counts.",
+    "scope_limit": "This is input-contract evidence, not a model run or an independent perturbation accuracy evaluation."
+  }
+}

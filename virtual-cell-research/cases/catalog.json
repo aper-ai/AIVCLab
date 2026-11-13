@@ -1,0 +1,569 @@
+{
+  "schema_version": 1,
+  "project": "virtual-cell-research",
+  "checked_on": "2026-11-13",
+  "cases": [
+    {
+      "id": "prnet-ht115-demo",
+      "title": "HT115 观测药物响应：配对、尺度和结果阅读",
+      "task": "observed_response_tutorial",
+      "context": "Homo sapiens; HT115; 6 h; 661 treated profiles + 20 DMSO controls; 978 genes",
+      "stage": "prepared",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "PRnet official repository",
+          "url": "https://github.com/Perturbation-Response-Prediction/PRnet"
+        },
+        {
+          "title": "PRnet original paper",
+          "url": "https://www.nature.com/articles/s41467-024-53457-1"
+        }
+      ],
+      "resources": [
+        {
+          "id": "demo",
+          "file_name": "demo.h5ad",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+          "format": "h5ad",
+          "bytes": 3136818,
+          "sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+          "license_status": "data_not_separately_licensed; repository_code_Apache-2.0",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        }
+      ],
+      "limitations": [
+        "计算实际观测值减原配对对照，不运行 PRnet，也不生成模型预测或临床候选。",
+        "保留源文件处理尺度，不当成原始计数、fold change 或未经证实的 log1p。",
+        "338 个处理 profile 的原配对跨 rna_plate；5 个药物名称对应多种 SMILES，不能只按名称合并。",
+        "demo_split=test 不足以证明独立评估，具体模型权重的训练重叠未核对。"
+      ],
+      "expected_outputs": [
+        "provenance.json",
+        "qc.json",
+        "figure_manifest.json",
+        "report.md",
+        "raw/source_profiles.npz",
+        "raw/observed_responses.npz",
+        "tables/condition_index.csv",
+        "tables/observed_responses.csv.gz",
+        "tables/condition_mean_responses.csv.gz",
+        "tables/condition_summary.csv",
+        "tables/top_observed_genes.csv",
+        "tables/figure_data.csv",
+        "figures/observed_response.png",
+        "figures/observed_response.svg"
+      ],
+      "source_checked_on": "2026-11-13",
+      "workflow": {
+        "fetch": "python scripts/cases.py fetch prnet-ht115-demo --asset demo --output-dir local-runs/prnet-input",
+        "run": "python scripts/observed_prnet_case.py --input local-runs/prnet-input/demo.h5ad --output-dir local-runs/prnet-observed"
+      },
+      "verification": {
+        "evidence": "cases/prnet-ht115-demo/evidence.json",
+        "data_downloaded": true,
+        "input_checked": true,
+        "input_contract_scope": "observed paired-response tutorial only",
+        "model_executed": false,
+        "independent_validation": false
+      }
+    },
+    {
+      "id": "celloracle-paul2015-input-audit",
+      "title": "Paul2015 造血输入审计：raw_count 层名不能证明原始计数",
+      "task": "input_contract_audit",
+      "context": "Mus musculus; hematopoietic progenitors; 2671 cells x 1999 genes; observational data",
+      "stage": "prepared",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "CellOracle official Gata1 tutorial",
+          "url": "https://morris-lab.github.io/CellOracle.documentation/notebooks/05_simulation/Gata1_KO_simulation_with_Paul_etal_2015_data.html"
+        },
+        {
+          "title": "Paul2015 original data GSE72857",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72857"
+        }
+      ],
+      "resources": [
+        {
+          "id": "tutorial",
+          "file_name": "Paul_etal_v202204.h5ad",
+          "url": "https://raw.githubusercontent.com/morris-lab/CellOracle/7948870a3b70f7d228e54734e1fa9ed3291fc23b/celloracle/data/anndata/Paul_etal_v202204.h5ad",
+          "format": "h5ad",
+          "bytes": 66291080,
+          "sha256": "518e62dc7207fe4ccae29c6cfeffada3f77bd58bd12effc8144abe1aadb28867",
+          "license_status": "data_terms_not_separately_verified; CellOracle_software_has_noncommercial_academic_restriction",
+          "license_url": "https://github.com/morris-lab/CellOracle/blob/7948870a3b70f7d228e54734e1fa9ed3291fc23b/LICENSE"
+        }
+      ],
+      "limitations": [
+        "本例预期预检 blocked：layers/raw_count 含 1327057 个非整数值，不能直接送当前要求原始整数 counts 的入口。",
+        "输入检查完成与输入契约通过是两回事；不要通过四舍五入或伪填声明绕过检查。",
+        "这是对本 Skill 输入契约的核查，不是判断 CellOracle 官方预处理对象流程错误。",
+        "无真实逐细胞 Gata1 KO 标签；当前未运行模型，不构成预测准确性评估。"
+      ],
+      "expected_outputs": [
+        "new preflight JSON with matrix_invalid",
+        "blocked / exit code 2",
+        "prediction_status=not_run"
+      ],
+      "source_checked_on": "2026-11-13",
+      "workflow": {
+        "fetch": "python scripts/cases.py fetch celloracle-paul2015-input-audit --asset tutorial --output-dir local-runs/paul2015-input",
+        "check": "python scripts/preflight.py --request cases/celloracle-paul2015-input-audit/request.json --output local-runs/paul2015-preflight-001.json"
+      },
+      "verification": {
+        "evidence": "cases/celloracle-paul2015-input-audit/evidence.json",
+        "data_downloaded": true,
+        "input_checked": true,
+        "input_contract_passed": false,
+        "expected_preflight_status": "blocked",
+        "model_executed": false,
+        "independent_validation": false
+      }
+    },
+    {
+      "id": "kang-ifnb-pbmc",
+      "title": "Kang PBMC：按供者和细胞类型比较 IFN-beta 响应",
+      "task": "measured_cell_state_response",
+      "context": "Homo sapiens; PBMC; GSE96583 batch 2; 8 donors; 6 h IFN-beta versus control",
+      "stage": "catalogued",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "GEO GSE96583",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583"
+        },
+        {
+          "title": "Original paper",
+          "url": "https://www.nature.com/articles/nbt.4042"
+        },
+        {
+          "title": "CC-BY derivative (different file)",
+          "url": "https://zenodo.org/records/10069528"
+        }
+      ],
+      "resources": [
+        {
+          "id": "control_matrix",
+          "file_name": "GSM2560248_2.1.mtx.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_2.1.mtx.gz",
+          "format": "gzip",
+          "bytes": 28545918,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "stimulated_matrix",
+          "file_name": "GSM2560249_2.2.mtx.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_2.2.mtx.gz",
+          "format": "gzip",
+          "bytes": 29050932,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "genes",
+          "file_name": "GSE96583_batch2.genes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.genes.tsv.gz",
+          "format": "gzip",
+          "bytes": 277054,
+          "sha256": "93aa4e9b530ef9d6411ca129b416324c5cc1cc5a01a1fa6ed4f4a845480ed3ca",
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "metadata",
+          "file_name": "GSE96583_batch2.total.tsne.df.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.total.tsne.df.tsv.gz",
+          "format": "gzip",
+          "bytes": 756342,
+          "sha256": "1d57e72e92ca8695250e88cc0f1c3fa8c0be1175d974f8b427c58f1274dc6c09",
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "control_barcodes",
+          "file_name": "GSM2560248_barcodes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_barcodes.tsv.gz",
+          "format": "gzip",
+          "bytes": 52904,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null,
+          "url_check": "HTTP 200 with matching Content-Length on 2026-11-13; body not downloaded"
+        },
+        {
+          "id": "stimulated_barcodes",
+          "file_name": "GSM2560249_barcodes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_barcodes.tsv.gz",
+          "format": "gzip",
+          "bytes": 52366,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null,
+          "url_check": "HTTP 200 with matching Content-Length on 2026-11-13; body not downloaded"
+        }
+      ],
+      "limitations": [
+        "只下载并读取基因和细胞元数据；两份表达矩阵尚未下载。",
+        "元数据 29065 条，其中 24679 singlet；预处理不能把双细胞或未分配供者当独立重复。",
+        "这是 cytokine 刺激，不是基因 KO/OE 或药物敏感性实验；按供者保留配对，细胞不等于独立生物学重复。",
+        "矩阵、barcode、metadata 需按完整稳定标识对齐；批次/供者拆分与任何模型训练重叠尚未核对。",
+        "GEO 文件未核实独立数据许可；其他存档的 CC-BY 不自动覆盖所有衍生文件。"
+      ],
+      "expected_outputs": [
+        "matrix/barcode/metadata alignment record",
+        "donor x cell-type x condition summary",
+        "observed response report with donor-aware design"
+      ],
+      "source_checked_on": "2026-11-13",
+      "prepare_status": "not_implemented",
+      "verification": {
+        "metadata_downloaded": true,
+        "expression_matrices_downloaded": false,
+        "model_executed": false,
+        "independent_validation": false
+      }
+    },
+    {
+      "id": "sciplex3-chemical-dose",
+      "title": "sci-Plex3：细胞背景、剂量和重复孔的化学响应",
+      "task": "chemical_dose_response",
+      "context": "Homo sapiens; A549/K562/MCF7; GSE139944 GSM4150378; 188 compounds; 24 h",
+      "stage": "catalogued",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "GEO series",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE139944"
+        },
+        {
+          "title": "Author repository",
+          "url": "https://github.com/cole-trapnell-lab/sci-plex"
+        },
+        {
+          "title": "Original paper",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7289078/"
+        },
+        {
+          "title": "Processed PRnet archive",
+          "url": "https://zenodo.org/records/14230870"
+        }
+      ],
+      "resources": [
+        {
+          "id": "umi_matrix",
+          "file_name": "GSM4150378_sciPlex3_A549_MCF7_K562_screen_UMI.count.matrix.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4150nnn/GSM4150378/suppl/GSM4150378_sciPlex3_A549_MCF7_K562_screen_UMI.count.matrix.gz",
+          "format": "gzip",
+          "bytes": 3096224606,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "genes",
+          "file_name": "GSM4150378_sciPlex3_A549_MCF7_K562_screen_gene.annotations.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4150nnn/GSM4150378/suppl/GSM4150378_sciPlex3_A549_MCF7_K562_screen_gene.annotations.txt.gz",
+          "format": "gzip",
+          "bytes": 806168,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "metadata",
+          "file_name": "GSM4150378_sciPlex3_pData.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4150nnn/GSM4150378/suppl/GSM4150378_sciPlex3_pData.txt.gz",
+          "format": "gzip",
+          "bytes": 84673357,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "processed_h5ad",
+          "file_name": "Sci_Plex.h5ad",
+          "url": "https://zenodo.org/api/records/14230870/files/Sci_Plex.h5ad/content",
+          "format": "h5ad",
+          "bytes": 333082088,
+          "sha256": null,
+          "license_status": "CC-BY-4.0_for_this_Zenodo_record",
+          "license_url": "https://creativecommons.org/licenses/by/4.0/",
+          "upstream_checksum": {
+            "algorithm": "md5",
+            "value": "6fdeb78c348cf5684ff0401368501bd4"
+          }
+        }
+      ],
+      "limitations": [
+        "来源与资源元数据已核实，矩阵尚未下载或切片。",
+        "原矩阵约3.10GB，元数据约84.7MB；处理后H5AD约333MB，需显式提高下载限额。",
+        "剂量10/100/1000/10000 nM、24h、重复孔须保留，不当成临床剂量；先核对对照标识。",
+        "PRnet/chemCPA常用相关数据，使用固定权重前排查训练重叠，不能自动称独立验证。",
+        "原始GEO文件和Zenodo处理文件的尺度、行列轴与许可分别核对。"
+      ],
+      "expected_outputs": [
+        "cell-line x compound x dose x replicate condition table",
+        "coverage and matched-vehicle QC",
+        "dose response plots on documented source scale"
+      ],
+      "source_checked_on": "2026-11-13",
+      "prepare_status": "not_implemented"
+    },
+    {
+      "id": "norman2019-k562-crispra",
+      "title": "Norman K562：单基因和双基因 CRISPRa",
+      "task": "gene_activation_and_combinations",
+      "context": "Homo sapiens; K562; GSE133344; SunTag CRISPRa",
+      "stage": "catalogued",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "GEO series",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE133344"
+        },
+        {
+          "title": "Original paper",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6746554/"
+        },
+        {
+          "title": "Author analysis",
+          "url": "https://github.com/thomasmaxwellnorman/Perturbseq_GI"
+        }
+      ],
+      "resources": [
+        {
+          "id": "filtered_matrix",
+          "file_name": "GSE133344_filtered_matrix.mtx.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE133nnn/GSE133344/suppl/GSE133344_filtered_matrix.mtx.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null,
+          "estimated_size": "about 1.1 GB"
+        },
+        {
+          "id": "barcodes",
+          "file_name": "GSE133344_filtered_barcodes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE133nnn/GSE133344/suppl/GSE133344_filtered_barcodes.tsv.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "genes",
+          "file_name": "GSE133344_filtered_genes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE133nnn/GSE133344/suppl/GSE133344_filtered_genes.tsv.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "identities",
+          "file_name": "GSE133344_filtered_cell_identities.csv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE133nnn/GSE133344/suppl/GSE133344_filtered_cell_identities.csv.gz",
+          "format": "gzip",
+          "bytes": 1956905,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        }
+      ],
+      "limitations": [
+        "真实过表达/激活实验，不是完全基因敲除；尚未下载表达矩阵或制作小切片。",
+        "guide 字符串出现 NegCtrl 不保证是纯对照，必须使用完整 guide→target 映射。",
+        "样本协议字段含与论文不一致的 dCas9-KRAB 描述，保留来源冲突并按原论文/作者流程核实 CRISPRa。",
+        "按目标/组合预先留出，不能只随机划分细胞；lane/gemgroup 不自动等于独立生物学重复。",
+        "数据是常见模型训练/评估材料，checkpoint 训练重叠未知；GEO 数据专用许可未核实。"
+      ],
+      "expected_outputs": [
+        "cell/guide/target/control mapping with exclusions",
+        "separate single and joint activation conditions",
+        "held-out perturbation split manifest"
+      ],
+      "source_checked_on": "2026-11-13",
+      "prepare_status": "not_implemented",
+      "suggested_subset": "CBL, CNN1, their combination and verified nontargeting controls; not yet prepared"
+    },
+    {
+      "id": "adamson2016-k562-upr-crispri",
+      "title": "Adamson K562：UPR CRISPRi 与对照标签核查",
+      "task": "gene_repression",
+      "context": "Homo sapiens; K562; GSE90546 / GSM2406681 UPR subexperiment",
+      "stage": "catalogued",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "GEO series",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE90546"
+        },
+        {
+          "title": "UPR sample",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2406681"
+        },
+        {
+          "title": "Original paper",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5315571/"
+        },
+        {
+          "title": "Published processed-label audit",
+          "url": "https://academic.oup.com/bioinformatics/article/41/6/btaf317/8142305"
+        }
+      ],
+      "resources": [
+        {
+          "id": "upr_matrix",
+          "file_name": "GSM2406681_10X010_matrix.mtx.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_matrix.mtx.txt.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null,
+          "estimated_size": "about 705 MB"
+        },
+        {
+          "id": "barcodes",
+          "file_name": "GSM2406681_10X010_barcodes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_barcodes.tsv.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "genes",
+          "file_name": "GSM2406681_10X010_genes.tsv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_genes.tsv.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        },
+        {
+          "id": "identities",
+          "file_name": "GSM2406681_10X010_cell_identities.csv.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_cell_identities.csv.gz",
+          "format": "gzip",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "license_url": null
+        }
+      ],
+      "limitations": [
+        "CRISPRi 是抑制/敲低，不应自动写成完全KO。",
+        "只选UPR子实验，不混合Pilot TF与UPR epistasis；矩阵和完整标签未在本次下载核验。",
+        "先重建原始guide/control映射；已发表评估指出旧处理包有标签问题，本项目尚未复现其全部数量。",
+        "GEO专用数据许可未核实；模型训练重叠及独立留出条件尚未核对。"
+      ],
+      "expected_outputs": [
+        "UPR-only input manifest",
+        "guide/target/control mapping audit",
+        "perturbation-held-out evaluation plan"
+      ],
+      "source_checked_on": "2026-11-13",
+      "prepare_status": "not_implemented"
+    },
+    {
+      "id": "replogle2022-k562-essential-crispri",
+      "title": "Replogle K562 essential：pseudobulk 与单细胞输入的区别",
+      "task": "gene_repression",
+      "context": "Homo sapiens; K562 essential; day 6; PRJNA831566 / Figshare 20029387 v1",
+      "stage": "catalogued",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "Original paper",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9380471/"
+        },
+        {
+          "title": "Original reads",
+          "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA831566"
+        },
+        {
+          "title": "Author processed data API",
+          "url": "https://api.figshare.com/v2/articles/20029387"
+        },
+        {
+          "title": "Original file map",
+          "url": "https://api.figshare.com/v2/articles/20022944"
+        }
+      ],
+      "resources": [
+        {
+          "id": "raw_pseudobulk",
+          "file_name": "K562_essential_raw_bulk_01.h5ad",
+          "url": "https://ndownloader.figshare.com/files/35773070",
+          "format": "h5ad",
+          "bytes": 79766954,
+          "sha256": null,
+          "license_status": "CC-BY-4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0/",
+          "upstream_checksum": {
+            "algorithm": "md5",
+            "value": "8321d5d3ffc99db2a5c71edca4189735"
+          }
+        },
+        {
+          "id": "raw_singlecell",
+          "file_name": "K562_essential_raw_singlecell_01.h5ad",
+          "url": "https://ndownloader.figshare.com/files/35773219",
+          "format": "h5ad",
+          "bytes": 10661879995,
+          "sha256": null,
+          "license_status": "CC-BY-4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0/",
+          "upstream_checksum": {
+            "algorithm": "md5",
+            "value": "4f1122ce1c7f13299a68df6459a266d3"
+          }
+        },
+        {
+          "id": "raw_file_manifest",
+          "file_name": "KD6_raw_files.csv",
+          "url": "https://ndownloader.figshare.com/files/35773886",
+          "format": "csv",
+          "bytes": 75702,
+          "sha256": null,
+          "license_status": "CC-BY-4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "limitations": [
+        "尚未下载矩阵；优先79.8MB raw pseudobulk检查，需显式提高默认64MiB限额。",
+        "pseudobulk不是单细胞；normalized版本是gemgroup Z-normalized，不能当raw counts；raw也已筛过表达基因。",
+        "同一载体两个sgRNA针对一个目标不等于双基因扰动。",
+        "GSE197744是另一项病毒研究，不是本研究accession；正确原始入口为PRJNA831566。",
+        "特定checkpoint训练重叠未知；完整single-cell约10.66GB，不自动下载。",
+        "MD5为发布者元数据；当前下载工具核对已知SHA256并记录本次SHA256，SHA256未提供时不会宣称来源哈希已验证。"
+      ],
+      "expected_outputs": [
+        "pseudobulk metadata/control key inspection",
+        "source-scale observed summary",
+        "model-specific held-out design before inference"
+      ],
+      "source_checked_on": "2026-11-13",
+      "prepare_status": "not_implemented"
+    }
+  ]
+}

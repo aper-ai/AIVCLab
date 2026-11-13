@@ -1,20 +1,26 @@
-# Aper AI 虚拟细胞工作台
+# Virtual Cell Research · 虚拟细胞研究 Skill
+
+面向初学者和研究者的虚拟细胞研究流程：从真实案例认识数据和对照，完成输入检查，再选择适合研究问题的模型，交付可复查的结果。Skill 由本项目独立维护，当前重点是数据契约、清楚的操作说明、实际案例和可维护的模型适配。
+
+## 从一个真实案例开始
+
+进入 [Virtual Cell Research](virtual-cell-research/README.md)。首次使用可运行约 3 MB 的 HT115 观测响应教学，或复现 Paul2015 输入审计；两条路线都已有实际数据检查记录。案例目录另收录 IFN-β、SciPlex3、CRISPRa 与 CRISPRi 等研究数据，明确区分来源整理、数据准备、模型执行与独立验证。
+
+- [首次使用指南](virtual-cell-research/references/first-run.md)：创建独立环境，获取小型数据，生成表、图和检查记录。
+- [案例目录](virtual-cell-research/cases/README.md)：七个案例的研究问题、真实完成阶段、资源与限制。
+- [预检与排错](virtual-cell-research/docs/troubleshooting.md)：缺少什么、为什么停止、下一步怎样处理。
+- [模型能力与实现程度](virtual-cell-research/references/model-capabilities.md)：参数化入口、历史脚本与文档路线分别说明。
+- [参与建设](virtual-cell-research/CONTRIBUTING.md)：从一个案例、一条适配或一个错误修复开始。
+
+源码包不包含模型权重或原始表达矩阵。当前新案例完成了观测教学和输入审计，尚未运行真实模型推理或取得独立预测验证；历史分析单独归档。复用代码、模型和数据分别保留[来源与许可](virtual-cell-research/THIRD_PARTY_NOTICES.md)。
+
+## 已有 Windows 结果查看器
 
 **0.1.0 · Windows x64 预览版**
 
-当前建设重点是完善 AIVC-skill 的使用流程、说明和结果正确性，让新手先完成一项清楚、可复查的虚拟干预分析。
+已有「Aper AI 虚拟细胞工作台」用于读取带 `manifest.json` 的模型运行包，把图、表、参数和来源整理为复核记录。它在本机运行，无需登录或上传数据。观测教学的输出是独立的数据报告，当前没有模型运行包的 `manifest.json`，请直接阅读生成的 `report.md`、表格和图。Skill 的使用不依赖此查看器。
 
-## 从 Skill 开始
-
-新增的 [AIVC-skill 改进版](aivc-skill/README.md) 保留上游来源与 MIT 许可，提供首次使用指南、输入预检、参数化 KO/OE 示例、药筛适配脚本与排错说明。它不包含模型权重或真实分析数据，也不代表本次已经重新运行模型。
-
-- [首次分析指南](aivc-skill/references/first-run.md)：先看历史结果、运行参考流程或使用自己的数据。
-- [预检与排错](aivc-skill/docs/troubleshooting.md)：输入问题、缺少资源和未完成检查分别说明。
-- [模型能力与实现程度](aivc-skill/references/model-capabilities.md)：明确参数化入口、历史脚本与文档路线的区别。
-
-下面的 Windows 应用继续用于读取已有结果，把图、表、参数和来源整理为复核记录。它在本机运行，无需登录或上传数据。通用插件框架与 DSH 集成暂缓，不是当前使用 Skill 的前提。
-
-## 使用
+### 使用查看器
 
 1. 安装后打开「Aper AI 虚拟细胞工作台」，点击「打开 AIVC 公开样例」开始体验；也可导入带有 `manifest.json` 的现有运行目录。
 2. 查看「运行概览」「图表」「源表」和「参数与验证」。图表页可跳转到运行包中已有的图件来源清单；源表页可选择数值列绘图。
@@ -23,7 +29,7 @@
 
 内置样例取自 [AIVC-Skill 固定版本的历史测试报告](https://github.com/Pengzhi-Gao/aivc-skill/blob/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/reports/reproduction-report.md#L33-L56)。它们是 CellOracle 同一批次的两个历史条件，未经独立实验或留出数据验证。样例出处、限制与上游许可见 [samples/README.md](samples/README.md)。
 
-## 与 AIVC-Skill 的衔接
+### 模型运行包与查看器的衔接
 
 | 已有环节 | 工作台 0.1.0 |
 | --- | --- |
@@ -35,7 +41,7 @@
 
 直接选择运行目录（例如 `results/<run_id>/`），而非它的父目录。可选内容包括 `validation.json`、`provenance.json`、`errors.jsonl`、`raw/`、`tables/`、`figures/` 和 `report.md`。运行包不会被执行或改写。定量汇总表使用表头 `metric,value,unit`，不能拿预览数值当作独立实验结论。需要直接访问未预览的格式，可从「报告与文件」打开原目录。
 
-## 构建与验证
+### 构建与验证查看器
 
 使用 Windows x64 Python 3.12、[requirements-build.txt](requirements-build.txt) 中的依赖及 Inno Setup 6，运行 `build.ps1`。脚本生成 `dist/AperAI-VirtualCell-Workbench-Setup-0.1.0-x64.exe`，仅安装到当前用户，无需管理员权限。
 
