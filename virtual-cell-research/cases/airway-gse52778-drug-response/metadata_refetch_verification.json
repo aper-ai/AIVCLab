@@ -1,0 +1,44 @@
+{
+  "first_xml_sha256": "dc135c8b233693d69eaae82f9aebc090cb49549b9176321721ebf03db6d77526",
+  "new_xml_sha256": "391c8a8747117e6f1eb6f41fdbee6f0f09e65669e1fec6ba2dd97879c94e547e",
+  "first_bytes": 146240,
+  "new_bytes": 146240,
+  "source_identity_records_equal": true,
+  "canonical_identity_sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927",
+  "canonical_identity_keys": [
+    "experiment",
+    "geo_accession",
+    "library_id",
+    "original_fastq_names",
+    "run_accession",
+    "sra_donor",
+    "sra_title",
+    "sra_treatment"
+  ],
+  "changed_SRAFiles_sibling_orders": 13,
+  "entire_xml_equal_after_sorting_only_SRAFile_siblings": true,
+  "observed_difference_reason": "SRAFile sibling order changed; no other XML changes after sorting those siblings",
+  "rerun_completed": true,
+  "array_checks": {
+    "raw/source_fpkm.npz": {
+      "source_gene_ids": true,
+      "sample_columns": true,
+      "fpkm": true
+    },
+    "raw/paired_responses.npz": {
+      "source_gene_ids": true,
+      "donors": true,
+      "treatments": true,
+      "observed_delta": true
+    }
+  },
+  "identical_exported_files": {
+    "tables/sample_mapping.csv": true,
+    "tables/donor_pairs.csv": true,
+    "tables/figure_data.csv": true,
+    "tables/gene_summary.csv": true,
+    "drug_response.png": true,
+    "drug_response.svg": false
+  },
+  "max_abs_full_response_change": 0.0
+}

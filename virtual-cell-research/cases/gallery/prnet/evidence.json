@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-11-13T08:39:45.522644+00:00",
+  "case_id": "prnet-reference-evaluation",
+  "plotter": "scripts/plot_prnet_case.py",
+  "plotter_sha256": "9bcedac2450166ddedf0bf8487f1a23abaf63cbe1655cd36838ea44a6f5fc8d1",
+  "run_directory": "local-runs/gallery-prnet-20261113-output",
+  "run_manifest": {
+    "schema_version": 1,
+    "run_id": "gallery-prnet-20261113-output",
+    "case_id": "prnet-reference-evaluation",
+    "task": "drug",
+    "backend": "PRnet",
+    "status": "completed",
+    "model_status": "executed",
+    "prediction_status": "success",
+    "validation_status": "unvalidated",
+    "independent_validation": "not_assessed",
+    "started_at": "2026-11-13T08:36:20.957418+00:00",
+    "parameters": {
+      "seed": 2024,
+      "noise_draws": 16,
+      "torch_threads": 1,
+      "device": "cpu"
+    },
+    "baseline_source": "official_demo_paired_controls",
+    "scale": "official_demo_normalize_total_median_then_log1p",
+    "execution_status": "success",
+    "conditions_completed": 661,
+    "figure_status": "generated",
+    "finished_at": "2026-11-13T08:37:07.193966+00:00"
+  },
+  "source_commit": "f19174bde3ed2633f54c7831799cc38c4ffc7a0d",
+  "inference_script_sha256": "320cb6947b6c3fd1a38848415253daf3d12b6c29bfbf908c87c3e779c610a1b6",
+  "resources_sha256_verified": true,
+  "resources": [
+    {
+      "id": "model",
+      "file_name": "PRnet.py",
+      "source_path": "models/PRnet.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/models/PRnet.py",
+      "bytes": 10794,
+      "sha256": "024f39a07e2887fea45a42f60b07b3ba17dc7501f134285ff72798eacb8bea3e",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "encoding",
+      "file_name": "_utils.py",
+      "source_path": "data/_utils.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/data/_utils.py",
+      "bytes": 9406,
+      "sha256": "b72ad61f7e4e1389a62ce50db144627e1d5d5f16fccee4c17f05ab29328d4b5e",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "weights",
+      "file_name": "lincs_best_epoch_all.pt",
+      "source_path": "checkpoint/lincs_best_epoch_all.pt",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/checkpoint/lincs_best_epoch_all.pt",
+      "bytes": 2210427,
+      "sha256": "f4b69f6fbcbfab3636b1e0a9eb64c32ccf61ea48431f05ba8433e3678713e8c8",
+      "format": "pytorch_state_dict",
+      "license_status": "not_separately_specified_for_file",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "demo",
+      "file_name": "demo.h5ad",
+      "source_path": "dataset/demo.h5ad",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+      "bytes": 3136818,
+      "sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+      "format": "h5ad",
+      "license_status": "not_separately_specified_for_file",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "official-demo",
+      "file_name": "test_demo.py",
+      "source_path": "test_demo.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/test_demo.py",
+      "bytes": 3244,
+      "sha256": "7adc897816106a78d5ec357a808a4ee1e14c3c90a04a23a546a0efacdbb3d84d",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "official-trainer",
+      "file_name": "PRnetTrainer.py",
+      "source_path": "trainer/PRnetTrainer.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/trainer/PRnetTrainer.py",
+      "bytes": 27021,
+      "sha256": "0d0eb2d8e19ce284d56313667fc2ffb532050ede8b93b4a40bc5ffa6329e8038",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "license",
+      "file_name": "LICENSE",
+      "source_path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    }
+  ],
+  "run_artifact_hashes": {
+    "manifest.json": {
+      "sha256": "03a934cfee2043cb1c905b3fbc33bd290693a2dd1817c7c5e5bb17de40b197e6",
+      "bytes": 750
+    },
+    "qc.json": {
+      "sha256": "33dfe9c08628cd9f893e6265bc46a5ddba97e839ee177c0c8309f96efeb9e407",
+      "bytes": 1082
+    },
+    "validation.json": {
+      "sha256": "f64ecee3003ff90b19ac7c61f98175df9202adaa00b0967f72eb5f34c99c0730",
+      "bytes": 2358
+    },
+    "raw/reference_predictions.npz": {
+      "sha256": "2e23c536d6fc9d1f5f3a81c3aaf133c6c56aa68349c41079fc4aed5d87c69143",
+      "bytes": 29977261
+    },
+    "tables/condition_index.csv": {
+      "sha256": "2fcc28d3350e302247d7789f08da183ac35534d609d33f31ef21511f40ce3569",
+      "bytes": 315969
+    },
+    "tables/gene_index.csv": {
+      "sha256": "1d4505a87d1ce8d479e672e108368a2ba2fb63fc8e3b5687c15100dc03abe784",
+      "bytes": 44778
+    },
+    "tables/profile_metrics.csv": {
+      "sha256": "0ac90cc6c739a01cc156772711411a1159690dd4688a72710b35654044c81c45",
+      "bytes": 529333
+    }
+  },
+  "run_provenance_sha256": "d8c51117271a825c32019da9313e6cb765bfced5d93ff579cc2fee0df009ff1e",
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.1",
+      "anndata": "0.13.4",
+      "scanpy": "1.11.5",
+      "torch": "2.5.1+cpu",
+      "rdkit": "2025.9.1",
+      "scipy": "1.18.1",
+      "h5py": "3.16.0",
+      "matplotlib": "3.11.2"
+    },
+    "full_freeze_file": "environment-freeze.txt"
+  },
+  "summary": {
+    "prnet_mean_rmse": 0.1401410921291978,
+    "zero_response_mean_rmse": 0.13242018096843164,
+    "mean_paired_rmse_difference": 0.007720911160766117,
+    "prnet_lower_rmse_count": 185,
+    "zero_response_lower_rmse_count": 476,
+    "exact_tie_count": 0,
+    "prnet_lower_rmse_fraction": 0.27987897125567324
+  },
+  "qc": {
+    "status": "passed_with_warnings",
+    "profiles": 661,
+    "genes": 978,
+    "source_profiles": 681,
+    "controls": 20,
+    "all_profile_and_gene_ids_preserved": true,
+    "finite_predictions": true,
+    "cross_rna_plate_profiles": 338,
+    "drug_exclusion_groups": 349,
+    "scale": "official_demo_normalize_total_median_then_log1p",
+    "normalization_target_sum": 8037.517578125,
+    "chemical_sensitivity": {
+      "background": "mean_of_20_processed_controls",
+      "noise": "same_zero_vector_for_all_conditions",
+      "mean_squared_response": 0.009118826803340216,
+      "mean_gene_variance_across_conditions": 0.000651220429036343,
+      "chemical_variation_to_total_rms_ratio": 0.26723573042178334,
+      "nearly_constant_at_absolute_tolerance_1e_8": false,
+      "interpretation": "Input sensitivity diagnostic; does not establish drug accuracy or efficacy."
+    },
+    "warnings": [
+      "training_overlap_unknown",
+      "transductive_demo_normalization",
+      "source_cross_plate_pairs_preserved",
+      "no_clinical_efficacy_or_independent_validation",
+      "other_group_mean_is_demo_derived_reference"
+    ]
+  },
+  "validation": {
+    "status": "unvalidated",
+    "independent_validation": "not_assessed",
+    "training_overlap": "unknown",
+    "holdout_status": "not_established",
+    "dataset_role": "official_checkpoint_reference_demo",
+    "source_split": "demo_split=test for 661 treatments; not a training-membership certificate",
+    "checkpoint_split_binding": "Published all checkpoint has no verified sample/compound membership manifest.",
+    "mean_reference": "Leave connected drug group out of THIS demo. Excludes shared pert_id/name/canonical isomeric SMILES; descriptive, not external or deployable.",
+    "preprocessing_scope": "Official default median normalization uses all 681 demo profiles including observed treatments; transductive reference evaluation.",
+    "inference_adaptation": "Official PGM and dose encoder, fixed CPU order/seed; 16 by default decoder-noise draws averaged, plus one Gaussian sample. Not byte-for-byte original shuffled Trainer output.",
+    "metrics": {
+      "prnet_mean": {
+        "mean_profile_rmse": 0.14014109212919776,
+        "mean_profile_mae": 0.1054610930294876,
+        "mean_profile_pearson": 0.4150553099313833,
+        "profile_pearson_defined": 661,
+        "mean_gene_pearson": 0.37917701253942554,
+        "gene_pearson_defined": 978,
+        "mean_profile_post_expression_pearson": 0.8299957983521812
+      },
+      "prnet_sample": {
+        "mean_profile_rmse": 0.2255216641621598,
+        "mean_profile_mae": 0.17281770874362212,
+        "mean_profile_pearson": 0.2316417317697587,
+        "profile_pearson_defined": 661,
+        "mean_gene_pearson": 0.14663644257962696,
+        "gene_pearson_defined": 978,
+        "mean_profile_post_expression_pearson": 0.6556233126322881
+      },
+      "no_change": {
+        "mean_profile_rmse": 0.13242018096843164,
+        "mean_profile_mae": 0.09070893183296487,
+        "mean_profile_pearson": null,
+        "profile_pearson_defined": 0,
+        "mean_gene_pearson": null,
+        "gene_pearson_defined": 0,
+        "mean_profile_post_expression_pearson": 0.8464037840457083
+      },
+      "other_group_mean": {
+        "mean_profile_rmse": 0.13036360710005776,
+        "mean_profile_mae": 0.09125123057768805,
+        "mean_profile_pearson": 0.1982301550692745,
+        "profile_pearson_defined": 661,
+        "mean_gene_pearson": -0.7397282566031745,
+        "gene_pearson_defined": 978,
+        "mean_profile_post_expression_pearson": 0.850314713265036
+      }
+    }
+  },
+  "numerical_checks": {
+    "full_npz_loaded": true,
+    "allow_pickle": false,
+    "npz_arrays_read": [
+      "baseline",
+      "condition_ids",
+      "exclusion_groups",
+      "fixed_baseline",
+      "fixed_prediction",
+      "gaussian_sample_delta",
+      "gaussian_sample_post",
+      "gene_ids",
+      "mean_aleatoric_variance",
+      "noise_induced_mean_variance",
+      "observed_delta",
+      "observed_post",
+      "other_group_mean_delta",
+      "paired_control_ids",
+      "predicted_delta",
+      "predicted_post_mean",
+      "processed_X",
+      "profile_ids",
+      "sampled_noise",
+      "source_X",
+      "source_profile_ids"
+    ],
+    "all_numeric_arrays_finite": true,
+    "tables_joined_by_ids": true,
+    "paired_control_values_verified": true,
+    "observed_and_predicted_deltas_verified": true,
+    "all_four_methods_profile_rmse_and_mae_recomputed": true,
+    "profile_metrics_and_summary_agree": true,
+    "zero_response_pearson_remains_undefined": true
+  },
+  "figure_checks": {
+    "dpi": 180,
+    "canvas_inches": [
+      12.5,
+      10.6
+    ],
+    "pixel_dimensions": [
+      2250,
+      1908
+    ],
+    "canvas_text_bounds": "passed",
+    "full_shared_color_range": true,
+    "displayed_heatmap_cells": 240,
+    "paired_error_profiles": 661
+  },
+  "visual_review": {
+    "status": "passed",
+    "reviewed_image": "predicted_response.png",
+    "sha256": "828d7498b289f22bbf899ab43cd2ba5508c1fc9b844b8ceb1f04849513e940d8",
+    "method": "Image opened and visually inspected; final PNG SHA256 equals the inspected v1 PNG.",
+    "checks": [
+      "English title and limits readable",
+      "Both heatmaps use one complete symmetric color scale",
+      "Drug labels and gene labels readable without clipping or overlap",
+      "All 661 profiles included in paired RMSE and ECDF panels",
+      "Axis labels, legends, annotation and footnotes clear",
+      "No existing figure copied"
+    ]
+  },
+  "artifacts": {
+    "README.md": {
+      "bytes": 9625,
+      "sha256": "5744b9577ace8d4a8d424edf8f05e85de1258e3593d793bcc07356300641159a"
+    },
+    "environment-freeze.txt": {
+      "bytes": 1053,
+      "sha256": "db6b9ad8a844d71347943bb0761a28afa7e8821b4c2b79a823008fea16a9fcd8"
+    },
+    "execution_log.json": {
+      "bytes": 21302,
+      "sha256": "6702ba859377dc35a21a4563d8d3c1a31d7b794640f6392a3dc60440eddff1bb"
+    },
+    "figure_source.json": {
+      "bytes": 88254,
+      "sha256": "edc71f03f04ad2fbe550d2bb4945a4014f977dae03ba660bd82d3cb7854fce7e"
+    },
+    "predicted_response.png": {
+      "bytes": 455417,
+      "sha256": "828d7498b289f22bbf899ab43cd2ba5508c1fc9b844b8ceb1f04849513e940d8"
+    },
+    "predicted_response.svg": {
+      "bytes": 268491,
+      "sha256": "56879d1a76a2a3bd2f9ecd248ef8800182bc6ed45d586adf66a495715cd92b34"
+    }
+  },
+  "regression_tests": {
+    "command": "/workspace/scratch/87abe0956112/gallery-prnet-env/bin/python -m unittest discover -s tests -p test_plot_prnet_case.py -v",
+    "status": "passed",
+    "test_count": 6,
+    "test_script": "tests/test_plot_prnet_case.py",
+    "test_script_sha256": "986619416ce29e3424ff0a792193b418d2d79bf6d6e8662589dff8d0685d26f5",
+    "log_record": "execution_log.json: logs.plot-tests.stderr.log",
+    "scope": "Synthetic data-integrity tests, not model scientific validation"
+  },
+  "runtime_log_status": {
+    "fetch_status": "ready",
+    "resources_downloaded": 7,
+    "resources_reused": 0,
+    "run_stderr_bytes": 0,
+    "run_errors_jsonl_bytes": 0,
+    "plot_stderr_bytes": 0,
+    "install_advisory": "uv reported a hardlink failure and fell back to copying; this was not a model execution failure.",
+    "scientific_warnings": [
+      "training_overlap_unknown",
+      "transductive_demo_normalization",
+      "source_cross_plate_pairs_preserved",
+      "no_clinical_efficacy_or_independent_validation",
+      "other_group_mean_is_demo_derived_reference"
+    ]
+  }
+}

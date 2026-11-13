@@ -115,16 +115,17 @@ Windows 用户可直接复制对应命令：
 
 ## 理解其他案例的实际阶段
 
-[案例目录](../cases/README.md) 收录十项具体问题。先用 `show <case-id>` 看限制，不必一次下载全部数据。
+[案例目录](../cases/README.md) 收录十一项具体问题。[公开案例结果](../cases/gallery/README.md) 提供本次实际生成的图、读图说明和重跑入口。先用 `show <case-id>` 看限制，不必一次下载全部数据。
 
 - **Paul2015 输入尺度审计已经实做。** 约 66.3 MB 的教程对象，其 `raw_count` 层含非整数值；按当前原始整数计数契约，预检应返回 `blocked`、退出码 `2`。这是检查找到了问题，不是模型计算失败。按 [案例步骤](../cases/celloracle-paul2015-input-audit/README.md) 阅读或复现，不要靠四舍五入伪装原始计数。
 - **Kang IFN-β PBMC 已完成真实供体配对教学。** 六份来源文件合计约 58.7 MB；按 [案例步骤](../cases/kang-ifnb-pbmc/README.md) 获取并运行，学习样本与 barcode 对齐、原始计数聚合、缺失配对和供体内差值。默认 CD14+ 分析有 8 个供体配对，未执行预测模型。
+- **Airway GSE52778 已完成真实药物观测分析。** [药物响应案例](../cases/airway-gse52778-drug-response/README.md) 用 GEO 与 SRA 核实 16 个样本的身份，对 4 位供体分别比较地塞米松、沙丁胺醇及联合处理与未处理对照。输入是作者处理后的 bulk RNA-seq FPKM；它帮助学习配对与读图，不是单细胞原始计数或模型预测。
 - **Kang 留一供体基线评估已完成。** [真实评估教学](../cases/kang-heldout-baseline/README.md) 每次只用另外 7 位供体构建均值参照，预测被留出的 1 位，再与零响应比较；保存全部成员和 8 折结果。它帮助理解数据划分与评价，不是 CellOracle/PRnet 的独立验证。
 - **CellOracle Gata1 KO 和 OE 已完成真实模型执行。** [完整案例](../cases/celloracle-paul2015-gata1/README.md) 从 GSE72857 原始整数 UMI 和 GEO 实验标签核实野生型背景，固定选择 500 个细胞，实际拟合网络并分别模拟 KO 和内部 95 分位固定值的 OE，记录实际被提高与降低的细胞数量。数据准备与模型环境分开，Linux CPU 路线已实测；这不等于独立生物学验证或 Windows 安装验收。
 - **PRnet 已完成固定权重的 CPU 参考推理。** [参考评估案例](../cases/prnet-reference-evaluation/README.md) 明确获取一组固定官方代码、权重与 demo，保留稳定 profile ID、随机种子和同尺度结果，并与零响应基线比较。本次正相关没有转化成更低的平均误差；训练重叠未知，不能标为独立验证，也不能将此固定 demo 入口直接用于任意用户矩阵。
 - **sci-Plex3、Norman2019、Adamson2016 和 Replogle2022 目前是已收录路线。** 数据尚未下载。Replogle 案例列出的是约 79.8 MB pseudobulk，不是原始单细胞矩阵；更大的资源需要明确提高下载限额。
 
-目录阶段 `catalogued`、`data_downloaded`、`prepared`、`model_executed`、`validated` 含义不同。当前有四项数据教学/审计/基线评估、两条真实模型路线（CellOracle 已分别运行 KO 与 OE），独立验证仍未完成。一个教学脚本完成、输入审计正确阻断、真正执行模型，分别说明，不合并为“已复现论文结论”。
+目录阶段 `catalogued`、`data_downloaded`、`prepared`、`model_executed`、`validated` 含义不同。当前有五项数据教学/审计/基线评估、两条真实模型路线（CellOracle 已分别运行 KO 与 OE），独立验证仍未完成。一个教学脚本完成、输入审计正确阻断、真正执行模型，分别说明，不合并为“已复现论文结论”。
 
 对自己的 H5AD，预检默认只读元数据与形状。在请求 JSON 中显式加入 `"scan_h5ad_values": true` 后，可按块扫描所选 dense/CSR/CSC 的全部存储值。数值合格仍不能证明原始计数来源、稀疏索引完整性、`n_counts` 与矩阵一致或模型环境兼容；通常仍有 `incomplete` 项。具体请求字段见 [预检与排错](../docs/troubleshooting.md)。
 

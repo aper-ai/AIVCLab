@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "case_id": "airway-gse52778-drug-response",
+  "created_at": "2026-11-13T08:46:23.439499+00:00",
+  "run_status": "completed",
+  "model_status": "not_run",
+  "independent_validation": "not_assessed",
+  "source_kind": "official_GEO_GSE52778_processed_FPKM_and_GEO_SRA_metadata",
+  "sources": {
+    "fpkm": {
+      "file_name": "GSE52778_All_Sample_FPKM_Matrix.txt.gz",
+      "bytes": 2596435,
+      "sha256": "e7e54e8f564d417b47843e82c2a7140b92a783d6b5078816bae15d07fca126f6",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE52nnn/GSE52778/suppl/GSE52778_All_Sample_FPKM_Matrix.txt.gz",
+      "local_path": "local-runs/gallery-airway-metadata-refresh/GSE52778_All_Sample_FPKM_Matrix.txt.gz",
+      "license_status": "not_separately_specified",
+      "sha256_provenance": "project_computed_full_download_2026-11-13_not_publisher_signed",
+      "hash_policy": "pinned_raw_file_hash"
+    },
+    "metadata": {
+      "file_name": "GSE52778_series_matrix.txt.gz",
+      "bytes": 3396,
+      "sha256": "67db46e962f795b9dd61fa6b4279f2678c6b2b9bf1df035fbc22fcf81b5e879e",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE52nnn/GSE52778/matrix/GSE52778_series_matrix.txt.gz",
+      "local_path": "local-runs/gallery-airway-metadata-refresh/GSE52778_series_matrix.txt.gz",
+      "license_status": "not_separately_specified",
+      "sha256_provenance": "project_computed_full_download_2026-11-13_not_publisher_signed",
+      "hash_policy": "pinned_raw_file_hash"
+    },
+    "sra_mapping": {
+      "file_name": "SRP033351_full.xml",
+      "bytes": 146240,
+      "sha256": "391c8a8747117e6f1eb6f41fdbee6f0f09e65669e1fec6ba2dd97879c94e547e",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=sra&id=551401,551400,551399,551398,551397,551396,551395,551394,551393,551392,551391,551390,551389,551388,551387,551386&rettype=full&retmode=xml",
+      "canonical_identity_sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927",
+      "local_path": "local-runs/gallery-airway-metadata-refresh/SRP033351_full.xml",
+      "license_status": "not_separately_specified",
+      "sha256_provenance": "project_computed_full_download_2026-11-13_not_publisher_signed",
+      "hash_policy": "pinned_canonical_identity_and_recorded_raw_hash"
+    }
+  },
+  "source_paper": "https://doi.org/10.1371/journal.pone.0099625",
+  "run_directory": "local-runs/gallery-airway-observed-v2",
+  "source_rows": 23273,
+  "source_profiles": 16,
+  "biological_units": 4,
+  "contrasts": 3,
+  "paired_responses": 12,
+  "figure_eligible_rows": 10849,
+  "plotted_genes": [
+    "SPARCL1",
+    "GPX3",
+    "FKBP5",
+    "SAMHD1",
+    "KCTD12",
+    "TNFAIP6",
+    "LRRC17",
+    "SOX4"
+  ],
+  "scale": "log2(1 + source_FPKM_treated) - log2(1 + source_FPKM_untreated)",
+  "gene_selection": "Among genes with source status OK in every condition and FPKM >= 1 in all 16 source profiles, select 4 highest positive and 4 lowest negative equal-donor Dex response means; source gene_id breaks ties. Reuse the same panel for Alb and combination. All 23,273 rows are retained in full outputs.",
+  "source_column_order_used_for_pairing": false,
+  "plotted_value_reconstruction_max_abs_error": 8.881784197001252e-16,
+  "mapping_audit": "GEO donor/treatment/title and SRX agree with SRA experiment and sample attributes; LL identities read from original paired FASTQ filenames",
+  "script_sha256": "7b61f188cce168478286c39303ea3dd79806e530152092d598eb8822023c51f2",
+  "python": "3.12.14",
+  "interpreter": "/workspace/scratch/87abe0956112/gallery-data-env/bin/python",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.8"
+  },
+  "invocation": {
+    "argv": [
+      "scripts/observed_airway_case.py",
+      "--input-dir",
+      "local-runs/gallery-airway-metadata-refresh",
+      "--output-dir",
+      "local-runs/gallery-airway-observed-v2"
+    ],
+    "cwd": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research"
+  },
+  "complete_run_provenance": {
+    "bytes": 5118,
+    "sha256": "9d07f764e7c27e534664ca2bf56a5cb983d097c0fee7ced1cf21e259cea9fb31"
+  },
+  "complete_run_artifacts": {
+    "drug_response.png": {
+      "bytes": 235100,
+      "sha256": "489b1cd8a1d7eb7fec3ab839add473907d8377146ff9956a9c9db27ad6a17112"
+    },
+    "drug_response.svg": {
+      "bytes": 45857,
+      "sha256": "0722d2f34fad76a391bd0a0ddc0654e123df30b538ce68944aeebbedfd49b0c8"
+    },
+    "qc.json": {
+      "bytes": 1735,
+      "sha256": "2faabbf881cd5574014fa7c819295c364005160cf8b400b24c511982500fce33"
+    },
+    "raw/paired_responses.npz": {
+      "bytes": 1804185,
+      "sha256": "bf05e19ab509a6ee4f84ba5137b54da59ca3893061d6d596b6cdb49a217a4847"
+    },
+    "raw/source_fpkm.npz": {
+      "bytes": 1861309,
+      "sha256": "6ce40618d739930edf09a5da6c7c806bf3694bc4da758ad4cf853c343b406ade"
+    },
+    "report.md": {
+      "bytes": 3322,
+      "sha256": "28630987110362af0c5a6ef85d9c50a6b0b020aa614f291d71aaa66907e1769e"
+    },
+    "tables/donor_pairs.csv": {
+      "bytes": 815,
+      "sha256": "4998aba4487c199c70de4914662e256901db4fd26e063e001b33b7c1da13542c"
+    },
+    "tables/figure_data.csv": {
+      "bytes": 10076,
+      "sha256": "09ad055b15cf095a0b0546023753fc08032cdd940cda0431dca2d70add548e0f"
+    },
+    "tables/gene_summary.csv": {
+      "bytes": 6514808,
+      "sha256": "1ed7d9fc2ccaee7ef91a6f16837a9eaa6e052abbfe5425ef3bc2d3fe53e5b3c4"
+    },
+    "tables/sample_mapping.csv": {
+      "bytes": 3075,
+      "sha256": "5715af48e2100454a1e4ce84c578ffc7fb26ffacde091089726ac4339d7b7ea7"
+    },
+    "tables/selected_gene_means.csv": {
+      "bytes": 542,
+      "sha256": "5aa2a9e6ec00bdf23f12de7ccbb74e7fa56776e56ea01638aedf37af63ca88d3"
+    },
+    "tables/source_annotations.csv": {
+      "bytes": 3761847,
+      "sha256": "dc4906f260ff7c4b935de3999b3bc07f8727a77e228491110b40a9ad5c2fa1a0"
+    }
+  },
+  "portable_artifacts": {
+    "README.md": {
+      "bytes": 12054,
+      "sha256": "b6ab29227224b1a2dc49a97f6bb240697e3bc76a582f24efccd5ab5a1cf71b44"
+    },
+    "donor_pairs.csv": {
+      "bytes": 815,
+      "sha256": "4998aba4487c199c70de4914662e256901db4fd26e063e001b33b7c1da13542c"
+    },
+    "drug_response.png": {
+      "bytes": 235100,
+      "sha256": "489b1cd8a1d7eb7fec3ab839add473907d8377146ff9956a9c9db27ad6a17112"
+    },
+    "drug_response.svg": {
+      "bytes": 45857,
+      "sha256": "0722d2f34fad76a391bd0a0ddc0654e123df30b538ce68944aeebbedfd49b0c8"
+    },
+    "figure_data.csv": {
+      "bytes": 10076,
+      "sha256": "09ad055b15cf095a0b0546023753fc08032cdd940cda0431dca2d70add548e0f"
+    },
+    "metadata_refetch_verification.json": {
+      "bytes": 1388,
+      "sha256": "f314b81727f4545034c68beb6b30f3a6aa956f4da49f040d94dd9ec62e52243e"
+    },
+    "qc.json": {
+      "bytes": 1735,
+      "sha256": "2faabbf881cd5574014fa7c819295c364005160cf8b400b24c511982500fce33"
+    },
+    "sample_mapping.csv": {
+      "bytes": 3075,
+      "sha256": "5715af48e2100454a1e4ce84c578ffc7fb26ffacde091089726ac4339d7b7ea7"
+    },
+    "selected_gene_means.csv": {
+      "bytes": 542,
+      "sha256": "5aa2a9e6ec00bdf23f12de7ccbb74e7fa56776e56ea01638aedf37af63ca88d3"
+    },
+    "sra_identity.json": {
+      "bytes": 3721,
+      "sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927"
+    }
+  },
+  "tests": {
+    "command": "python -m unittest discover -s tests -p test_airway_case.py -v",
+    "passed": 7,
+    "kind": "Identity tests; numeric fixtures are synthetic; original scientific identity projection is pinned"
+  },
+  "visual_inspection": {
+    "png_size_bytes": 235100,
+    "dpi": 175,
+    "font": "DejaVu Sans",
+    "status": "viewed; no clipped or overlapping text"
+  },
+  "sra_canonical_identity_sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927",
+  "sra_canonical_identity_fields": [
+    "experiment",
+    "geo_accession",
+    "library_id",
+    "original_fastq_names",
+    "run_accession",
+    "sra_donor",
+    "sra_title",
+    "sra_treatment"
+  ],
+  "sra_raw_hash_policy": "Actual raw SHA256 retained; scientific identity projection pinned; XML file ordering may vary",
+  "metadata_refresh_verification": {
+    "first_xml_sha256": "dc135c8b233693d69eaae82f9aebc090cb49549b9176321721ebf03db6d77526",
+    "new_xml_sha256": "391c8a8747117e6f1eb6f41fdbee6f0f09e65669e1fec6ba2dd97879c94e547e",
+    "first_bytes": 146240,
+    "new_bytes": 146240,
+    "source_identity_records_equal": true,
+    "canonical_identity_sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927",
+    "canonical_identity_keys": [
+      "experiment",
+      "geo_accession",
+      "library_id",
+      "original_fastq_names",
+      "run_accession",
+      "sra_donor",
+      "sra_title",
+      "sra_treatment"
+    ],
+    "changed_SRAFiles_sibling_orders": 13,
+    "entire_xml_equal_after_sorting_only_SRAFile_siblings": true,
+    "observed_difference_reason": "SRAFile sibling order changed; no other XML changes after sorting those siblings",
+    "rerun_completed": true,
+    "array_checks": {
+      "raw/source_fpkm.npz": {
+        "source_gene_ids": true,
+        "sample_columns": true,
+        "fpkm": true
+      },
+      "raw/paired_responses.npz": {
+        "source_gene_ids": true,
+        "donors": true,
+        "treatments": true,
+        "observed_delta": true
+      }
+    },
+    "identical_exported_files": {
+      "tables/sample_mapping.csv": true,
+      "tables/donor_pairs.csv": true,
+      "tables/figure_data.csv": true,
+      "tables/gene_summary.csv": true,
+      "drug_response.png": true,
+      "drug_response.svg": false
+    },
+    "max_abs_full_response_change": 0.0
+  }
+}

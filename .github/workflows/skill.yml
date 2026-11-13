@@ -52,6 +52,10 @@ jobs:
           python scripts/cases.py --help
           python scripts/observed_prnet_case.py --help
           python scripts/observed_kang_case.py --help
+          python scripts/observed_airway_case.py --help
+          python scripts/plot_celloracle_case.py --help
+          python scripts/plot_prnet_case.py --help
+          python scripts/plot_kang_case.py --help
           python scripts/prepare_paul2015_case.py --help
           python scripts/prnet_reference_case.py --help
           python scripts/prepare_user_data.py --help

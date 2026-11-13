@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-11-13T08:41:08.114590+00:00",
+  "logs": {
+    "fetch.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "fetch.stdout.log": {
+      "bytes": 63,
+      "sha256": "f0820f5e0252788c79175d2705824d56818191e56bfca785f64ec5b561c9e2d6",
+      "text": "{\"status\": \"ready\", \"resources\": 7, \"model_status\": \"not_run\"}\n"
+    },
+    "install-analysis.stderr.log": {
+      "bytes": 1668,
+      "sha256": "8b26cfb69064b32761a7717caa149df788726139b8f484817d64df391d13e550",
+      "text": "Using Python 3.12.14 environment at: /workspace/scratch/87abe0956112/gallery-prnet-env\nResolved 52 packages in 7.22s\nDownloading numpy (16.0MiB)\nDownloading matplotlib (9.4MiB)\nDownloading llvmlite (56.9MiB)\nDownloading pandas (11.5MiB)\nDownloading statsmodels (11.5MiB)\nDownloading scanpy (2.0MiB)\nDownloading numba (3.7MiB)\nDownloading rdkit (34.5MiB)\nDownloading scikit-learn (8.7MiB)\n Downloaded scanpy\n Downloaded matplotlib\n Downloaded scikit-learn\n Downloaded numpy\n Downloaded statsmodels\n Downloaded pandas\n Downloaded numba\n Downloaded rdkit\n Downloaded llvmlite\nPrepared 11 packages in 6.46s\nInstalled 50 packages in 2.29s\n + anndata==0.13.4\n + annotated-types==0.8.0\n + array-api-compat==1.16.0\n + cloudpickle==3.1.2\n + contourpy==1.4.0\n + cycler==0.12.1\n + donfig==0.8.1.post1\n + fonttools==4.68.0\n + formulaic==1.2.2\n + google-crc32c==1.9.0\n + h5py==3.16.0\n + interface-meta==2.0.1\n + joblib==1.6.0\n + kiwisolver==1.5.1\n + legacy-api-wrap==1.5\n + llvmlite==0.50.0\n + matplotlib==3.11.2\n + msgspec==0.22.0\n + narwhals==2.28.0\n + natsort==8.4.0\n + numba==0.68.1\n + numcodecs==0.17.1\n + numpy==2.5.4\n + packaging==26.3\n + pandas==3.1.1\n + patsy==1.0.3\n + pillow==13.0.0\n + pydantic==2.14.3\n + pydantic-core==2.50.4\n + pydantic-settings==2.16.2\n + pynndescent==0.7.0\n + pyparsing==3.3.3\n + python-dateutil==4.0.0\n + python-dotenv==1.2.4\n + pyyaml==6.0.3\n + rdkit==2025.9.1\n + scanpy==1.11.5\n + scikit-learn==1.9.1\n + scipy==1.18.1\n + scverse-misc==0.1.8\n + seaborn==0.13.2\n + session-info2==0.4.2\n + statsmodels==0.15.0\n + threadpoolctl==3.8.0\n + tqdm==4.70.1\n + typing-inspection==0.4.5\n + tzdata==2026.6\n + umap-learn==0.6.0\n + wrapt==2.5.2\n + zarr==3.4.2\n"
+    },
+    "install-analysis.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "install-torch.stderr.log": {
+      "bytes": 902,
+      "sha256": "b3dd2a9e065831abd6a1c6e6df24f9b6b3958651e15c05d585e77f15b5d8fde4",
+      "text": "Using Python 3.12.14 environment at: /workspace/scratch/87abe0956112/gallery-prnet-env\nResolved 10 packages in 16.64s\nDownloading setuptools (1.2MiB)\nDownloading torch (166.6MiB)\nDownloading sympy (5.9MiB)\n Downloaded setuptools\nDownloading networkx (2.0MiB)\n Downloaded networkx\n Downloaded sympy\n Downloaded torch\nPrepared 10 packages in 5.16s\nwarning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.\n         If the cache and target directories are on different filesystems, hardlinking may not be supported.\n         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.\nInstalled 10 packages in 3.24s\n + filelock==4.2.4\n + fsspec==2026.9.0\n + jinja2==3.1.6\n + markupsafe==3.0.3\n + mpmath==1.3.0\n + networkx==3.7\n + setuptools==78.1.0\n + sympy==1.13.1\n + torch==2.5.1+cpu\n + typing-extensions==4.16.0\n"
+    },
+    "install-torch.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "plot-final.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "plot-final.stdout.log": {
+      "bytes": 1380,
+      "sha256": "e0c18a33fee6992f5fd98da2e413a8008a60ffddf821b607c0da11c2694f8b47",
+      "text": "{\n  \"status\": \"generated\",\n  \"output_dir\": \"cases/gallery/prnet\",\n  \"summary\": {\n    \"prnet_mean_rmse\": 0.1401410921291978,\n    \"zero_response_mean_rmse\": 0.13242018096843164,\n    \"mean_paired_rmse_difference\": 0.007720911160766117,\n    \"prnet_lower_rmse_count\": 185,\n    \"zero_response_lower_rmse_count\": 476,\n    \"exact_tie_count\": 0,\n    \"prnet_lower_rmse_fraction\": 0.27987897125567324\n  },\n  \"numerical_checks\": {\n    \"full_npz_loaded\": true,\n    \"allow_pickle\": false,\n    \"npz_arrays_read\": [\n      \"baseline\",\n      \"condition_ids\",\n      \"exclusion_groups\",\n      \"fixed_baseline\",\n      \"fixed_prediction\",\n      \"gaussian_sample_delta\",\n      \"gaussian_sample_post\",\n      \"gene_ids\",\n      \"mean_aleatoric_variance\",\n      \"noise_induced_mean_variance\",\n      \"observed_delta\",\n      \"observed_post\",\n      \"other_group_mean_delta\",\n      \"paired_control_ids\",\n      \"predicted_delta\",\n      \"predicted_post_mean\",\n      \"processed_X\",\n      \"profile_ids\",\n      \"sampled_noise\",\n      \"source_X\",\n      \"source_profile_ids\"\n    ],\n    \"all_numeric_arrays_finite\": true,\n    \"tables_joined_by_ids\": true,\n    \"paired_control_values_verified\": true,\n    \"observed_and_predicted_deltas_verified\": true,\n    \"all_four_methods_profile_rmse_and_mae_recomputed\": true,\n    \"profile_metrics_and_summary_agree\": true,\n    \"zero_response_pearson_remains_undefined\": true\n  }\n}\n"
+    },
+    "plot-tests.stderr.log": {
+      "bytes": 1162,
+      "sha256": "4b65001d57dda569bb0e647ee88ca7357671880ea96a8c03ed2dd088fba2b013",
+      "text": "test_consistently_relabelled_control_still_must_match_actual_values (test_plot_prnet_case.PRnetPlotIntegrity.test_consistently_relabelled_control_still_must_match_actual_values) ... ok\ntest_heatmap_choice_ignores_prediction_success_and_table_order (test_plot_prnet_case.PRnetPlotIntegrity.test_heatmap_choice_ignores_prediction_success_and_table_order) ... ok\ntest_matching_lengths_cannot_hide_duplicate_or_missing_profile_id (test_plot_prnet_case.PRnetPlotIntegrity.test_matching_lengths_cannot_hide_duplicate_or_missing_profile_id) ... ok\ntest_reordered_tables_keep_exact_source_id_and_gene_alignment (test_plot_prnet_case.PRnetPlotIntegrity.test_reordered_tables_keep_exact_source_id_and_gene_alignment) ... ok\ntest_response_cannot_silently_drift_from_saved_prediction (test_plot_prnet_case.PRnetPlotIntegrity.test_response_cannot_silently_drift_from_saved_prediction) ... ok\ntest_wrong_saved_rmse_and_nonzero_baseline_correlation_are_rejected (test_plot_prnet_case.PRnetPlotIntegrity.test_wrong_saved_rmse_and_nonzero_baseline_correlation_are_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.068s\n\nOK\n"
+    },
+    "plot-tests.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "plot-v1.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "plot-v1.stdout.log": {
+      "bytes": 1402,
+      "sha256": "3a8529fd293c29f0a4555dfeffbff7f3f07780acb4593f991af09bb6e1bd6e4e",
+      "text": "{\n  \"status\": \"generated\",\n  \"output_dir\": \"local-runs/gallery-prnet-20261113-plot-v1\",\n  \"summary\": {\n    \"prnet_mean_rmse\": 0.1401410921291978,\n    \"zero_response_mean_rmse\": 0.13242018096843164,\n    \"mean_paired_rmse_difference\": 0.007720911160766117,\n    \"prnet_lower_rmse_count\": 185,\n    \"zero_response_lower_rmse_count\": 476,\n    \"exact_tie_count\": 0,\n    \"prnet_lower_rmse_fraction\": 0.27987897125567324\n  },\n  \"numerical_checks\": {\n    \"full_npz_loaded\": true,\n    \"allow_pickle\": false,\n    \"npz_arrays_read\": [\n      \"baseline\",\n      \"condition_ids\",\n      \"exclusion_groups\",\n      \"fixed_baseline\",\n      \"fixed_prediction\",\n      \"gaussian_sample_delta\",\n      \"gaussian_sample_post\",\n      \"gene_ids\",\n      \"mean_aleatoric_variance\",\n      \"noise_induced_mean_variance\",\n      \"observed_delta\",\n      \"observed_post\",\n      \"other_group_mean_delta\",\n      \"paired_control_ids\",\n      \"predicted_delta\",\n      \"predicted_post_mean\",\n      \"processed_X\",\n      \"profile_ids\",\n      \"sampled_noise\",\n      \"source_X\",\n      \"source_profile_ids\"\n    ],\n    \"all_numeric_arrays_finite\": true,\n    \"tables_joined_by_ids\": true,\n    \"paired_control_values_verified\": true,\n    \"observed_and_predicted_deltas_verified\": true,\n    \"all_four_methods_profile_rmse_and_mae_recomputed\": true,\n    \"profile_metrics_and_summary_agree\": true,\n    \"zero_response_pearson_remains_undefined\": true\n  }\n}\n"
+    },
+    "run.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "text": ""
+    },
+    "run.stdout.log": {
+      "bytes": 1039,
+      "sha256": "4637042cdc917e0785647eaebb2ccee742bce5a999f83ee70258c8e3f50a7959",
+      "text": "\nINITIALIZING NEW NETWORK..............\nEncoder Architecture:\n\tInput Layer in, out: 1042 128\n\tMean/Var Layer in/out: 128 64\nDecoder Architecture:\n\tFirst Layer in, out 138 128\n\tOutput Layer in/out:  128 1956 \n\nEncoder Architecture:\n\tInput Layer in, out: 1024 128\n\tComb Layer in/out: 128 64\n{\n  \"schema_version\": 1,\n  \"run_id\": \"gallery-prnet-20261113-output\",\n  \"case_id\": \"prnet-reference-evaluation\",\n  \"task\": \"drug\",\n  \"backend\": \"PRnet\",\n  \"status\": \"completed\",\n  \"model_status\": \"executed\",\n  \"prediction_status\": \"success\",\n  \"validation_status\": \"unvalidated\",\n  \"independent_validation\": \"not_assessed\",\n  \"started_at\": \"2026-11-13T08:36:20.957418+00:00\",\n  \"parameters\": {\n    \"seed\": 2024,\n    \"noise_draws\": 16,\n    \"torch_threads\": 1,\n    \"device\": \"cpu\"\n  },\n  \"baseline_source\": \"official_demo_paired_controls\",\n  \"scale\": \"official_demo_normalize_total_median_then_log1p\",\n  \"execution_status\": \"success\",\n  \"conditions_completed\": 661,\n  \"figure_status\": \"generated\",\n  \"finished_at\": \"2026-11-13T08:37:07.193966+00:00\"\n}\n"
+    }
+  },
+  "resource_acquisition": {
+    "case_id": "prnet-reference-evaluation",
+    "status": "ready",
+    "model_status": "not_run",
+    "resources": [
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "model",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/models/PRnet.py",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/models/PRnet.py",
+        "file_name": "PRnet.py",
+        "format": "text",
+        "max_bytes": 8388608,
+        "bytes": 10794,
+        "sha256": "024f39a07e2887fea45a42f60b07b3ba17dc7501f134285ff72798eacb8bea3e",
+        "expected_bytes": 10794,
+        "expected_bytes_verified": true,
+        "expected_sha256": "024f39a07e2887fea45a42f60b07b3ba17dc7501f134285ff72798eacb8bea3e",
+        "expected_sha256_verified": true,
+        "format_check": "not_checked",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:04.371874+00:00",
+        "finished_at": "2026-11-13T08:35:10.815326+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/model/PRnet.py",
+        "error": null
+      },
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "encoding",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/data/_utils.py",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/data/_utils.py",
+        "file_name": "_utils.py",
+        "format": "text",
+        "max_bytes": 8388608,
+        "bytes": 9406,
+        "sha256": "b72ad61f7e4e1389a62ce50db144627e1d5d5f16fccee4c17f05ab29328d4b5e",
+        "expected_bytes": 9406,
+        "expected_bytes_verified": true,
+        "expected_sha256": "b72ad61f7e4e1389a62ce50db144627e1d5d5f16fccee4c17f05ab29328d4b5e",
+        "expected_sha256_verified": true,
+        "format_check": "not_checked",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:10.816590+00:00",
+        "finished_at": "2026-11-13T08:35:17.410526+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/encoding/_utils.py",
+        "error": null
+      },
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "weights",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/checkpoint/lincs_best_epoch_all.pt",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/checkpoint/lincs_best_epoch_all.pt",
+        "file_name": "lincs_best_epoch_all.pt",
+        "format": "pytorch_state_dict",
+        "max_bytes": 8388608,
+        "bytes": 2210427,
+        "sha256": "f4b69f6fbcbfab3636b1e0a9eb64c32ccf61ea48431f05ba8433e3678713e8c8",
+        "expected_bytes": 2210427,
+        "expected_bytes_verified": true,
+        "expected_sha256": "f4b69f6fbcbfab3636b1e0a9eb64c32ccf61ea48431f05ba8433e3678713e8c8",
+        "expected_sha256_verified": true,
+        "format_check": "not_checked",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:17.411567+00:00",
+        "finished_at": "2026-11-13T08:35:24.303590+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/weights/lincs_best_epoch_all.pt",
+        "error": null
+      },
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "demo",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+        "file_name": "demo.h5ad",
+        "format": "h5ad",
+        "max_bytes": 8388608,
+        "bytes": 3136818,
+        "sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+        "expected_bytes": 3136818,
+        "expected_bytes_verified": true,
+        "expected_sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+        "expected_sha256_verified": true,
+        "format_check": "hdf5_signature_only",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:24.304575+00:00",
+        "finished_at": "2026-11-13T08:35:31.168209+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/demo/demo.h5ad",
+        "error": null
+      },
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "official-demo",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/test_demo.py",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/test_demo.py",
+        "file_name": "test_demo.py",
+        "format": "text",
+        "max_bytes": 8388608,
+        "bytes": 3244,
+        "sha256": "7adc897816106a78d5ec357a808a4ee1e14c3c90a04a23a546a0efacdbb3d84d",
+        "expected_bytes": 3244,
+        "expected_bytes_verified": true,
+        "expected_sha256": "7adc897816106a78d5ec357a808a4ee1e14c3c90a04a23a546a0efacdbb3d84d",
+        "expected_sha256_verified": true,
+        "format_check": "not_checked",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:31.170493+00:00",
+        "finished_at": "2026-11-13T08:35:37.889919+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/official-demo/test_demo.py",
+        "error": null
+      },
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "official-trainer",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/trainer/PRnetTrainer.py",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/trainer/PRnetTrainer.py",
+        "file_name": "PRnetTrainer.py",
+        "format": "text",
+        "max_bytes": 8388608,
+        "bytes": 27021,
+        "sha256": "0d0eb2d8e19ce284d56313667fc2ffb532050ede8b93b4a40bc5ffa6329e8038",
+        "expected_bytes": 27021,
+        "expected_bytes_verified": true,
+        "expected_sha256": "0d0eb2d8e19ce284d56313667fc2ffb532050ede8b93b4a40bc5ffa6329e8038",
+        "expected_sha256_verified": true,
+        "format_check": "not_checked",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:37.890758+00:00",
+        "finished_at": "2026-11-13T08:35:44.689569+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/official-trainer/PRnetTrainer.py",
+        "error": null
+      },
+      {
+        "schema_version": 1,
+        "case_id": "prnet-reference-evaluation",
+        "asset_id": "license",
+        "status": "downloaded",
+        "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE",
+        "final_url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE",
+        "file_name": "LICENSE",
+        "format": "text",
+        "max_bytes": 8388608,
+        "bytes": 11357,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "expected_bytes": 11357,
+        "expected_bytes_verified": true,
+        "expected_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "expected_sha256_verified": true,
+        "format_check": "not_checked",
+        "model_status": "not_run",
+        "validation_status": "not_assessed",
+        "started_at": "2026-11-13T08:35:44.691843+00:00",
+        "finished_at": "2026-11-13T08:35:49.934373+00:00",
+        "artifact": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-prnet-20261113-input/license/LICENSE",
+        "error": null
+      }
+    ]
+  },
+  "commands": [
+    "uv venv /workspace/scratch/87abe0956112/gallery-prnet-env --python python3.12",
+    "UV_HTTP_TIMEOUT=60 uv pip install --python /workspace/scratch/87abe0956112/gallery-prnet-env/bin/python torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu",
+    "UV_HTTP_TIMEOUT=60 uv pip install --link-mode=copy --python /workspace/scratch/87abe0956112/gallery-prnet-env/bin/python scanpy==1.11.5 rdkit==2025.9.1 numpy==2.5.4 pandas==3.1.1 anndata==0.13.4 scipy==1.18.1 h5py==3.16.0 matplotlib==3.11.2",
+    "python3 scripts/prnet_reference_case.py fetch --output-dir local-runs/gallery-prnet-20261113-input",
+    "OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 /workspace/scratch/87abe0956112/gallery-prnet-env/bin/python scripts/prnet_reference_case.py run --resources-dir local-runs/gallery-prnet-20261113-input --output-dir local-runs/gallery-prnet-20261113-output --seed 2024 --noise-draws 16 --threads 1",
+    "/workspace/scratch/87abe0956112/gallery-prnet-env/bin/python -m unittest discover -s tests -p test_plot_prnet_case.py -v",
+    "/workspace/scratch/87abe0956112/gallery-prnet-env/bin/python scripts/plot_prnet_case.py --run-dir local-runs/gallery-prnet-20261113-output --output-dir cases/gallery/prnet"
+  ],
+  "command_notes": "Commands are recorded without shell log redirections; raw stdout/stderr text is preserved above. Commands listed by role, not exact wall-clock launch ordering.",
+  "runtime_stderr_bytes": 0,
+  "runtime_errors_jsonl": "",
+  "install_advisory": "uv reported a hardlink failure and fell back to copying; this was not a model execution failure."
+}

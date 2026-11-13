@@ -1,0 +1,67 @@
+{
+  "status": "completed",
+  "source_rows": 23273,
+  "source_profiles": 16,
+  "biological_units": 4,
+  "contrasts": 3,
+  "paired_responses": 12,
+  "source_gene_id_unique": true,
+  "source_gene_symbols_unique": true,
+  "all_zero_fpkm_rows": 3307,
+  "all_condition_status_ok_rows": 23101,
+  "all_16_fpkm_at_least_one_rows": 10908,
+  "figure_eligible_rows": 10849,
+  "plotted_genes": [
+    "SPARCL1",
+    "GPX3",
+    "FKBP5",
+    "SAMHD1",
+    "KCTD12",
+    "TNFAIP6",
+    "LRRC17",
+    "SOX4"
+  ],
+  "source_status_counts": {
+    "Untreated_status": {
+      "OK": 23151,
+      "LOWDATA": 94,
+      "FAIL": 23,
+      "HIDATA": 5
+    },
+    "Dex_status": {
+      "OK": 23132,
+      "LOWDATA": 94,
+      "FAIL": 42,
+      "HIDATA": 5
+    },
+    "Alb_status": {
+      "OK": 23151,
+      "LOWDATA": 94,
+      "FAIL": 23,
+      "HIDATA": 5
+    },
+    "Alb_Dex_status": {
+      "OK": 23144,
+      "LOWDATA": 94,
+      "FAIL": 30,
+      "HIDATA": 5
+    }
+  },
+  "plotted_value_reconstruction_max_abs_error": 8.881784197001252e-16,
+  "sra_canonical_identity_sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927",
+  "sra_canonical_identity_fields": [
+    "experiment",
+    "geo_accession",
+    "library_id",
+    "original_fastq_names",
+    "run_accession",
+    "sra_donor",
+    "sra_title",
+    "sra_treatment"
+  ],
+  "sra_raw_hash_policy": "Actual raw SHA256 retained; scientific identity projection pinned; XML file ordering may vary",
+  "mapping_rule": "Original SRA FASTQ filename -> library_id -> experiment/GEO accession -> donor/treatment; treatment labels also checked against SRA attributes",
+  "source_column_order_used_for_pairing": false,
+  "model_status": "not_run",
+  "independent_validation": "not_assessed"
+}

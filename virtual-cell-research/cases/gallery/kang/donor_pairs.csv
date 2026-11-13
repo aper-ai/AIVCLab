@@ -1,0 +1,9 @@
+donor,cell_type,status,reason,ctrl_group_id,ctrl_n_cells,ctrl_library_umi,stim_group_id,stim_n_cells,stim_library_umi
+101,CD14+ Monocytes,included,,pb_65c9f9e6c7cfef3a,202,524723,pb_8ca41f612b2d1224,253,726512
+1015,CD14+ Monocytes,included,,pb_0785b10920a515bf,779,1685517,pb_9cd46e987dccf2f4,671,1681881
+1016,CD14+ Monocytes,included,,pb_d44dff32dec158b1,369,721958,pb_d1dbe71a26e82c11,329,707388
+1039,CD14+ Monocytes,included,,pb_a40f27ccd81fc34b,126,306115,pb_986f17aa8627fa28,165,463142
+107,CD14+ Monocytes,included,,pb_3099bb29e4231dea,209,469563,pb_e65a81a18cb1230a,169,436403
+1244,CD14+ Monocytes,included,,pb_7703040699c0550b,415,970635,pb_0ab3c2454d11cff4,290,720532
+1256,CD14+ Monocytes,included,,pb_c9f5f4fd5e240f15,390,987097,pb_6dd7f2f3a52c4ecd,375,988999
+1488,CD14+ Monocytes,included,,pb_caa93351d7c0b530,295,526443,pb_3716d92fd266edd2,348,735512

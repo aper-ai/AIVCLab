@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "case_id": "kang-gallery",
+  "created_at": "2026-11-13T08:39:23.999187+00:00",
+  "observed_run": "local-runs/gallery-kang-observed",
+  "heldout_run": "local-runs/gallery-kang-heldout",
+  "source_kind": "official_GEO_GSE96583_batch2",
+  "sources": {
+    "control_matrix": {
+      "file_name": "GSM2560248_2.1.mtx.gz",
+      "bytes": 28545918,
+      "sha256": "32add28a0b3397d9ef3f220b7a6a55e98e60fe7b66fe48d0986d634df8ca0013",
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-kang-input/control_matrix/GSM2560248_2.1.mtx.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_2.1.mtx.gz"
+    },
+    "stimulated_matrix": {
+      "file_name": "GSM2560249_2.2.mtx.gz",
+      "bytes": 29050932,
+      "sha256": "8aecc98a7ac4957bbc2570f87ebe8ce97332a5bcdbf557d40bd5aabfd287bdc5",
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-kang-input/stimulated_matrix/GSM2560249_2.2.mtx.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_2.2.mtx.gz"
+    },
+    "genes": {
+      "file_name": "GSE96583_batch2.genes.tsv.gz",
+      "bytes": 277054,
+      "sha256": "93aa4e9b530ef9d6411ca129b416324c5cc1cc5a01a1fa6ed4f4a845480ed3ca",
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-kang-input/genes/GSE96583_batch2.genes.tsv.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.genes.tsv.gz"
+    },
+    "metadata": {
+      "file_name": "GSE96583_batch2.total.tsne.df.tsv.gz",
+      "bytes": 756342,
+      "sha256": "1d57e72e92ca8695250e88cc0f1c3fa8c0be1175d974f8b427c58f1274dc6c09",
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-kang-input/metadata/GSE96583_batch2.total.tsne.df.tsv.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE96nnn/GSE96583/suppl/GSE96583_batch2.total.tsne.df.tsv.gz"
+    },
+    "control_barcodes": {
+      "file_name": "GSM2560248_barcodes.tsv.gz",
+      "bytes": 52904,
+      "sha256": "d58d8d55cbe4a12757207784b3bc9227bf200c9100ca15131176e9f8159c955e",
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-kang-input/control_barcodes/GSM2560248_barcodes.tsv.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_barcodes.tsv.gz"
+    },
+    "stimulated_barcodes": {
+      "file_name": "GSM2560249_barcodes.tsv.gz",
+      "bytes": 52366,
+      "sha256": "9bb38e080dfae81036fbcd9902c6c6254a4466aa85f70705479be3b2d6679d55",
+      "path": "/workspace/scratch/87abe0956112/virtual-cell-skill/virtual-cell-research/local-runs/gallery-kang-input/stimulated_barcodes/GSM2560249_barcodes.tsv.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_barcodes.tsv.gz"
+    }
+  },
+  "run_status": "completed",
+  "model_status": "not_run",
+  "baseline_status": "executed",
+  "independent_validation": "not_assessed",
+  "source_cells": 29065,
+  "singlets": 24679,
+  "paired_donors": 8,
+  "all_genes": 35635,
+  "all_zero_response_genes": 20815,
+  "control_cells": 2785,
+  "stimulated_cells": 2600,
+  "mean_rmse_baseline": 0.620646539572983,
+  "mean_rmse_zero": 0.8377138751197386,
+  "mean_pearson_baseline": 0.6733644273481002,
+  "max_abs_prediction_error_against_other_seven_donors": 0.0,
+  "full_gene_metrics_recomputed": true,
+  "gene_axis_checked": true,
+  "donor_axis_checked": true,
+  "gene_selection": "6 largest positive donor means and 6 most negative donor means; gene_id breaks ties; selection affects heatmap only",
+  "response_scale": "log2(1 + CPM_stim) - log2(1 + CPM_ctrl); CPM uses all source genes per donor-condition library",
+  "script": {
+    "bytes": 14007,
+    "sha256": "a34d99c31bd573c6382b891bba63c97f6f024ef767239f705a5f95908feeb5ef"
+  },
+  "python": "3.12.14",
+  "interpreter": "/workspace/scratch/87abe0956112/gallery-data-env/bin/python",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.8"
+  },
+  "invocation": [
+    "scripts/plot_kang_case.py",
+    "--observed-run",
+    "local-runs/gallery-kang-observed",
+    "--heldout-run",
+    "local-runs/gallery-kang-heldout",
+    "--output-dir",
+    "local-runs/gallery-kang-figure-v2"
+  ],
+  "inputs": {
+    "local-runs/gallery-kang-observed/provenance.json": {
+      "bytes": 5972,
+      "sha256": "593b7ba4c4072699bf10d9948142d81daea6faa3d3e908ed5688a737d2b13692"
+    },
+    "local-runs/gallery-kang-observed/raw/paired_responses.npz": {
+      "bytes": 571729,
+      "sha256": "772a862626a8a66362aee4e697e338d11e5d6ec1dd1f493e02f881de3c0a2245"
+    },
+    "local-runs/gallery-kang-heldout/fitting.json": {
+      "bytes": 4373,
+      "sha256": "ab871e9ea3859564e85533033bf2a839411c6221da5dc9ac64bebc21587f021d"
+    },
+    "local-runs/gallery-kang-heldout/evaluation/raw/aligned_responses.npz": {
+      "bytes": 2597063,
+      "sha256": "1bfed92b5e16da0f36b95d5ffec682a9172c4f8d25630406ea9f11c38627ff98"
+    },
+    "local-runs/gallery-kang-heldout/evaluation/tables/unit_metrics.csv": {
+      "bytes": 1383,
+      "sha256": "b3283b605bab47b47c9d3662334e3581f93b824c41fdf2ea02971c555c051e06"
+    }
+  },
+  "outputs": {
+    "donor_pairs.csv": {
+      "bytes": 862,
+      "sha256": "a18421e980800cdec58842291bb4ba280b5a38c29e2e473527a5620c3dbdc2ac"
+    },
+    "donor_response_and_holdout.png": {
+      "bytes": 281696,
+      "sha256": "8a7734229843c37e3b5888741e8fea93428b422f064a79225010aed947f0cfe8"
+    },
+    "donor_response_and_holdout.svg": {
+      "bytes": 51513,
+      "sha256": "feb01944f0bcdf0f6fe4fd74c8973d24ef93ab833031a63a4a2cd21a8e11b651"
+    },
+    "figure_data.csv": {
+      "bytes": 7463,
+      "sha256": "bb385738601b033225869bda5ae09cf48171e6af055dfe298c8de0972ec82aed"
+    },
+    "unit_metrics.csv": {
+      "bytes": 1354,
+      "sha256": "dda3fb801d1eb86f840c0a270faba0b193686f59f79740cce819fbbf5373ffa0"
+    }
+  }
+}

@@ -70,6 +70,128 @@
       }
     },
     {
+      "id": "airway-gse52778-drug-response",
+      "title": "Airway GSE52778：四供体三种处理条件的真实配对响应",
+      "task": "paired_observed_drug_response",
+      "context": "Homo sapiens; primary airway smooth muscle from 4 donors; bulk RNA-seq; 16 profiles; 1 µM each drug for 18 h; author-processed FPKM",
+      "stage": "prepared",
+      "model_status": "not_run",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "GEO GSE52778 original study and processed FPKM",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52778"
+        },
+        {
+          "title": "Himes et al. 2014 original paper",
+          "url": "https://doi.org/10.1371/journal.pone.0099625"
+        },
+        {
+          "title": "GEO original treatment metadata",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM1275863"
+        },
+        {
+          "title": "NCBI SRA SRP033351 original library identities",
+          "url": "https://www.ncbi.nlm.nih.gov/sra?term=SRP033351"
+        }
+      ],
+      "resources": [
+        {
+          "id": "fpkm",
+          "file_name": "GSE52778_All_Sample_FPKM_Matrix.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE52nnn/GSE52778/suppl/GSE52778_All_Sample_FPKM_Matrix.txt.gz",
+          "bytes": 2596435,
+          "sha256": "e7e54e8f564d417b47843e82c2a7140b92a783d6b5078816bae15d07fca126f6",
+          "license_status": "not_separately_specified",
+          "sha256_provenance": "project_computed_full_download_2026-11-13_not_publisher_signed",
+          "format": "gzip",
+          "license_url": null
+        },
+        {
+          "id": "metadata",
+          "file_name": "GSE52778_series_matrix.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE52nnn/GSE52778/matrix/GSE52778_series_matrix.txt.gz",
+          "bytes": 3396,
+          "sha256": "67db46e962f795b9dd61fa6b4279f2678c6b2b9bf1df035fbc22fcf81b5e879e",
+          "license_status": "not_separately_specified",
+          "sha256_provenance": "project_computed_full_download_2026-11-13_not_publisher_signed",
+          "format": "gzip",
+          "license_url": null
+        },
+        {
+          "id": "sra_mapping",
+          "file_name": "SRP033351_full.xml",
+          "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=sra&id=551401,551400,551399,551398,551397,551396,551395,551394,551393,551392,551391,551390,551389,551388,551387,551386&rettype=full&retmode=xml",
+          "bytes": null,
+          "sha256": null,
+          "license_status": "not_separately_specified",
+          "sha256_provenance": "raw_file_hash_not_pinned_for_dynamic_service_response; canonical_identity_hash_project_computed_2026-11-13",
+          "format": "xml",
+          "license_url": null,
+          "source_behavior": "dynamic_sra_eutils_xml; SRAFile sibling order can change",
+          "last_observed_bytes": 146240,
+          "last_observed_raw_sha256": "391c8a8747117e6f1eb6f41fdbee6f0f09e65669e1fec6ba2dd97879c94e547e",
+          "canonical_identity_sha256": "2992f218505bc0d7a20cfa3579685848cd8ade5aea34900e0a52c4e20e58a927",
+          "canonical_identity_fields": [
+            "experiment",
+            "geo_accession",
+            "library_id",
+            "original_fastq_names",
+            "run_accession",
+            "sra_donor",
+            "sra_title",
+            "sra_treatment"
+          ],
+          "identity_validation": "All sixteen projected identities are pinned by observed_airway_case.py; each raw response hash is recorded"
+        }
+      ],
+      "limitations": [
+        "真实公开bulk RNA-seq处理后FPKM，不是原始计数、单细胞矩阵或模型预测；未做原始read重处理。",
+        "4位供体各有untreated、Dex、Alb及组合；3个对比共享同一供体的untreated，12个响应不是12个独立生物学重复。",
+        "LL文库经SRA Original FASTQ文件名连接SRX/GSM，再核对GEO/SRA donor、treatment和title；不按表达列顺序推测配对。",
+        "保留全部23273来源gene_id与原状态；图从10849个全条件status=OK且16profiles的FPKM均≥1的基因中，按Dex均值选正负各4个；这是描述性选图，不是无偏全基因性能。",
+        "响应是log2(1+FPKM_treated)-log2(1+FPKM_untreated)，不称原始logFC；无P值、FDR、置信区间或药物交互作用检验。",
+        "无虚拟细胞模型推断或独立模型验证；不能解释临床疗效、药物协同或拮抗。",
+        "GEO/SRA文件单独数据许可未核实；原论文CC BY和项目代码MIT不自动外推。",
+        "SRA eutils XML的文件子节点顺序会变化；静态FPKM/GEO文件固定原始SHA256，动态SRA记录实际响应hash并强制固定16样本的规范化科学身份SHA256。"
+      ],
+      "expected_outputs": [
+        "report.md",
+        "qc.json",
+        "provenance.json",
+        "drug_response.png",
+        "drug_response.svg",
+        "tables/sample_mapping.csv",
+        "tables/donor_pairs.csv",
+        "tables/source_annotations.csv",
+        "tables/gene_summary.csv",
+        "tables/figure_data.csv",
+        "tables/selected_gene_means.csv",
+        "raw/source_fpkm.npz",
+        "raw/paired_responses.npz"
+      ],
+      "source_checked_on": "2026-11-13",
+      "prepare_status": "implemented_and_executed",
+      "verification": {
+        "evidence": "cases/airway-gse52778-drug-response/evidence.json",
+        "metadata_downloaded": true,
+        "expression_matrix_downloaded": true,
+        "complete_source_to_sample_mapping_verified": true,
+        "paired_observed_analysis_completed": true,
+        "source_genes": 23273,
+        "source_profiles": 16,
+        "paired_donors": 4,
+        "model_executed": false,
+        "independent_validation": false,
+        "dynamic_sra_refetch_completed": true,
+        "full_response_max_abs_change_after_refetch": 0.0
+      },
+      "workflow": {
+        "fetch": "three explicit source downloads under local-runs/airway-input; see cases/airway-gse52778-drug-response/README.md",
+        "run": "python scripts/observed_airway_case.py --input-dir local-runs/airway-input --output-dir local-runs/airway-observed"
+      }
+    },
+    {
       "id": "celloracle-paul2015-input-audit",
       "title": "Paul2015 造血输入审计：raw_count 层名不能证明原始计数",
       "task": "input_contract_audit",

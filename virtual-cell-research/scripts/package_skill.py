@@ -7,6 +7,9 @@ import tempfile
 import zipfile
 
 
+MAX_GALLERY_TABLE_BYTES = 2 * 1024 * 1024
+
+
 def build(root):
     root = Path(root).resolve()
     folders = {'references', 'docs', 'examples', 'scripts', 'tests', 'assets', 'agents', 'cases', 'archive'}
@@ -30,9 +33,20 @@ def build(root):
             if not p.is_file() or p.is_symlink():
                 continue
             rel = p.relative_to(root)
+            # Small figure-source tables and a pinned environment make the
+            # plots auditable. General input matrices remain outside the zip.
+            gallery_table = (
+                (rel.parts[:2] == ('cases', 'gallery') and
+                 (name.endswith(('_source.csv', '_source.csv.gz')) or
+                  name == 'environment-freeze.txt')) or
+                (rel.parts[0] == 'cases' and name in {
+                    'figure_data.csv', 'sample_mapping.csv', 'donor_pairs.csv',
+                    'selected_gene_means.csv', 'unit_metrics.csv'}))
+            if gallery_table and p.stat().st_size > MAX_GALLERY_TABLE_BYTES:
+                raise ValueError('gallery figure-source table exceeds 2 MiB: ' + rel.as_posix())
             if rel.as_posix() in {'SKILL.md', 'README.md', 'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md',
                                   'CONTRIBUTING.md', 'requirements-tests.txt', 'requirements-data.txt'} or (
-                    rel.parts[0] in folders and p.suffix in suffixes):
+                    rel.parts[0] in folders and p.suffix in suffixes) or gallery_table:
                 sources[rel.as_posix()] = p.read_bytes()
     if 'SKILL.md' not in sources:
         raise ValueError('SKILL.md missing')
