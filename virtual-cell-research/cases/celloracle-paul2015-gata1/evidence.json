@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "case_id": "celloracle-paul2015-gata1",
+  "stage": "model_executed",
+  "model_status": "executed",
+  "validation_status": "not_assessed",
+  "scientific_status": "simulated_unvalidated",
+  "input_preparation": {
+    "script": "../../scripts/prepare_paul2015_case.py",
+    "script_sha256_at_execution": "79442d6f823081c64ef43265e044abb90130ea9b366c85e07d75211c157c69c2",
+    "source_records": [
+      {
+        "bytes": 16413252,
+        "sha256": "6f45b72b935493181f0f9fdb7343181a5eeca63d0d39ba2a2a8439ac34f08e74",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_umitab.txt.gz"
+      },
+      {
+        "bytes": 115876,
+        "sha256": "b547a49285a59476e194d77c9a34a9747628ee465736227d840a6aac5f3a5f68",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_experimental_design.txt.gz"
+      },
+      {
+        "bytes": 5888,
+        "sha256": "9dac928a12f462739c0c92f3562acedff4813b2a2acdcf3aa2bee9e62cd6b440",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/soft/GSE72857_family.soft.gz"
+      }
+    ],
+    "parameters": {
+      "max_cells": 500,
+      "min_counts": 1000,
+      "min_genes": 500,
+      "seed": 123
+    },
+    "checks": {
+      "case_id": "celloracle-paul2015-gata1",
+      "source_kind": "GSE72857_original_UMI_and_design",
+      "source_cells": 10368,
+      "source_genes": 27297,
+      "candidate_cells": 3040,
+      "eligible_cells": 2342,
+      "selected_cells": 500,
+      "selected_expressed_genes": 10757,
+      "excluded_multiname_genes": 2109,
+      "candidate_counts_before_exclusion": 9946777,
+      "candidate_counts_excluded_multiname": 1311971,
+      "selected_counts_excluded_multiname": 284322,
+      "selected_counts_before_exclusion": 2149673,
+      "selected_counts_retained": 1865351,
+      "selected_target_positive_cells": 224,
+      "raw_counts_passed": true,
+      "background_verified_in_GEO": true,
+      "model_status": "not_run",
+      "independent_validation": "not_assessed",
+      "numeric_check_scope": "all genes and count values in the 3040-well selected background before QC; other experimental backgrounds are not scanned"
+    },
+    "input_h5ad": {
+      "bytes": 2464175,
+      "sha256": "ef6a9063f4c8b0b497d11179b4a0e7880faf1b139fa1e1636bb99c6603be3175"
+    },
+    "notes": [
+      "The input is not CellOracle tutorial normalized raw_count layer; it is reconstructed from original integer molecule counts.",
+      "Counts and sample design contain mixed experimental backgrounds. This case excludes Cebpa/Cebpe KO and control experiments and selects one explicitly verified wild-type mouse.",
+      "Multiname genes are excluded with per-gene and per-cell molecule count accounting; no first-alias substitution is used.",
+      "Cell and gene QC are small-case choices, not a universal preprocessing standard."
+    ]
+  },
+  "runtime": {
+    "platform": "Linux x86_64 CPU",
+    "python": "3.10.22",
+    "backend": {
+      "name": "CellOracle",
+      "version": "0.20.0",
+      "source_hashes": "backend-code-hashes.json",
+      "source_tree_sha256": "568a905ed7a0313da587bc75e08ccafff8fa1d67c2536f26e805e62b878f0c64"
+    },
+    "software": {
+      "python": "3.10.22",
+      "anndata": "0.10.8",
+      "scanpy": "1.9.8",
+      "numpy": "1.26.4",
+      "pandas": "1.5.3"
+    },
+    "environment_record": "environment-linux.json",
+    "full_runtime_dependencies_installed": true,
+    "stub_modules_used": false,
+    "official_package_source_modified": false,
+    "compiler_compatibility_flags": "-Wno-error=implicit-int -Wno-error=int-conversion",
+    "OMP_NUM_THREADS": 1,
+    "OPENBLAS_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "pip_check": "No broken requirements found.",
+    "optional_motif_discovery_binaries": "Some optional standalone tools absent; this workflow imports a prebuilt promoter prior and does not perform de novo motif scanning."
+  },
+  "model_execution": {
+    "script": "../../examples/ko_oe/celloracle_run.py",
+    "script_sha256_at_execution": "a6b8e0948a8d0c2a449e2c347194386dfabce6b4c0800847596dedf96641c4d0",
+    "created_utc": "2026-11-13T04:07:00.477054+00:00",
+    "completed_utc": "2026-11-13T04:07:53.928344+00:00",
+    "exit_code": 0,
+    "elapsed_seconds": 54.51309019600012,
+    "parameters": {
+      "counts_layer": null,
+      "target_gene": "Gata1",
+      "mode": "ko",
+      "group_col": "Plate_ID",
+      "grn_unit_col": null,
+      "oe_value": null,
+      "oe_percentile": null,
+      "n_hvg": 1500,
+      "n_pcs": 20,
+      "n_neighbors": 50,
+      "n_propagation": 3,
+      "alpha": 10.0,
+      "bagging_number": 20,
+      "n_jobs": 2,
+      "min_grn_cells": 30,
+      "seed": 123
+    },
+    "genes_used": 1500,
+    "n_pcs_used": 20,
+    "base_grn_sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+    "validation": {
+      "input_status": "passed",
+      "simulation_status": "result_available",
+      "projection_status": "result_available",
+      "figure_status": "generated",
+      "independent_validation": "none",
+      "cells": 500,
+      "genes_input": 10757,
+      "group_column": "Plate_ID",
+      "group_labels": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "grn_unit_column": null,
+      "grn_units": [
+        "all_cells"
+      ],
+      "grn_scope": "whole",
+      "base_grn_gene_overlap": 9304,
+      "celloracle_cv_capacity": {
+        "status": "capacity_checked",
+        "backend_version": "0.20.0",
+        "eligible_genes": 1211,
+        "required_genes": 1000,
+        "rule": "expressed_cells>2 and 0<mean_raw_count<35; no values or genes changed"
+      },
+      "filtered_grn_links": null,
+      "fitted_grn_source": "base TF dictionary fitted across all cells",
+      "target_setting": {
+        "chosen_value": 0.0,
+        "choice": "ko_zero",
+        "imputed_min": 0.0,
+        "imputed_max": 1.7735152301501698
+      },
+      "delta_x_finite": true,
+      "target_gene_mean_delta": -0.5240621702525107,
+      "note": "delta_X is simulated_count minus imputed_count, both on CellOracle's internal imputed log1p(raw-count) scale; it is not log2FC or measured perturbation response",
+      "random_control": "delta_X row permutation with sign randomization before embedding projection; not a randomized GRN",
+      "mean_shift_magnitude": 0.5132651808095899,
+      "mean_random_shift_magnitude": 0.31100702525640955
+    },
+    "portable_command": ".venv-celloracle/bin/python examples/ko_oe/celloracle_run.py --h5ad local-runs/paul-wt-prepared/paul2015_wt_input.h5ad --base-grn local-runs/paul-mouse-grn/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet --target-gene Gata1 --mode ko --output-dir local-runs/paul-gata1-model --group-col Plate_ID --n-hvg 1500 --n-pcs 20 --n-neighbors 50 --n-jobs 2 --seed 123",
+    "command_note": "Relative paths above are the documented portable equivalent of actual local arguments; absolute paths are retained in the full local execution record.",
+    "execution_log_sha256": "ac2f953d90a26272f8c2418e2a7ec2790b15e3165e65fbea10a5838a7e3ddf98"
+  },
+  "numerical_verification": {
+    "shape": [
+      500,
+      1500
+    ],
+    "all_axes_equal": true,
+    "all_finite": true,
+    "max_abs_delta_reconstruction_error": 0.0,
+    "target_simulated_max_abs": 0.0,
+    "target_mean_delta": -0.5240621702525107,
+    "genes_with_nonzero_delta": 1312,
+    "non_target_genes_with_nonzero_delta": 1311,
+    "coefficient_shape": [
+      1500,
+      1500
+    ],
+    "nonzero_coefficients": 22697,
+    "Gata1_nonzero_row_coefficients": 600,
+    "state_ids_match_expression": true,
+    "state_projection_finite": true,
+    "mean_shift": 0.5132651808095899,
+    "mean_random_shift": 0.31100702525640955
+  },
+  "earlier_failed_attempt": {
+    "n_hvg": 1000,
+    "selected_genes": 1001,
+    "internal_cv_eligible_genes": 790,
+    "needed_scores": 1000,
+    "failed_stage": "fit_grn",
+    "error": "IndexError('index 999 is out of bounds for axis 0 with size 790')",
+    "reason": "CellOracle 0.20.0 indexes score[999] (the 1000th eligible CV score) after filtering; the selected input supplied only 790 eligible scores.",
+    "remediation": "Use an explicitly recorded n_hvg=1500 after inspecting gene coverage; the adapter now checks the known 0.20.0 capacity boundary before import without modifying expression or native model code.",
+    "model_execution_log_sha256": "af0bdbb274d84df2c51beea26d89bfa74fe805bda6c0cde53820c26984aecf10",
+    "exit_code": 1
+  },
+  "figure": {
+    "file": "state_shift_preview.png",
+    "source_output": "figures/state_shift.png",
+    "sha256": "3f4ea46a453dcc3493a8ffb9ddd44120400ed0427e392f1f3ceb84ff1b0ad3f5",
+    "bytes": 320788,
+    "points": 500,
+    "arrow_subset": 400,
+    "arrow_selection": "numpy default_rng(seed=123) choice without replacement; identical subset and common arrow scale for both panels",
+    "colors": "Plate_ID, a technical sorting plate label; not cell type",
+    "interpretation": "Simulated shift and randomized-delta projection; neither is an observed Gata1 perturbation measurement."
+  },
+  "full_model_artifacts_not_bundled": {
+    "errors.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "figures/figure_manifest.csv": {
+      "bytes": 2098,
+      "sha256": "1fa31d0c074cc4808fa035a65166910c2c75d0eae01f9f3ddfc7f22a67be4e3b"
+    },
+    "figures/gene_effects.png": {
+      "bytes": 68706,
+      "sha256": "86ffb057c605f10f27f1c3c7ab13aa72f247056e7d3bc1c39373613a71a60256"
+    },
+    "figures/shift_distribution.png": {
+      "bytes": 50120,
+      "sha256": "c242dd0da1edb9349b50a902d2c055426fd99cc191836e1e7305f459c2656457"
+    },
+    "figures/state_shift.png": {
+      "bytes": 320788,
+      "sha256": "3f4ea46a453dcc3493a8ffb9ddd44120400ed0427e392f1f3ceb84ff1b0ad3f5"
+    },
+    "manifest.json": {
+      "bytes": 2278,
+      "sha256": "88453bc6ac9356f4f8a4a626a3858c97dfc96d64f6cdc3b1a422e977b50ef638"
+    },
+    "numerical_verification.json": {
+      "bytes": 570,
+      "sha256": "6706bc3ffb65919109ff362dee973dee3c466c64c3331aebc55f7d147869b214"
+    },
+    "provenance.json": {
+      "bytes": 1727,
+      "sha256": "6ad9b2db99fde61aaed98c0bc870bfa08064ef2de95ff08c2d6dcb9d49264188"
+    },
+    "raw/baseline_imputed_expression.csv.gz": {
+      "bytes": 927376,
+      "sha256": "3e33816dd13ec91cc2e82f44d2eca04cadf86d995d60712a7ab16408f0652562"
+    },
+    "raw/delta_X.csv.gz": {
+      "bytes": 4470818,
+      "sha256": "d71a753a9c092222f15550991b68832428e74b2672a769b94e8e6c45b1e0112e"
+    },
+    "raw/simulated_expression.csv.gz": {
+      "bytes": 4572950,
+      "sha256": "dc2f5e87cc9acd63003a9dd9de88fdb86e5da25d95c78012ef8cdd3ea6b2d527"
+    },
+    "raw/simulation_grn_coefficients_000.csv.gz": {
+      "bytes": 293841,
+      "sha256": "2ada474a9280c8ae710ff776cadb45bcaa5657f4088fd45919aa93c8bb695e78"
+    },
+    "report.md": {
+      "bytes": 984,
+      "sha256": "513b86add7c898df8b266b70ee08634235c7484be1ef7553d30e30f438023d2a"
+    },
+    "tables/cell_state_shift.csv.gz": {
+      "bytes": 38971,
+      "sha256": "ae704c019fae3fa394afdf116c92f795b211f3326b9937d5bf4ebd2650f882fb"
+    },
+    "tables/gene_effects.csv": {
+      "bytes": 83227,
+      "sha256": "b26b3802ce99235836f1ef2ef70c9d807f5ea3b81931c3dd801db74a5185f409"
+    },
+    "tables/shift_by_group.csv": {
+      "bytes": 844,
+      "sha256": "75ee5f89dac02c138ae8cc3ccdaadca98e21058ab82d6a30c1c4861a38151fa4"
+    },
+    "tables/simulation_grn_index.csv": {
+      "bytes": 106,
+      "sha256": "e6a0bcb8976430031253bcfcec2cb998b5aec87c00f1f7ed73e62afd0a820052"
+    },
+    "tables/target_expression_setting.csv": {
+      "bytes": 14297,
+      "sha256": "019310086c6f39a0c99c760348b0ab22218818884ab2d2c0d632709fb515a196"
+    },
+    "validation.json": {
+      "bytes": 1423,
+      "sha256": "3295e83218d101366a81f86c90e65dbd45a14580086e149f9557cfff156b6b49"
+    }
+  },
+  "behavior_tests": {
+    "new_input_preparation_tests": 8,
+    "new_version_specific_capacity_tests": 3,
+    "existing_celloracle_route_tests": 4,
+    "fixtures": "Explicit synthetic fixtures/arrays; these tests are not model inference evidence."
+  },
+  "limitations": [
+    "One mouse and a fixed 500-cell subset; no donor replication or independent perturbation labels for this Gata1 analysis.",
+    "1500 highly variable genes and a whole-population GRN; no curated cell-type-specific network or trusted developmental trajectory.",
+    "Excluding multiname genes removes about 13.2 percent of candidate and selected molecule counts; alias resolution remains a future improvement.",
+    "CellOracle simulated_count and delta_X retain its internal imputed log1p(raw-count) scale, not experimental fold changes.",
+    "A single randomized projection is a technical control and does not establish biological specificity, significance or accuracy.",
+    "Linux CPU model environment was executed; Windows model dependency installation was not validated."
+  ]
+}

@@ -34,9 +34,10 @@ description: 为虚拟细胞研究提供真实观测数据教学、输入审计�
 
 | 路线 | 本仓库提供的入口 | 使用边界 |
 | --- | --- | --- |
-| CellOracle | `examples/ko_oe/celloracle_run.py` 参数化脚本 | 单细胞原始计数、匹配 GRN 先验和可模拟 TF；输出模型表达差值与状态位移 |
+| CellOracle | `examples/ko_oe/celloracle_run.py` 参数化脚本；[原始数据到 Gata1 KO 的实际案例](cases/celloracle-paul2015-gata1/README.md) | 单细胞原始计数、匹配 GRN 先验和可模拟 TF；输出模型表达差值与状态位移 |
 | Geneformer | `examples/ko_oe/geneformer_route.py` 参数化脚本 | 本示例限人类完整原始转录组、匹配 tokenizer/权重和所需环境；输出 embedding 影响 |
-| PRnet、chemCPA、UniPert-G2CP | `examples/lung_cancer/` 下的历史适配脚本 | 需核对并适配路径、输入、环境和权重；不能把历史脚本存在当成本机已可运行 |
+| PRnet | `scripts/prnet_reference_case.py` 的固定官方资源参考评估；历史脚本另保留 | 只接收明确固定的参考资源，已实跑不等于任意用户基线适配；训练重叠未知时仍未独立验证 |
+| chemCPA、UniPert-G2CP | `examples/lung_cancer/` 下的历史适配脚本 | 需核对并适配路径、输入、环境和权重；不能把历史脚本存在当成本机已可运行 |
 | GEARS、UniCure、DrugReflector | 相应 workflow 参考文档与代码片段 | 按任务准备数据、资源并实现/验证适配；尚非统一的一键入口 |
 
 模型选择读取 [能力登记](references/model-capabilities.md)，选定路线再读 [资源与执行入口](references/model-setup.md)。环境说明中的历史路径只作排查参考，不视为当前机器的安装事实。不同后端隔离环境，不把旧依赖强装进主环境。
@@ -44,6 +45,7 @@ description: 为虚拟细胞研究提供真实观测数据教学、输入审计�
 ## 3. 计算并保留结果原始含义
 
 - **观测教学**：差值是来源处理谱减其指定对照谱，保留原始处理后尺度与跨板标记；不称为预测、单细胞前后追踪或模型验证。
+- **Kang 供体配对教学**：按样本与 barcode 对齐，保留唯一基因 ID；用原始计数聚合供体/条件/细胞标签，明确全基因 CPM 分母与伪计数，供体内求差、供体间等权汇总。细胞数不作为独立重复，缺失配对不补成零响应。
 - **CellOracle**：KO 设为 0；OE 必须给出内部 `imputed_count` 尺度内的固定值或分位数及依据，并报告基线高于设定值、因而被下调的细胞。随机化表达变化的投影是技术对照；原始与随机投影的向量差不能解释为特异信号。
 - **Geneformer**：`delete` 删除目标 token，`overexpress` 改变排序编码；当前示例不支持 `inhibit`/`activate`。embedding 变化不转写成表达倍数、差异表达或药效。只在原始完整转录组来源核实后设置脚本的确认参数。
 - **GEARS**：需要与目标背景及扰动类型匹配的训练数据；KO/CRISPRi 训练不能直接声称支持任意 OE。
@@ -73,7 +75,7 @@ description: 为虚拟细胞研究提供真实观测数据教学、输入审计�
 
 药筛逐条件结果及全量响应先落盘；有表达输出时交付每药每条件的 Top 30 变化基因，并保留方向和稳定 ID。恢复方向分类只描述预测转录响应；无效或未评分条件保留“无法判定”及原因。
 
-模型路线逐图登记 `figures/figure_manifest.csv` 的生成、跳过或失败状态；HT115 观测教学使用其实际输出的根目录 `figure_manifest.json`，不要求补造模型图清单。缺可选图不改写成功预测状态；图形失败只重画相关图，不重跑已完成模型。真实扰动验证图与模拟图分开，p 值、误差条、存活率和 IC50 只在有对应数据和方法时提供。
+模型路线逐图登记 `figures/figure_manifest.csv` 的生成、跳过或失败状态；HT115 与 Kang 观测教学使用其实际输出的根目录 `figure_manifest.json`，不要求补造模型图清单。缺可选图不改写成功预测状态；图形失败只重画相关图，不重跑已完成模型。真实扰动验证图与模拟图分开，p 值、误差条、存活率和 IC50 只在有对应数据和方法时提供。
 
 ## 6. 交付可复查的运行包
 
@@ -84,9 +86,10 @@ description: 为虚拟细胞研究提供真实观测数据教学、输入审计�
 ## 按需参考
 
 - [首次使用](references/first-run.md)：HT115 入门、数据环境、KO/OE 命令、报告阅读和失败下一步。
-- [案例目录](cases/README.md)、[catalog.json](cases/catalog.json)：七个案例的来源、资源、实际阶段及限制。
+- [案例目录](cases/README.md)、[catalog.json](cases/catalog.json)：九个案例的来源、资源、实际阶段及限制。
 - [执行手册](references/execution-playbook.md)：默认设置、一次合并提问、运行记录和失败处理。
 - [输入契约](references/input-contracts.md)、[能力登记](references/model-capabilities.md)：输入和模型适用范围。
+- [方法依据与独立维护范围](docs/methodology-and-scope.md)：明确观测/预测尺度、实验单位、评估泄漏和科学归属；不沿用历史演示结论证明新分析成立。
 - [资源与执行入口](references/model-setup.md)、[环境说明](references/backend-environments.md)：选定后端后核对资源和依赖。
 - [KO/OE 参数化示例](examples/ko_oe/README.md)：CellOracle/Geneformer 的实际 CLI 与输出。
 - [GEARS](references/gears-workflow.md)、[UniCure](references/unicure-workflow.md)、[DrugReflector](references/drugreflector-workflow.md)：按需适配的研究路线。

@@ -1,0 +1,272 @@
+{
+  "backend": "CellOracle",
+  "version": "0.20.0",
+  "kind": "installed_official_PyPI_Python_source_files",
+  "record_hashes_verified": true,
+  "source_files": 65,
+  "tree_sha256": "568a905ed7a0313da587bc75e08ccafff8fa1d67c2536f26e805e62b878f0c64",
+  "tree_algorithm": "SHA256 of concatenated UTF-8 sorted relative-path + NUL + lowercase-file-SHA256 + LF records",
+  "scope": "Python source only, excluding bytecode, installed data files and native dependency binaries; dependency versions are recorded separately.",
+  "files": {
+    "celloracle/__init__.py": {
+      "bytes": 1453,
+      "sha256": "c3aa00764c06b70a5e64ead3f0744d541a91779d9f41e834cf5b6bcff5226341"
+    },
+    "celloracle/applications/__init__.py": {
+      "bytes": 784,
+      "sha256": "84f1bf180fdb024c785c94c8c2cca62e8355c41cb18d06da2198304197d8e17a"
+    },
+    "celloracle/applications/development_module.py": {
+      "bytes": 16144,
+      "sha256": "cc84729fb02fce15012629037d9a0b48eac09799aa9d375b956430944cc8a5d0"
+    },
+    "celloracle/applications/differentiation_flow.py": {
+      "bytes": 17620,
+      "sha256": "d5e25ca91081033989f24eaadd2f938856303ace2a20b9915abc273dd48d85a0"
+    },
+    "celloracle/applications/pseudotime.py": {
+      "bytes": 8941,
+      "sha256": "14f55e523630c823299bffd74126b029274249a78ea2176f11c512411beb06e1"
+    },
+    "celloracle/applications/scatter_to_grid.py": {
+      "bytes": 2907,
+      "sha256": "0a4abea0b844c1c3588c07b617ffb3a22bd0ddf83b1ad1a69f6481c2fbf8a9f9"
+    },
+    "celloracle/applications/systematic_analysis_helper.py": {
+      "bytes": 17158,
+      "sha256": "30ed6075209f35b5f6182ec02dd28b5578b472d7bfe8d6cd4812908eff7ea043"
+    },
+    "celloracle/applications/utility.py": {
+      "bytes": 8356,
+      "sha256": "0c3c42f297466b06e5d347f77e84245d0bc641bb19d522947b35014af552c7cd"
+    },
+    "celloracle/data/__init__.py": {
+      "bytes": 1985,
+      "sha256": "51ea2f684ceaca3ad5dc344acbcf7560a6ea32bf1a0295f91eb43fd325de2e4d"
+    },
+    "celloracle/data/config.py": {
+      "bytes": 228,
+      "sha256": "44fd2039857ff371c94a6083a92e5cc73954d3e1ecd6386a7b1c71b2da55405c"
+    },
+    "celloracle/data/load_data.py": {
+      "bytes": 4361,
+      "sha256": "f9f836bce5fe89f355a0f0e80fd9965f8acc5de741ac366ecb9742b1f7f26065"
+    },
+    "celloracle/data/load_promoter_base_GRN.py": {
+      "bytes": 19531,
+      "sha256": "0d063028af2a0a18fc5cf1145eea43f791da60dc2727f6b04565e7d5fc26e54a"
+    },
+    "celloracle/data_conversion/__init__.py": {
+      "bytes": 225,
+      "sha256": "d8d344a45288e690aee79cc0463cd1af651e680636cbf98c533364ea78de76c9"
+    },
+    "celloracle/data_conversion/process_seurat_object.py": {
+      "bytes": 4871,
+      "sha256": "b627ce4c4d89da8ded76d2522fbd35edf9c2a99555952f3bd13c1e16e9c8dcd8"
+    },
+    "celloracle/go_analysis/__init__.py": {
+      "bytes": 261,
+      "sha256": "34639729749d57b011b077696823f9fb164a148b76b83b928859d665b4282d10"
+    },
+    "celloracle/go_analysis/goatools_wrapper.py": {
+      "bytes": 5244,
+      "sha256": "6a842e106bb36de1efd30c0c11e76fab9a84a0e3967523acf639f50ebb8b77e2"
+    },
+    "celloracle/helpers.py": {
+      "bytes": 59,
+      "sha256": "9aa3994469ce97d42e594974ec10c1598c42ca90132713bcc67d0c0d75492c48"
+    },
+    "celloracle/motif_analysis/__init__.py": {
+      "bytes": 1378,
+      "sha256": "cae9f948b636e0f2533e1902269d1b298d8732a2b3877acf73989e510816b6b9"
+    },
+    "celloracle/motif_analysis/motif_analysis_utility.py": {
+      "bytes": 7998,
+      "sha256": "36300951d952bad934ea56523fa0beeccb4ec75014f836eff5773362a770a716"
+    },
+    "celloracle/motif_analysis/motif_data.py": {
+      "bytes": 3879,
+      "sha256": "aa8d52260dd0385ece77caf0cf4f382a07e4e35ecbe6748a6ce95c83427278d4"
+    },
+    "celloracle/motif_analysis/process_bed_file.py": {
+      "bytes": 6261,
+      "sha256": "52c3aa50a3daa6b130a2b13405049aba91728c75c0065df5f62590345a981ae5"
+    },
+    "celloracle/motif_analysis/process_cicero_data.py": {
+      "bytes": 2448,
+      "sha256": "c9f4ce15d19564999d7321cc3220171b9e02a17b69726468fb1eb508b66481bb"
+    },
+    "celloracle/motif_analysis/reference_genomes.py": {
+      "bytes": 1556,
+      "sha256": "b2f6d5d3e9086c7a5f38b9afcf6d32d68e10d0f13d148cbc7971d74d81e5ab04"
+    },
+    "celloracle/motif_analysis/tfinfo_core.py": {
+      "bytes": 29735,
+      "sha256": "6bd94818400eb90389702a506a5260a118ed7149e271998db902a98a4d0fc2f6"
+    },
+    "celloracle/motif_analysis/tss_annotation.py": {
+      "bytes": 4378,
+      "sha256": "298ffcff5185491e4dcb92eabd5f467bf729f0d4f700bd516294eefae8139dd3"
+    },
+    "celloracle/network/__init__.py": {
+      "bytes": 328,
+      "sha256": "90617bd67f574f545039d8bdabe10f6bf6041cbcd4e1b5d383efa2a00ba15580"
+    },
+    "celloracle/network/net_core.py": {
+      "bytes": 26597,
+      "sha256": "f56e198f27878590b68ea52de8729924a935ba33ec7ee018a531cf440b1f8b72"
+    },
+    "celloracle/network/net_util.py": {
+      "bytes": 3317,
+      "sha256": "91e39d3835c7f28293576039b9ae66432b6bae80ddfd0a2f8226b1f4498e4173"
+    },
+    "celloracle/network/regression_models.py": {
+      "bytes": 4877,
+      "sha256": "27eea89eda4fd601ce15e691b99338e56b3c9aab3271a9468116f4a590715bdf"
+    },
+    "celloracle/network_analysis/__init__.py": {
+      "bytes": 742,
+      "sha256": "9f0a76128c47bd622dd7717289527fd8454af2b03b229130d05bedffb4f8729e"
+    },
+    "celloracle/network_analysis/cartography.py": {
+      "bytes": 5167,
+      "sha256": "6114218aebd94e3da3d770186727ab561a5d48bf02c7966bbc13f2a5639e2e0c"
+    },
+    "celloracle/network_analysis/gene_analysis.py": {
+      "bytes": 17257,
+      "sha256": "270ff5705de3f6bf63ba6a4b5f575fb4330b313ffc52e7d77f8089e3425cb2ce"
+    },
+    "celloracle/network_analysis/links_object.py": {
+      "bytes": 21557,
+      "sha256": "5fe4b51ee260fda86262c853ae72dbba0f754cf38d87e48966c35ad2c3acd047"
+    },
+    "celloracle/network_analysis/network_analysis_utility.py": {
+      "bytes": 2762,
+      "sha256": "4629e537d14d0497c43e010a259488e9fe8e291ebd665c564f563a8076f6f358"
+    },
+    "celloracle/network_analysis/network_construction.py": {
+      "bytes": 5601,
+      "sha256": "d8647fbe874d75db4a9af7710ad9bf9ddb9783ed536a8fbe90abce28b48793bc"
+    },
+    "celloracle/network_analysis/network_structure_analysis.py": {
+      "bytes": 7935,
+      "sha256": "19d9a5dc98b5efa9d482a51721a8f3559e9fd3545b21cb820c467fe77c79685e"
+    },
+    "celloracle/network_analysis/use_r_scripts.py": {
+      "bytes": 6013,
+      "sha256": "8e61eb1f679a718170dbf41444ad16ce26b19250b8d0f1930c1b3297600872b5"
+    },
+    "celloracle/oracle_utility/__init__.py": {
+      "bytes": 552,
+      "sha256": "27a7acf65b55cc97ee386087068108db8bfdfacf363d631c294c4045ed0de8b4"
+    },
+    "celloracle/oracle_utility/development_analysis.py": {
+      "bytes": 16805,
+      "sha256": "a3bf14b200593bd1108ec79598af6acc5c3cdc8399956fdbca4d0fbae1746aff"
+    },
+    "celloracle/oracle_utility/interactive_simulation_and_plot.py": {
+      "bytes": 10169,
+      "sha256": "bdaab25377a9c6c22635e604a851fa39193e44662e4cdae7aa3ecedb369c1d99"
+    },
+    "celloracle/oracle_utility/make_figure.py": {
+      "bytes": 11801,
+      "sha256": "20f5171ce8fdbe351ffc15ab7b54eb60ad904795b75c82728f28bd01fe8a9b68"
+    },
+    "celloracle/oracle_utility/scatter_to_grid.py": {
+      "bytes": 2739,
+      "sha256": "19ca88f6e924350bd2704898df85472b1a809ad66c9bccae2590b2452b299acc"
+    },
+    "celloracle/oracle_utility/utility.py": {
+      "bytes": 2989,
+      "sha256": "037e2f83af28def7bba246d6fb902d526b271ef86fa8d7291f35fad45eb55b24"
+    },
+    "celloracle/oracle_utility/visualization.py": {
+      "bytes": 36385,
+      "sha256": "aa0bf970748fce596f5d0d4593f3b1d41fa6f686f259eec7c2fa39d1eea880d4"
+    },
+    "celloracle/trajectory/init__.py": {
+      "bytes": 190,
+      "sha256": "5f1aff7b4584400493e81be8bdd6d75609b24c54948b61bea7697f8726114535"
+    },
+    "celloracle/trajectory/markov_simulation.py": {
+      "bytes": 1754,
+      "sha256": "4b2cac5bbfeba71bccb723f9cce790d06e001838e671a2d01aac1221b706ba61"
+    },
+    "celloracle/trajectory/modified_VelocytoLoom_class.py": {
+      "bytes": 45794,
+      "sha256": "5ba836d192b2d8dcf55286dd67add18e2965309f75f1631cc6ecb612f9399b59"
+    },
+    "celloracle/trajectory/neighbors.py": {
+      "bytes": 18888,
+      "sha256": "a3c259ffb4966e2f7eaf5a980cfb537c0a59956ccb6c7c958a0a4f07e755a38d"
+    },
+    "celloracle/trajectory/oracle_GRN.py": {
+      "bytes": 4349,
+      "sha256": "1ab4bb1a8acf9b1758e8b3a9f8d8214d9aa178d9b0f5173096c8c9edff9a37b6"
+    },
+    "celloracle/trajectory/oracle_core.py": {
+      "bytes": 68149,
+      "sha256": "4b11552f1c03b6990b724d4c867e49bf45a8f9414e77f7e8209afce8c73f5d9b"
+    },
+    "celloracle/trajectory/oracle_utility.py": {
+      "bytes": 8487,
+      "sha256": "534d1fddb3e1ee7bf4ef65298a06f28ff490c76f5fb7ebc417e299eaa29ae92a"
+    },
+    "celloracle/trajectory/sankey.py": {
+      "bytes": 9065,
+      "sha256": "e30d17717b34d9c7f3eecae0a300f7eef601cfb5083c6cbad224dc28a9307def"
+    },
+    "celloracle/utility/__init__.py": {
+      "bytes": 1165,
+      "sha256": "8ee852b3baf6453f3557bc5427b296b8d6013562fd4ec4f92d40861e9bfcd4f4"
+    },
+    "celloracle/utility/data_download_from_web.py": {
+      "bytes": 2369,
+      "sha256": "1fc0ea3f59e29d88563aae0d3fb9d9a0d4c4782209593628941cf93ba9203549"
+    },
+    "celloracle/utility/hdf5_processing.py": {
+      "bytes": 5098,
+      "sha256": "f74ad269f3cdd19a7c9cb436aaa30976f83bec217c4cf5618bb168fe8d09c2d4"
+    },
+    "celloracle/utility/load_hdf5.py": {
+      "bytes": 1479,
+      "sha256": "888c00f40a22e17e2fd45b7e0f2a51f0514aa3faefed74029c7bb3a16236f8d6"
+    },
+    "celloracle/utility/make_log.py": {
+      "bytes": 1342,
+      "sha256": "4f0b45b0816fc1fab5ff9956704d45c0016b26c11d3a4f51aa488fda1906ad29"
+    },
+    "celloracle/utility/package_version_checker.py": {
+      "bytes": 3258,
+      "sha256": "354def825e712a55a140a3a03fe39953630452d966b1f33274fa99d4945395e3"
+    },
+    "celloracle/utility/pandas_utility_for_jupyternotebook.py": {
+      "bytes": 2722,
+      "sha256": "f9a197d55b8faaaa52a6cf6bca64c3bb6fb0f49d9460e43082c1a58f749a2468"
+    },
+    "celloracle/utility/utility.py": {
+      "bytes": 11865,
+      "sha256": "743f09d578e1e15a0df731339ce7443e81dea5c6742c46cf623d31ff4c92fb8d"
+    },
+    "celloracle/version.py": {
+      "bytes": 51,
+      "sha256": "8b716994725e8bf9aa65f02daddab0bdda76c354366f006cd93814244a5a9ad4"
+    },
+    "celloracle/visualizations/__init__.py": {
+      "bytes": 314,
+      "sha256": "7e633cb8a95be45ab3425b695fabefe448945b1ae945a0fedb810b7bcba09fd9"
+    },
+    "celloracle/visualizations/config.py": {
+      "bytes": 296,
+      "sha256": "32217b204a71c29bcb6a066272fa46d202e4aaebc0fb1cb4dc4a03a631415d9b"
+    },
+    "celloracle/visualizations/development_module_visualization.py": {
+      "bytes": 19883,
+      "sha256": "877039dae9ffc50ca98cb7e8b7700eb683f9226d7e412dcd4d21f674791d9dc6"
+    },
+    "celloracle/visualizations/oracle_object_visualization.py": {
+      "bytes": 1805,
+      "sha256": "91622835fb775aa6b6bd57164cbcf5479868a857b4b39d3a169cc6d9319442a5"
+    }
+  }
+}

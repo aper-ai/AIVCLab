@@ -51,6 +51,9 @@ jobs:
           python scripts/cases.py validate
           python scripts/cases.py --help
           python scripts/observed_prnet_case.py --help
+          python scripts/observed_kang_case.py --help
+          python scripts/prepare_paul2015_case.py --help
+          python scripts/prnet_reference_case.py --help
           python examples/ko_oe/celloracle_run.py --help
           python examples/ko_oe/geneformer_route.py --help
       - name: Build and verify the source-only skill package

@@ -13,16 +13,27 @@ def build(root):
     excluded = {'data', 'results', 'local-runs', '__pycache__', '.git', 'dist', '.venv'}
     suffixes = {'.md', '.py', '.png', '.jpg', '.jpeg', '.svg', '.yaml', '.yml', '.json'}
     sources = {}
-    for p in sorted(root.rglob('*')):
-        if not p.is_file() or p.is_symlink():
-            continue
-        rel = p.relative_to(root)
-        if any(x in excluded for x in rel.parts[:-1]):
-            continue
-        if rel.as_posix() in {'SKILL.md', 'README.md', 'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md',
-                              'CONTRIBUTING.md', 'requirements-tests.txt', 'requirements-data.txt'} or (
-                rel.parts[0] in folders and p.suffix in suffixes):
-            sources[rel.as_posix()] = p.read_bytes()
+    for current, directories, names in os.walk(root, topdown=True, followlinks=False):
+        current = Path(current)
+        # Prune before descending: documented .venv-data and nested custom
+        # Python/conda environments must never enter a distributable source zip.
+        directories[:] = sorted(
+            name for name in directories
+            if name not in excluded and not name.startswith('.venv')
+            and not (current / name).is_symlink()
+            and not (current / name / 'pyvenv.cfg').is_file()
+            and not (current / name / 'conda-meta').is_dir()
+            and (current != root or name in folders)
+        )
+        for name in sorted(names):
+            p = current / name
+            if not p.is_file() or p.is_symlink():
+                continue
+            rel = p.relative_to(root)
+            if rel.as_posix() in {'SKILL.md', 'README.md', 'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md',
+                                  'CONTRIBUTING.md', 'requirements-tests.txt', 'requirements-data.txt'} or (
+                    rel.parts[0] in folders and p.suffix in suffixes):
+                sources[rel.as_posix()] = p.read_bytes()
     if 'SKILL.md' not in sources:
         raise ValueError('SKILL.md missing')
     hashes = {k: hashlib.sha256(v).hexdigest() for k, v in sources.items()}

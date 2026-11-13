@@ -4,15 +4,15 @@
 
 ## 从一个真实案例开始
 
-进入 [Virtual Cell Research](virtual-cell-research/README.md)。首次使用可运行约 3 MB 的 HT115 观测响应教学，或复现 Paul2015 输入审计；两条路线都已有实际数据检查记录。案例目录另收录 IFN-β、SciPlex3、CRISPRa 与 CRISPRi 等研究数据，明确区分来源整理、数据准备、模型执行与独立验证。
+进入 [Virtual Cell Research](virtual-cell-research/README.md)。首次使用可运行约 3 MB 的 HT115 观测响应教学，再学习 Kang PBMC 的供体配对分析；进阶案例已在独立 Linux CPU 环境实际执行 CellOracle Gata1 KO 和 PRnet 参考推理。案例目录另有输入审计、SciPlex3、CRISPRa 与 CRISPRi 等路线，明确区分来源整理、数据准备、模型执行与独立验证。
 
 - [首次使用指南](virtual-cell-research/references/first-run.md)：创建独立环境，获取小型数据，生成表、图和检查记录。
-- [案例目录](virtual-cell-research/cases/README.md)：七个案例的研究问题、真实完成阶段、资源与限制。
+- [案例目录](virtual-cell-research/cases/README.md)：九个工作流案例的研究问题、真实完成阶段、资源与限制。
 - [预检与排错](virtual-cell-research/docs/troubleshooting.md)：缺少什么、为什么停止、下一步怎样处理。
 - [模型能力与实现程度](virtual-cell-research/references/model-capabilities.md)：参数化入口、历史脚本与文档路线分别说明。
 - [参与建设](virtual-cell-research/CONTRIBUTING.md)：从一个案例、一条适配或一个错误修复开始。
 
-源码包不包含模型权重或原始表达矩阵。当前新案例完成了观测教学和输入审计，尚未运行真实模型推理或取得独立预测验证；历史分析单独归档。复用代码、模型和数据分别保留[来源与许可](virtual-cell-research/THIRD_PARTY_NOTICES.md)。
+源码包不包含模型权重或原始表达矩阵。当前有三项实际数据教学/审计和两项真实模型执行，独立预测验证仍未完成；历史分析单独归档。项目独立维护工作流与工具，科研方法和归属见 [方法说明](virtual-cell-research/docs/methodology-and-scope.md)；复用代码、模型和数据分别保留[来源与许可](virtual-cell-research/THIRD_PARTY_NOTICES.md)。
 
 ## 已有 Windows 结果查看器
 

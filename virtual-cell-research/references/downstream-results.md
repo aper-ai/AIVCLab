@@ -167,7 +167,7 @@ Top 30 按每个 `(drug, dose, time, cell_type)` 条件下 `|预测处理后表�
 
 ### 图与数据清单
 
-模型分析在 `figures/figure_manifest.csv` 逐项保存。HT115 观测教学是独立的数据阅读入口，使用根目录 `figure_manifest.json` 记录图数据、选择规则、状态和路径；不要求补造本节模型图清单，也不改变其 `model_status: not_run`。下列 CSV 字段适用于模型路线：
+模型分析在 `figures/figure_manifest.csv` 逐项保存。HT115 与 Kang 观测教学是独立的数据阅读入口，使用根目录 `figure_manifest.json` 记录图数据、选择规则、状态和路径；不要求补造本节模型图清单，也不改变其 `model_status: not_run`。下列 CSV 字段适用于模型路线：
 
 `figure_id, task, condition, backend, output_type, question, plot_path, source_table, metric, unit, baseline_source, status, reason`
 

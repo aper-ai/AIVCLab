@@ -117,6 +117,33 @@ def check_raw_counts(adata, layer: str | None) -> None:
         raise ValueError("Every retained cell must have a positive library size")
 
 
+def check_celloracle_cv_capacity(adata, version: str) -> dict:
+    """Explain the observed 0.20.0 CV/QC indexing boundary before import.
+
+    This checks gene eligibility for the pinned release's internal index only;
+    it is not a replacement for CellOracle QC or a compatibility certificate.
+    No expression values, selected genes or backend implementation are changed.
+    """
+    import numpy as np
+    if version != "0.20.0":
+        return {"status": "not_checked", "reason": "CV capacity rule audited for CellOracle 0.20.0 only"}
+    matrix = adata.X
+    expressed_cells = np.asarray((matrix > 0).sum(axis=0)).ravel()
+    means = np.asarray(matrix.mean(axis=0)).ravel()
+    eligible = int(((expressed_cells > 2) & (means > 0) & (means < 35)).sum())
+    required = min(adata.n_vars, 1000)
+    if eligible < required:
+        raise ValueError(
+            f"CellOracle 0.20.0 import CV/QC needs at least {required} eligible genes, "
+            f"but only {eligible} selected genes are expressed in >2 cells with 0<mean raw count<35. "
+            "Its native importer would index past the available scores. Review target/coverage and "
+            "increase --n-hvg or use a suitable larger dataset; do not pad counts or change their scale."
+        )
+    return {"status": "capacity_checked", "backend_version": version,
+            "eligible_genes": eligible, "required_genes": required,
+            "rule": "expressed_cells>2 and 0<mean_raw_count<35; no values or genes changed"}
+
+
 def choose_oe_value(values, explicit: float | None, percentile: float | None) -> tuple[float, dict]:
     import numpy as np
     x = np.asarray(values, dtype=float).reshape(-1)
@@ -396,6 +423,8 @@ def run(a: argparse.Namespace) -> Path:
         # X contains raw counts again; the PCA copy's log1p marker is now stale.
         selected_raw.uns.pop("log1p", None)
         prepare_oracle_grn_labels(selected_raw, grn_col)
+        validation["celloracle_cv_capacity"] = check_celloracle_cv_capacity(selected_raw, co.__version__)
+        dump_json(output / "validation.json", validation)
         manifest["genes_used"] = int(selected_raw.n_vars)
         manifest["n_pcs_used"] = n_pcs
         dump_json(status_file, manifest)

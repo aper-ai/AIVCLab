@@ -1,0 +1,21 @@
+name: virtual-cell-prnet-reference
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cpu
+      - torch==2.5.1+cpu
+      - scanpy==1.11.5
+      - rdkit==2025.9.1
+      - numpy==2.5.4
+      - pandas==3.1.1
+      - anndata==0.13.4
+      - scipy==1.18.1
+      - h5py==3.16.0
+      - matplotlib==3.11.2
+variables:
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"

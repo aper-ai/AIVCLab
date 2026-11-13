@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "project": "Virtual Cell Research",
+  "case_id": "prnet-reference-evaluation",
+  "case_check_status": "completed",
+  "model_status": "executed",
+  "independent_validation": "not_assessed",
+  "execution": {
+    "started_at": "2026-11-13T04:11:22.817035+00:00",
+    "finished_at": "2026-11-13T04:11:47.629146+00:00",
+    "platform": "Linux CPU",
+    "parameters": {
+      "seed": 2024,
+      "noise_draws": 16,
+      "torch_threads": 1,
+      "device": "cpu"
+    },
+    "command_argv": [
+      "scripts/prnet_reference_case.py",
+      "run",
+      "--resources-dir",
+      "local-runs/prnet-reference-ready",
+      "--output-dir",
+      "local-runs/prnet-reference-final-verified",
+      "--seed",
+      "2024",
+      "--noise-draws",
+      "16",
+      "--threads",
+      "1"
+    ],
+    "working_directory": "Skill root containing SKILL.md",
+    "interpreter": "Actual absolute executable is preserved in the full run provenance; omitted from this portable summary."
+  },
+  "implementation": {
+    "script": "../../scripts/prnet_reference_case.py",
+    "sha256_at_execution": "320cb6947b6c3fd1a38848415253daf3d12b6c29bfbf908c87c3e779c610a1b6",
+    "official_code_commit": "f19174bde3ed2633f54c7831799cc38c4ffc7a0d",
+    "method": "Official PGM architecture and Drug_dose_encoder called by a controlled project wrapper; no model training.",
+    "adaptations": [
+      "fixed CPU profile order and seed",
+      "strict weights-only checkpoint load",
+      "16 decoder-noise conditional means averaged",
+      "one Gaussian sample retained",
+      "new output directory and stable profile/gene IDs",
+      "complete input/output/variance/noise records"
+    ]
+  },
+  "resources": [
+    {
+      "id": "model",
+      "file_name": "PRnet.py",
+      "source_path": "models/PRnet.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/models/PRnet.py",
+      "bytes": 10794,
+      "sha256": "024f39a07e2887fea45a42f60b07b3ba17dc7501f134285ff72798eacb8bea3e",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "encoding",
+      "file_name": "_utils.py",
+      "source_path": "data/_utils.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/data/_utils.py",
+      "bytes": 9406,
+      "sha256": "b72ad61f7e4e1389a62ce50db144627e1d5d5f16fccee4c17f05ab29328d4b5e",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "weights",
+      "file_name": "lincs_best_epoch_all.pt",
+      "source_path": "checkpoint/lincs_best_epoch_all.pt",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/checkpoint/lincs_best_epoch_all.pt",
+      "bytes": 2210427,
+      "sha256": "f4b69f6fbcbfab3636b1e0a9eb64c32ccf61ea48431f05ba8433e3678713e8c8",
+      "format": "pytorch_state_dict",
+      "license_status": "not_separately_specified_for_file",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "demo",
+      "file_name": "demo.h5ad",
+      "source_path": "dataset/demo.h5ad",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+      "bytes": 3136818,
+      "sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+      "format": "h5ad",
+      "license_status": "not_separately_specified_for_file",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "official-demo",
+      "file_name": "test_demo.py",
+      "source_path": "test_demo.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/test_demo.py",
+      "bytes": 3244,
+      "sha256": "7adc897816106a78d5ec357a808a4ee1e14c3c90a04a23a546a0efacdbb3d84d",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "official-trainer",
+      "file_name": "PRnetTrainer.py",
+      "source_path": "trainer/PRnetTrainer.py",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/trainer/PRnetTrainer.py",
+      "bytes": 27021,
+      "sha256": "0d0eb2d8e19ce284d56313667fc2ffb532050ede8b93b4a40bc5ffa6329e8038",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    },
+    {
+      "id": "license",
+      "file_name": "LICENSE",
+      "source_path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "format": "text",
+      "license_status": "Apache-2.0",
+      "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+    }
+  ],
+  "resources_sha256_verified": true,
+  "python": "3.12.14",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "anndata": "0.13.4",
+    "scanpy": "1.11.5",
+    "torch": "2.5.1+cpu",
+    "rdkit": "2025.9.1",
+    "scipy": "1.18.1",
+    "h5py": "3.16.0",
+    "matplotlib": "3.11.2"
+  },
+  "qc": {
+    "status": "passed_with_warnings",
+    "profiles": 661,
+    "genes": 978,
+    "source_profiles": 681,
+    "controls": 20,
+    "all_profile_and_gene_ids_preserved": true,
+    "finite_predictions": true,
+    "cross_rna_plate_profiles": 338,
+    "drug_exclusion_groups": 349,
+    "scale": "official_demo_normalize_total_median_then_log1p",
+    "normalization_target_sum": 8037.517578125,
+    "chemical_sensitivity": {
+      "background": "mean_of_20_processed_controls",
+      "noise": "same_zero_vector_for_all_conditions",
+      "mean_squared_response": 0.009118826803340216,
+      "mean_gene_variance_across_conditions": 0.000651220429036343,
+      "chemical_variation_to_total_rms_ratio": 0.26723573042178334,
+      "nearly_constant_at_absolute_tolerance_1e_8": false,
+      "interpretation": "Input sensitivity diagnostic; does not establish drug accuracy or efficacy."
+    },
+    "warnings": [
+      "training_overlap_unknown",
+      "transductive_demo_normalization",
+      "source_cross_plate_pairs_preserved",
+      "no_clinical_efficacy_or_independent_validation",
+      "other_group_mean_is_demo_derived_reference"
+    ]
+  },
+  "validation": {
+    "status": "unvalidated",
+    "independent_validation": "not_assessed",
+    "training_overlap": "unknown",
+    "holdout_status": "not_established",
+    "dataset_role": "official_checkpoint_reference_demo",
+    "source_split": "demo_split=test for 661 treatments; not a training-membership certificate",
+    "checkpoint_split_binding": "Published all checkpoint has no verified sample/compound membership manifest.",
+    "mean_reference": "Leave connected drug group out of THIS demo. Excludes shared pert_id/name/canonical isomeric SMILES; descriptive, not external or deployable.",
+    "preprocessing_scope": "Official default median normalization uses all 681 demo profiles including observed treatments; transductive reference evaluation.",
+    "inference_adaptation": "Official PGM and dose encoder, fixed CPU order/seed; 16 by default decoder-noise draws averaged, plus one Gaussian sample. Not byte-for-byte original shuffled Trainer output.",
+    "metrics": {
+      "prnet_mean": {
+        "mean_profile_rmse": 0.14014109212919776,
+        "mean_profile_mae": 0.1054610930294876,
+        "mean_profile_pearson": 0.4150553099313833,
+        "profile_pearson_defined": 661,
+        "mean_gene_pearson": 0.37917701253942554,
+        "gene_pearson_defined": 978,
+        "mean_profile_post_expression_pearson": 0.8299957983521812
+      },
+      "prnet_sample": {
+        "mean_profile_rmse": 0.2255216641621598,
+        "mean_profile_mae": 0.17281770874362212,
+        "mean_profile_pearson": 0.2316417317697587,
+        "profile_pearson_defined": 661,
+        "mean_gene_pearson": 0.14663644257962696,
+        "gene_pearson_defined": 978,
+        "mean_profile_post_expression_pearson": 0.6556233126322881
+      },
+      "no_change": {
+        "mean_profile_rmse": 0.13242018096843164,
+        "mean_profile_mae": 0.09070893183296487,
+        "mean_profile_pearson": null,
+        "profile_pearson_defined": 0,
+        "mean_gene_pearson": null,
+        "gene_pearson_defined": 0,
+        "mean_profile_post_expression_pearson": 0.8464037840457083
+      },
+      "other_group_mean": {
+        "mean_profile_rmse": 0.13036360710005776,
+        "mean_profile_mae": 0.09125123057768805,
+        "mean_profile_pearson": 0.1982301550692745,
+        "profile_pearson_defined": 661,
+        "mean_gene_pearson": -0.7397282566031745,
+        "gene_pearson_defined": 978,
+        "mean_profile_post_expression_pearson": 0.850314713265036
+      }
+    }
+  },
+  "engineering_verification": {
+    "scope": "Numerical engineering verification; not independent scientific validation",
+    "checks": {
+      "source_X_exact": true,
+      "source_axes_exact": true,
+      "official_preprocessing_exact": true,
+      "observed_by_id_exact": true,
+      "baseline_by_id_exact": true,
+      "observed_delta_exact": true,
+      "prediction_delta_exact": true,
+      "condition_axis_exact": true,
+      "all_other_means_exclude_own_group": true,
+      "all_model_rmse_align": true,
+      "zero_response_correlations_missing": true,
+      "all_report_local_links_resolve": true,
+      "same_seed_prediction_exact_between_runs": true
+    },
+    "response_values": 646458,
+    "report_links_checked": 14,
+    "model_prediction_mean_rmse": 0.14014109212919776,
+    "script_sha256": "320cb6947b6c3fd1a38848415253daf3d12b6c29bfbf908c87c3e779c610a1b6"
+  },
+  "figure": {
+    "file": "reference_metrics_preview.svg",
+    "source": "figures/reference_metrics.svg",
+    "bytes": 25496,
+    "sha256": "6bba58aaa3c2bfb58ddda3927f28a034f1490478b34d934c0e332e0439c959d3",
+    "source_table": "tables/profile_metrics.csv",
+    "status": "generated",
+    "meaning": "Descriptive checkpoint-reference metrics; not independent validation or efficacy ranking."
+  },
+  "full_run_artifacts_not_bundled": {
+    "errors.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "figures/figure_manifest.csv": {
+      "bytes": 410,
+      "sha256": "e9c9c4c49f790f3459e6323bfdd970d456348b4377d0e166b23c5932ecceb205"
+    },
+    "figures/reference_metrics.png": {
+      "bytes": 85146,
+      "sha256": "2a13c670ad050c5fcc80bf6901ae6cb317875125d9dcfd9294574835c60f83ea"
+    },
+    "figures/reference_metrics.svg": {
+      "bytes": 25496,
+      "sha256": "6bba58aaa3c2bfb58ddda3927f28a034f1490478b34d934c0e332e0439c959d3"
+    },
+    "manifest.json": {
+      "bytes": 751,
+      "sha256": "6537cabc94127b5ae5ffc00e9cc75936b21909c288dca148a0094a7b96782fab"
+    },
+    "qc.json": {
+      "bytes": 1082,
+      "sha256": "33dfe9c08628cd9f893e6265bc46a5ddba97e839ee177c0c8309f96efeb9e407"
+    },
+    "raw/reference_predictions.npz": {
+      "bytes": 29977261,
+      "sha256": "2e23c536d6fc9d1f5f3a81c3aaf133c6c56aa68349c41079fc4aed5d87c69143"
+    },
+    "report.md": {
+      "bytes": 4144,
+      "sha256": "04d0469f8b9b71269d1733a7c26c4be50d0e7dea5fec66ee08dd3b7b3ba8003d"
+    },
+    "tables/condition_index.csv": {
+      "bytes": 315969,
+      "sha256": "2fcc28d3350e302247d7789f08da183ac35534d609d33f31ef21511f40ce3569"
+    },
+    "tables/gene_index.csv": {
+      "bytes": 44778,
+      "sha256": "1d4505a87d1ce8d479e672e108368a2ba2fb63fc8e3b5687c15100dc03abe784"
+    },
+    "tables/gene_metrics.csv": {
+      "bytes": 475135,
+      "sha256": "d760dc957d324f38abc9dbe76c451640a43ae0ae60b5b029321523a82ee7e6a4"
+    },
+    "tables/observed_delta.csv.gz": {
+      "bytes": 5425311,
+      "sha256": "a708b20ec898911675ea198ce906e1c267b81f91c535af918fdc2b4002d16ecd"
+    },
+    "tables/other_group_mean_delta.csv.gz": {
+      "bytes": 3338816,
+      "sha256": "fb4eff59bacf411cd3094177a227a58019576760f6b7378a35f1b54bf95d053a"
+    },
+    "tables/predicted_delta.csv.gz": {
+      "bytes": 6033520,
+      "sha256": "62e7918f245f5e96c60d516e804f5ab458a4860509c90e95b1f544a7a3d31f58"
+    },
+    "tables/profile_metrics.csv": {
+      "bytes": 529333,
+      "sha256": "0ac90cc6c739a01cc156772711411a1159690dd4688a72710b35654044c81c45"
+    },
+    "validation.json": {
+      "bytes": 2358,
+      "sha256": "f64ecee3003ff90b19ac7c61f98175df9202adaa00b0967f72eb5f34c99c0730"
+    }
+  },
+  "acquisition_history": {
+    "initial_fetch": "Six resources downloaded and verified; final LICENSE request returned HTTP 503. Failure directory and records preserved.",
+    "successful_preparation": "Seven previously downloaded official resources were reverified and copied through --reuse-dir into a new directory; resources.json marks reused_verified, not a new network download.",
+    "model_execution_started_only_after_all_seven_hashes_verified": true
+  },
+  "notes": [
+    "Model execution is genuine, but checkpoint training overlap with demo remains unknown.",
+    "All 661 plate-specific source conditions contain one treated profile; Monte Carlo draws are not biological replicates.",
+    "In this checkpoint/demo/preprocessing/pairing setting, mean PRnet delta RMSE exceeds the no-change reference; do not generalize this result to all PRnet settings.",
+    "The observed source_X copy was fixed after audit detected in-place preprocessing of a shared buffer. This evidence uses only the corrected run; prior intermediate output was not used as final evidence.",
+    "Full model weights, expression arrays and machine-specific paths are not bundled."
+  ],
+  "tests": {
+    "command": "python -m unittest discover -s tests -p test_prnet_reference.py -v",
+    "passed": 12,
+    "scope": "Synthetic input/metric/resource contracts and source-copy regression; no model inference in fast tests."
+  },
+  "references": [
+    {
+      "title": "PRnet original paper",
+      "url": "https://doi.org/10.1038/s41467-024-53457-1"
+    },
+    {
+      "title": "Fixed official code",
+      "url": "https://github.com/Perturbation-Response-Prediction/PRnet/tree/f19174bde3ed2633f54c7831799cc38c4ffc7a0d"
+    }
+  ]
+}

@@ -2,6 +2,8 @@
 
 按本次已确定的模型读取对应段落。Skill 提供规则、流程和示例；先核验已有代码、权重、词典、先验和训练配套文件，缺失时按当前授权获取，并配置到本次环境与分析目录。用户未指定模型时先依据数据与预期输出提出路线，见 `model-capabilities.md`，不要求新手先理解全部模型名。
 
+首次实际运行模型，优先从已执行的小案例开始：[CellOracle 原始计数到 Gata1 KO](../cases/celloracle-paul2015-gata1/README.md)或 [PRnet 固定 checkpoint 参考评估](../cases/prnet-reference-evaluation/README.md)。两条路线均提供独立环境、资源哈希、命令、真实图表和证据，已在 Linux CPU 执行；独立科学验证仍未完成。PRnet 案例只接受固定官方 demo，不能当作任意用户数据的通用适配。
+
 ## 共同配置规则
 
 1. 沿用已明确的研究设置。已有兼容资源时直接核验并复用；资源缺失时列明需求，按当前授权从官方来源获取。版本、物种、细胞背景能由数据和任务确定时配置并记录依据；多个资源代表不同研究问题时说明差异后选择。
@@ -11,10 +13,10 @@
 
 | 路线 | 获取哪些资源 | 输入、调用及结果指导 |
 | --- | --- | --- |
-| CellOracle | 官方包、物种对应 base GRN；GRN 在用户表达数据上拟合 | [本页 CellOracle](#celloracle)；[参数化代码](../examples/ko_oe/celloracle_run.py) |
+| CellOracle | 官方包、物种对应 base GRN；GRN 在用户表达数据上拟合 | [已执行案例](../cases/celloracle-paul2015-gata1/README.md)；[本页 CellOracle](#celloracle)；[参数化代码](../examples/ko_oe/celloracle_run.py) |
 | Geneformer | 官方代码、选定 checkpoint、同版本词典/基因统计 | [本页 Geneformer](#geneformer)；[参数化代码](../examples/ko_oe/geneformer_route.py) |
 | GEARS | 官方包、GO 图资源、扰动数据、匹配 checkpoint 或本次训练产物 | [GEARS 完整流程与示例](gears-workflow.md) |
-| PRnet | 官方代码、LINCS/SciPlex 权重及配套基因顺序/数据 | [本页 PRnet](#prnet)；[外部基线示例](../examples/lung_cancer/drug_screen/run_prnet.py) |
+| PRnet | 官方代码、LINCS/SciPlex 权重及配套基因顺序/数据 | [已执行参考评估](../cases/prnet-reference-evaluation/README.md)；[本页 PRnet](#prnet)；[历史外部基线示例](../examples/lung_cancer/drug_screen/run_prnet.py) |
 | chemCPA | 官方代码、checkpoint/config、训练基因与协变量、RDKit 表征 | [本页 chemCPA](#chemcpa)；[推理示例](../examples/lung_cancer/drug_screen/run_chempa.py) |
 | UniPert-G2CP | UniPert 编码器、G2CP 代码、指定细胞系数据与权重 | [本页 UniPert-G2CP](#unipert-g2cp)；[推理示例](../examples/lung_cancer/drug_screen/run_unipert_g2cp.py) |
 | UniCure | UniCure 权重、细胞与药物表征；新样本另需 UCE 配套资源 | [UniCure 完整流程与示例](unicure-workflow.md) |

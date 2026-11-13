@@ -86,7 +86,7 @@
       "source_path": "examples/ko_oe/celloracle_run.py",
       "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
       "source_git_blob": "93dfa861a62d125b8d470d987a202a8b4accc4fb",
-      "change_status": "retained",
+      "change_status": "modified",
       "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
     },
     {
@@ -324,9 +324,29 @@
   ],
   "project_added_files": [
     {
+      "path": "CONTRIBUTING.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "NOTICE",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "archive/aivc-587579e7/README.md",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "cases/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
       "path": "cases/adamson2016-k562-upr-crispri/README.md",
@@ -339,12 +359,42 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
-      "path": "cases/celloracle-paul2015-input-audit/evidence.json",
+      "path": "cases/celloracle-paul2015-gata1/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/backend-code-hashes.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/environment-linux.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/resources.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-gata1/state_shift_preview.png",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
       "path": "cases/celloracle-paul2015-input-audit/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/celloracle-paul2015-input-audit/evidence.json",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
@@ -359,7 +409,22 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
+      "path": "cases/kang-ifnb-pbmc/donor_response_preview.svg",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/kang-ifnb-pbmc/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
       "path": "cases/norman2019-k562-crispra/README.md",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-ht115-demo/README.md",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
@@ -374,12 +439,22 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
-      "path": "cases/prnet-ht115-demo/README.md",
+      "path": "cases/prnet-reference-evaluation/README.md",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
-      "path": "cases/README.md",
+      "path": "cases/prnet-reference-evaluation/environment.yml",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-reference-evaluation/evidence.json",
+      "change_status": "project_added",
+      "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
+    },
+    {
+      "path": "cases/prnet-reference-evaluation/reference_metrics_preview.svg",
       "change_status": "project_added",
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
@@ -394,7 +469,7 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
-      "path": "CONTRIBUTING.md",
+      "path": "docs/methodology-and-scope.md",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
@@ -405,11 +480,6 @@
     },
     {
       "path": "docs/source-provenance.md",
-      "change_status": "project_added",
-      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
-    },
-    {
-      "path": "NOTICE",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
@@ -434,6 +504,11 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "scripts/observed_kang_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "scripts/observed_prnet_case.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
@@ -444,7 +519,27 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "scripts/prepare_paul2015_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "scripts/prnet_reference_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "tests/test_cases.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_celloracle_capacity.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_kang_case.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
@@ -454,12 +549,22 @@
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
+      "path": "tests/test_package_skill.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
+      "path": "tests/test_paul2015_case.py",
+      "change_status": "project_added",
+      "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
+    },
+    {
       "path": "tests/test_preflight.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     },
     {
-      "path": "THIRD_PARTY_NOTICES.md",
+      "path": "tests/test_prnet_reference.py",
       "change_status": "project_added",
       "scope": "Project-created implementation, tests, documentation or packaging; not imported from the recorded baseline."
     }

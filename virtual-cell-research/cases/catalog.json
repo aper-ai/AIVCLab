@@ -129,8 +129,8 @@
       "id": "kang-ifnb-pbmc",
       "title": "Kang PBMC：按供者和细胞类型比较 IFN-beta 响应",
       "task": "measured_cell_state_response",
-      "context": "Homo sapiens; PBMC; GSE96583 batch 2; 8 donors; 6 h IFN-beta versus control",
-      "stage": "catalogued",
+      "context": "Homo sapiens; PBMC from 8 lupus patients; GSE96583 batch 2; 6 h IFN-beta versus control",
+      "stage": "prepared",
       "model_status": "not_run",
       "validation_status": "not_assessed",
       "sources": [
@@ -154,9 +154,10 @@
           "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_2.1.mtx.gz",
           "format": "gzip",
           "bytes": 28545918,
-          "sha256": null,
+          "sha256": "32add28a0b3397d9ef3f220b7a6a55e98e60fe7b66fe48d0986d634df8ca0013",
           "license_status": "not_separately_specified",
-          "license_url": null
+          "license_url": null,
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
         },
         {
           "id": "stimulated_matrix",
@@ -164,9 +165,10 @@
           "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_2.2.mtx.gz",
           "format": "gzip",
           "bytes": 29050932,
-          "sha256": null,
+          "sha256": "8aecc98a7ac4957bbc2570f87ebe8ce97332a5bcdbf557d40bd5aabfd287bdc5",
           "license_status": "not_separately_specified",
-          "license_url": null
+          "license_url": null,
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
         },
         {
           "id": "genes",
@@ -176,7 +178,8 @@
           "bytes": 277054,
           "sha256": "93aa4e9b530ef9d6411ca129b416324c5cc1cc5a01a1fa6ed4f4a845480ed3ca",
           "license_status": "not_separately_specified",
-          "license_url": null
+          "license_url": null,
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
         },
         {
           "id": "metadata",
@@ -186,7 +189,8 @@
           "bytes": 756342,
           "sha256": "1d57e72e92ca8695250e88cc0f1c3fa8c0be1175d974f8b427c58f1274dc6c09",
           "license_status": "not_separately_specified",
-          "license_url": null
+          "license_url": null,
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
         },
         {
           "id": "control_barcodes",
@@ -194,10 +198,10 @@
           "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560248/suppl/GSM2560248_barcodes.tsv.gz",
           "format": "gzip",
           "bytes": 52904,
-          "sha256": null,
+          "sha256": "d58d8d55cbe4a12757207784b3bc9227bf200c9100ca15131176e9f8159c955e",
           "license_status": "not_separately_specified",
           "license_url": null,
-          "url_check": "HTTP 200 with matching Content-Length on 2026-11-13; body not downloaded"
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
         },
         {
           "id": "stimulated_barcodes",
@@ -205,32 +209,289 @@
           "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2560nnn/GSM2560249/suppl/GSM2560249_barcodes.tsv.gz",
           "format": "gzip",
           "bytes": 52366,
-          "sha256": null,
+          "sha256": "9bb38e080dfae81036fbcd9902c6c6254a4466aa85f70705479be3b2d6679d55",
           "license_status": "not_separately_specified",
           "license_url": null,
-          "url_check": "HTTP 200 with matching Content-Length on 2026-11-13; body not downloaded"
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
         }
       ],
       "limitations": [
-        "只下载并读取基因和细胞元数据；两份表达矩阵尚未下载。",
-        "元数据 29065 条，其中 24679 singlet；预处理不能把双细胞或未分配供者当独立重复。",
-        "这是 cytokine 刺激，不是基因 KO/OE 或药物敏感性实验；按供者保留配对，细胞不等于独立生物学重复。",
-        "矩阵、barcode、metadata 需按完整稳定标识对齐；批次/供者拆分与任何模型训练重叠尚未核对。",
-        "GEO 文件未核实独立数据许可；其他存档的 CC-BY 不自动覆盖所有衍生文件。"
+        "本例完成真实观测数据处理，不运行模型；没有显著性检验或独立预测验证。",
+        "来源元数据29065细胞、24679 singlet；默认CD14+分析有8个完整供体配对，统计单位为供体。",
+        "两个条件来自条件特异文库，配对不消除共享文库或批次影响；没有重新做细胞注释/线粒体或doublet质量检查。",
+        "313个跨样本同名barcode按固定来源映射；9个NA细胞标签和2697条重复symbol记录明确保留。",
+        "log2(1+CPM)中+1是CPM尺度伪计数，配对差值不等于真实fold change；来源全基因计数用于文库分母。",
+        "GEO文件的数据许可未单独核实，其他存档CC-BY条款不能自动外推。",
+        "当前固定 GEO 注释的 singlet 数与论文正文不同；差异来源未核实，分析重现当前固定输入，不声称逐项复现原论文。"
       ],
       "expected_outputs": [
-        "matrix/barcode/metadata alignment record",
-        "donor x cell-type x condition summary",
-        "observed response report with donor-aware design"
+        "report.md",
+        "qc.json",
+        "provenance.json",
+        "figure_manifest.json",
+        "raw/pseudobulk_counts.npz",
+        "raw/paired_responses.npz",
+        "tables/cell_index.csv.gz",
+        "tables/genes.csv",
+        "tables/pseudobulk_index.csv",
+        "tables/donor_pairs.csv",
+        "tables/paired_responses.csv.gz",
+        "tables/gene_summary.csv",
+        "tables/figure_data.csv",
+        "figures/donor_response.png",
+        "figures/donor_response.svg"
       ],
       "source_checked_on": "2026-11-13",
-      "prepare_status": "not_implemented",
+      "prepare_status": "implemented_and_executed",
       "verification": {
+        "evidence": "cases/kang-ifnb-pbmc/evidence.json",
         "metadata_downloaded": true,
-        "expression_matrices_downloaded": false,
+        "expression_matrices_downloaded": true,
+        "observed_paired_analysis_completed": true,
         "model_executed": false,
         "independent_validation": false
+      },
+      "workflow": {
+        "fetch": "six explicit asset downloads under local-runs/kang-input; see cases/kang-ifnb-pbmc/README.md",
+        "run": "python scripts/observed_kang_case.py --input-dir local-runs/kang-input --output-dir local-runs/kang-observed --cell-type \"CD14+ Monocytes\" --min-cells 20"
       }
+    },
+    {
+      "id": "celloracle-paul2015-gata1",
+      "title": "CellOracle：GSE72857 原始计数到 Gata1 KO 实际模拟",
+      "task": "gene_knockout_simulation",
+      "context": "Mus musculus; GSE72857; Mouse 2 wild-type C57BL/6 bone-marrow Lin-cKit+Sca1- cells; mm9; fixed 500-cell subset; 1500 model genes",
+      "stage": "model_executed",
+      "model_status": "executed",
+      "validation_status": "not_assessed",
+      "sources": [
+        {
+          "title": "Original GSE72857 data",
+          "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72857"
+        },
+        {
+          "title": "Paul et al., Cell 2015",
+          "url": "https://doi.org/10.1016/j.cell.2015.11.013"
+        },
+        {
+          "title": "CellOracle paper",
+          "url": "https://doi.org/10.1038/s41586-022-05688-9"
+        },
+        {
+          "title": "CellOracle 0.20.0",
+          "url": "https://pypi.org/project/celloracle/0.20.0/"
+        }
+      ],
+      "resources": [
+        {
+          "id": "umi",
+          "file_name": "GSE72857_umitab.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_umitab.txt.gz",
+          "format": "tsv.gz",
+          "bytes": 16413252,
+          "sha256": "6f45b72b935493181f0f9fdb7343181a5eeca63d0d39ba2a2a8439ac34f08e74",
+          "license_status": "not_separately_specified_for_data_resource",
+          "license_url": null,
+          "role": "Original gene-by-well molecule counts",
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
+        },
+        {
+          "id": "design",
+          "file_name": "GSE72857_experimental_design.txt.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/suppl/GSE72857_experimental_design.txt.gz",
+          "format": "tsv.gz",
+          "bytes": 115876,
+          "sha256": "b547a49285a59476e194d77c9a34a9747628ee465736227d840a6aac5f3a5f68",
+          "license_status": "not_separately_specified_for_data_resource",
+          "license_url": null,
+          "role": "Well-to-mouse, batch and experimental-background mapping",
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
+        },
+        {
+          "id": "samples",
+          "file_name": "GSE72857_family.soft.gz",
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72857/soft/GSE72857_family.soft.gz",
+          "format": "soft.gz",
+          "bytes": 5888,
+          "sha256": "9dac928a12f462739c0c92f3562acedff4813b2a2acdcf3aa2bee9e62cd6b440",
+          "license_status": "not_separately_specified_for_data_resource",
+          "license_url": null,
+          "role": "GEO primary sample genotype, source and genome-build verification",
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
+        },
+        {
+          "id": "mouse-grn",
+          "file_name": "mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "url": "https://raw.githubusercontent.com/morris-lab/CellOracle/7948870a3b70f7d228e54734e1fa9ed3291fc23b/celloracle/data/promoter_base_GRN/mm9_TFinfo_dataframe_gimmemotifsv5_fpr2_threshold_10_20210630.parquet",
+          "format": "parquet",
+          "bytes": 4596514,
+          "sha256": "f7cb9c4344754377a0d56b558403ca9dae9a11fbf5b5515d635c5115eaa0496d",
+          "license_status": "not_separately_specified_for_data_resource",
+          "license_url": null,
+          "role": "CellOracle official mm9 promoter prior",
+          "sha256_provenance": "project_computed_from_full_download_2026-11-13; not a publisher-signed checksum"
+        }
+      ],
+      "limitations": [
+        "Linux CPU execution completed; independent biological validation and native Windows model installation are not assessed.",
+        "One mouse, fixed 500-cell subset, 1500 HVGs and a whole-population GRN; no curated cell-type-specific network or real Gata1 KO labels for evaluation.",
+        "Excluding 2109 multiname gene rows removes about 13.2 percent of molecules; this is a substantial input limitation, not a lossless conversion.",
+        "The raw source mixes experimental backgrounds; selected batches are explicitly matched to GEO SOFT wild-type sample metadata.",
+        "Simulation and randomized-delta projection are technical outputs, not measured effects, significance tests or proof of biological specificity.",
+        "CellOracle fixed-source license contains noncommercial academic-use restrictions; data and prior terms are not separately verified."
+      ],
+      "expected_outputs": [
+        "manifest.json",
+        "validation.json",
+        "provenance.json",
+        "errors.jsonl",
+        "report.md",
+        "raw/baseline_imputed_expression.csv.gz",
+        "raw/simulated_expression.csv.gz",
+        "raw/delta_X.csv.gz",
+        "raw/simulation_grn_coefficients_000.csv.gz",
+        "tables/target_expression_setting.csv",
+        "tables/gene_effects.csv",
+        "tables/cell_state_shift.csv.gz",
+        "figures/figure_manifest.csv"
+      ],
+      "source_checked_on": "2026-11-13",
+      "evidence": "cases/celloracle-paul2015-gata1/evidence.json",
+      "workflow": [
+        "Fetch the four explicitly selected assets umi, design, samples and mouse-grn into separate new directories; see the case README.",
+        "Run scripts/prepare_paul2015_case.py with the three fixed source files; max-cells=500, min-counts=1000, min-genes=500, seed=123.",
+        "Use the dedicated Python 3.10 CellOracle 0.20.0 environment and pinned mm9 promoter prior.",
+        "Run examples/ko_oe/celloracle_run.py for Gata1 KO, n-hvg=1500, n-pcs=20, n-neighbors=50, n-jobs=2, seed=123.",
+        "Retain the earlier n-hvg=1000 failure and interpret the successful simulation as simulated_unvalidated."
+      ],
+      "output_note": "Input preparation has its own qc.json; model QC is recorded in validation.json, with provenance and full output matrices in the model run directory."
+    },
+    {
+      "id": "prnet-reference-evaluation",
+      "title": "PRnet 官方权重：真实 CPU 推理与基线参照",
+      "task": "drug_reference_evaluation",
+      "context": "Human HT115; official 681-profile, 978-gene demo, 661 treated profiles; same-source paired controls.",
+      "sources": [
+        {
+          "title": "Official PRnet fixed source",
+          "url": "https://github.com/Perturbation-Response-Prediction/PRnet/tree/f19174bde3ed2633f54c7831799cc38c4ffc7a0d"
+        },
+        {
+          "title": "PRnet paper",
+          "url": "https://doi.org/10.1038/s41467-024-53457-1"
+        }
+      ],
+      "stage": "model_executed",
+      "model_status": "executed",
+      "validation_status": "not_assessed",
+      "resources": [
+        {
+          "id": "model",
+          "file_name": "PRnet.py",
+          "source_path": "models/PRnet.py",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/models/PRnet.py",
+          "bytes": 10794,
+          "sha256": "024f39a07e2887fea45a42f60b07b3ba17dc7501f134285ff72798eacb8bea3e",
+          "format": "text",
+          "license_status": "Apache-2.0",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        },
+        {
+          "id": "encoding",
+          "file_name": "_utils.py",
+          "source_path": "data/_utils.py",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/data/_utils.py",
+          "bytes": 9406,
+          "sha256": "b72ad61f7e4e1389a62ce50db144627e1d5d5f16fccee4c17f05ab29328d4b5e",
+          "format": "text",
+          "license_status": "Apache-2.0",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        },
+        {
+          "id": "weights",
+          "file_name": "lincs_best_epoch_all.pt",
+          "source_path": "checkpoint/lincs_best_epoch_all.pt",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/checkpoint/lincs_best_epoch_all.pt",
+          "bytes": 2210427,
+          "sha256": "f4b69f6fbcbfab3636b1e0a9eb64c32ccf61ea48431f05ba8433e3678713e8c8",
+          "format": "pytorch_state_dict",
+          "license_status": "not_separately_specified_for_file",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        },
+        {
+          "id": "demo",
+          "file_name": "demo.h5ad",
+          "source_path": "dataset/demo.h5ad",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/dataset/demo.h5ad",
+          "bytes": 3136818,
+          "sha256": "c3bd7c7e3e08fa68062fbf2080ada31f9086359b5ab03f843b7f0efd21389d9b",
+          "format": "h5ad",
+          "license_status": "not_separately_specified_for_file",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        },
+        {
+          "id": "official-demo",
+          "file_name": "test_demo.py",
+          "source_path": "test_demo.py",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/test_demo.py",
+          "bytes": 3244,
+          "sha256": "7adc897816106a78d5ec357a808a4ee1e14c3c90a04a23a546a0efacdbb3d84d",
+          "format": "text",
+          "license_status": "Apache-2.0",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        },
+        {
+          "id": "official-trainer",
+          "file_name": "PRnetTrainer.py",
+          "source_path": "trainer/PRnetTrainer.py",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/trainer/PRnetTrainer.py",
+          "bytes": 27021,
+          "sha256": "0d0eb2d8e19ce284d56313667fc2ffb532050ede8b93b4a40bc5ffa6329e8038",
+          "format": "text",
+          "license_status": "Apache-2.0",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        },
+        {
+          "id": "license",
+          "file_name": "LICENSE",
+          "source_path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Perturbation-Response-Prediction/PRnet/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "format": "text",
+          "license_status": "Apache-2.0",
+          "license_url": "https://github.com/Perturbation-Response-Prediction/PRnet/blob/f19174bde3ed2633f54c7831799cc38c4ffc7a0d/LICENSE"
+        }
+      ],
+      "limitations": [
+        "Checkpoint training membership is unknown; demo_split=test does not certify independent holdout.",
+        "Official demo preprocessing uses the median sum of all 681 profiles, including observed treatments; not a general deployment preprocessing fit.",
+        "338 source paired controls cross RNA plate; source pairs are preserved.",
+        "On this exact setting, PRnet mean delta RMSE 0.140141 exceeds no-change reference 0.132420; this does not establish model-wide performance.",
+        "Other-group mean uses this demo and excludes all connected drug group conditions; descriptive only, not external validation.",
+        "Code Apache-2.0 does not automatically establish separate dataset/weight terms; models and data are not this project's original work."
+      ],
+      "expected_outputs": [
+        "manifest.json",
+        "validation.json",
+        "qc.json",
+        "provenance.json",
+        "errors.jsonl",
+        "report.md",
+        "raw/reference_predictions.npz",
+        "tables/condition_index.csv",
+        "tables/profile_metrics.csv",
+        "tables/gene_metrics.csv",
+        "figures/figure_manifest.csv"
+      ],
+      "source_checked_on": "2026-11-13",
+      "evidence": "cases/prnet-reference-evaluation/evidence.json",
+      "workflow": [
+        "Run scripts/prnet_reference_case.py fetch into a new resource directory (7 pinned resources, about 5.41 MB).",
+        "Use the dedicated Python 3.12 CPU environment, not requirements-data alone.",
+        "Run scripts/prnet_reference_case.py run with resources-dir, a new output-dir, seed=2024, noise-draws=16, threads=1.",
+        "Read response metrics against no-change and the disclosed same-demo other-group reference; keep independent validation not_assessed."
+      ]
     },
     {
       "id": "sciplex3-chemical-dose",

@@ -1,6 +1,8 @@
 # Virtual Cell Research 后端运行环境
 
-本页保留上游固定版本的后端依赖、历史权重位置和安装记录，来源见 [NOTICE](../NOTICE)。CellOracle、药筛记录来自上游历史环境，不代表本次机器已经安装或通过推理；Geneformer 列出运行前要求。实际解释器、权重与完整推理验收需针对本次任务重新登记。
+本项目新执行的环境记录以 [CellOracle Gata1 案例](../cases/celloracle-paul2015-gata1/README.md) 和 [PRnet 参考案例](../cases/prnet-reference-evaluation/README.md) 为准：两者已在隔离的 Linux CPU 环境真实运行。CellOracle 使用完整官方依赖，未用占位模块；工程测试在 Windows 通过不代表所有模型依赖的 Windows 安装已验收。
+
+下文保留固定来源版本的依赖、历史权重位置和安装记录，来源见 [NOTICE](../NOTICE)。旧 Windows 局部导入/占位适配属于历史记录，不作为本版默认安装方案。其他后端的实际解释器、权重和推理仍需针对本次任务登记。
 
 从零配置和跨机器执行时先读 [模型资源与执行入口](model-setup.md)。该文档提供官方来源、资源获取、输入转换、调用示例和结果处理；本页保留既有环境的具体记录。
 
