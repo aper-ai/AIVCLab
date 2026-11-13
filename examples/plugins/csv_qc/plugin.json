@@ -1,0 +1,18 @@
+{
+  "api_version": "0.1",
+  "id": "example.csv-qc",
+  "version": "0.1.0",
+  "kind": "data_qc",
+  "description": "教学插件：读取细胞×基因 CSV，计算基础数值检查。不是扰动预测或完整单细胞质控。",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "input_csv": {"type": "string", "minLength": 1, "maxLength": 2048, "description": "CSV 文件的绝对路径；第一列是 cell_id，其余列为基因。"},
+      "input_scale": {"type": "string", "enum": ["unknown", "raw_counts", "normalized", "log_transformed"], "description": "由用户声明的数据尺度；不会根据数值自动推断。"}
+    },
+    "required": ["input_csv"],
+    "additionalProperties": false
+  },
+  "output_types": ["table", "report"],
+  "entrypoint": "entrypoint.py"
+}
