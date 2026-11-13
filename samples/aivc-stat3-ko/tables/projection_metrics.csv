@@ -1,0 +1,4 @@
+metric,value,unit
+位移幅度,0.546,embedding units
+随机对照,0.277,embedding units
+向量差长度,0.494,embedding units

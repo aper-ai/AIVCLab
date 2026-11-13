@@ -1,0 +1,9 @@
+{
+  "status": "unvalidated",
+  "summary": "上游历史结果无独立实验或留出数据验证。",
+  "checks": [
+    {"name": "独立实验或留出数据验证", "status": "unvalidated", "details": "沿用上游报告的 unvalidated 标记。"},
+    {"name": "修正规则重跑", "status": "not_performed", "details": "原报告的历史数值与图片按勘误保留。"},
+    {"name": "技术对照", "status": "reported", "details": "原报告记录了固定网络下随机化表达变化的投影，向量差长度用于描述投影差异。"}
+  ]
+}

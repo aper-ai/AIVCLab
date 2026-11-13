@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "run_id": "aivc-stat3-ko",
+  "title": "STAT3 敲除",
+  "backend": "CellOracle",
+  "task": "虚拟敲除",
+  "dataset": "GSE198291",
+  "source_url": "https://github.com/Pengzhi-Gao/aivc-skill/blob/587579e7e004ccfa7079c794d7dd1948caa211f9/examples/lung_cancer/reports/reproduction-report.md#L33-L56",
+  "source_commit": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+  "source_kind": "public-historical-condition-view",
+  "source_batch": "AIVC-Skill GSE198291 CellOracle historical example",
+  "parameters": {
+    "后端版本": "0.20.0",
+    "条件": "STAT3 KO",
+    "历史设定值": 0,
+    "质控前细胞数": 720,
+    "质控后细胞数": 703,
+    "结果来源": "上游历史批次"
+  },
+  "notes": "Aper AI 整理的公开历史结果视图，与 JUN 敲除来自同一批次。上游勘误注明未按修正规则重跑。"
+}
