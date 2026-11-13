@@ -4,24 +4,31 @@ from __future__ import annotations
 import json
 import math
 import sys
+from dataclasses import replace
 from pathlib import Path
 
-from PySide6.QtCore import QSignalBlocker, Qt, QUrl
+from PySide6.QtCore import QEvent, QSignalBlocker, QSize, Qt, QUrl
 from PySide6.QtGui import QColor, QDesktopServices, QIcon, QImageReader, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QComboBox, QFileDialog, QFrame, QHBoxLayout, QHeaderView,
-    QLabel, QListWidget, QMainWindow, QMessageBox, QPlainTextEdit, QPushButton,
-    QScrollArea, QSplitter, QTabWidget, QTableWidget, QTableWidgetItem,
+    QLabel, QListWidget, QMainWindow, QMenu, QMessageBox, QPlainTextEdit, QPushButton,
+    QScrollArea, QSizePolicy, QSplitter, QTabWidget, QTableWidget, QTableWidgetItem,
     QVBoxLayout, QWidget,
 )
 
-from run_data import MAX_FIGURE_BYTES, RunDataError, compare_runs, export_report, load_run, read_table, resolve_asset
+from run_data import (MAX_FIGURE_BYTES, RunDataError, compare_runs, export_report, load_run,
+                      read_table, resolve_asset, review_status, status_label)
+from ui_state import UiState
+from version import VERSION
 
 
 TITLE = "Aper AI 虚拟细胞工作台"
 APP_ROOT = Path(__file__).resolve().parent
 ASSETS = APP_ROOT / "samples"
 ICON = APP_ROOT / "installer" / "aper-workbench.ico"
+MAX_DISPLAY_CELLS = 30_000
+MAX_DISPLAY_ROWS = 600
+MAX_COMPARISON_ROWS = 2000
 STYLE = """
 QWidget { background: #f4f7fb; color: #142338; font: 13px 'Microsoft YaHei UI'; }
 QFrame#sidebar { background: #0e2136; }
@@ -79,17 +86,23 @@ def table_widget():
 
 
 def populate(table, headers, rows):
-    table.clear()
-    table.setColumnCount(len(headers))
-    table.setHorizontalHeaderLabels(list(headers))
-    table.setRowCount(len(rows))
-    for row_number, row in enumerate(rows):
-        for column, value in enumerate(row):
-            item = QTableWidgetItem(str(value))
-            item.setToolTip(str(value))
-            table.setItem(row_number, column, item)
-    if headers:
-        table.setColumnWidth(0, 205 if len(headers) < 5 else 130)
+    # A whole-table replacement should not trigger a repaint for each cell.
+    updates = table.updatesEnabled()
+    table.setUpdatesEnabled(False)
+    try:
+        table.clear()
+        table.setColumnCount(len(headers))
+        table.setHorizontalHeaderLabels(list(headers))
+        table.setRowCount(len(rows))
+        for row_number, row in enumerate(rows):
+            for column, value in enumerate(row):
+                item = QTableWidgetItem(str(value))
+                item.setToolTip(str(value))
+                table.setItem(row_number, column, item)
+        if headers:
+            table.setColumnWidth(0, 205 if len(headers) < 5 else 130)
+    finally:
+        table.setUpdatesEnabled(updates)
 
 
 def display(value):
@@ -143,10 +156,12 @@ class NumericChart(QWidget):
 
 
 class Workbench(QMainWindow):
-    def __init__(self):
+    def __init__(self, *, state: UiState | None = None):
         super().__init__()
+        self.state = state if state is not None else UiState()
         self.runs = []
         self.preview = None
+        self._figure_pixmap = None
         self.setWindowTitle(TITLE)
         self.resize(1240, 820)
         self.setMinimumSize(950, 670)
@@ -173,13 +188,28 @@ class Workbench(QMainWindow):
         self.sample_btn = button("打开 AIVC 公开样例", self.load_samples)
         side.addWidget(self.import_btn)
         side.addWidget(self.sample_btn)
+        self.recent_btn = QPushButton("最近打开…")
+        self.recent_menu = QMenu(self.recent_btn)
+        self.recent_menu.aboutToShow.connect(self._populate_recent_menu)
+        self.recent_btn.setMenu(self.recent_menu)
+        side.addWidget(self.recent_btn)
         side.addSpacing(14)
         side.addWidget(label("已打开的运行"))
         self.run_list = QListWidget()
         self.run_list.setObjectName("runs")
         self.run_list.setAccessibleName("已打开的运行")
         side.addWidget(self.run_list, 1)
-        side.addWidget(label("本地查看 · Windows 预览版 0.1.0"))
+        manage = QHBoxLayout()
+        self.reload_btn = button("刷新当前", self.reload_current_run)
+        self.close_run_btn = button("关闭当前", self.close_current_run)
+        self.reload_btn.setToolTip("重新读取当前目录中的清单、源表和图件")
+        self.close_run_btn.setToolTip("从已打开列表中移除，源文件保留")
+        self.reload_btn.setEnabled(False)
+        self.close_run_btn.setEnabled(False)
+        manage.addWidget(self.reload_btn)
+        manage.addWidget(self.close_run_btn)
+        side.addLayout(manage)
+        side.addWidget(label(f"本地查看 · Windows 预览版 {VERSION}"))
         layout.addWidget(sidebar)
 
         body = QWidget()
@@ -242,12 +272,15 @@ class Workbench(QMainWindow):
         self.figure_source_btn = button("打开图表来源清单", self.open_figure_source)
         self.figure_source_btn.setEnabled(False)
         layout.addWidget(self.figure_source_btn, 0, Qt.AlignmentFlag.AlignLeft)
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
+        self.figure_scroll = QScrollArea()
+        self.figure_scroll.setWidgetResizable(True)
+        self.figure_scroll.viewport().installEventFilter(self)
         self.figure_image = label("当前运行无可预览的图。", "muted")
         self.figure_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        scroll.setWidget(self.figure_image)
-        layout.addWidget(scroll, 1)
+        self.figure_image.setMinimumSize(1, 1)
+        self.figure_image.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
+        self.figure_scroll.setWidget(self.figure_image)
+        layout.addWidget(self.figure_scroll, 1)
 
     def _create_tables(self):
         layout = self._tab("源表")
@@ -332,7 +365,8 @@ class Workbench(QMainWindow):
         return self.runs[row] if 0 <= row < len(self.runs) else None
 
     def import_directory(self):
-        folder = QFileDialog.getExistingDirectory(self, "选择含 manifest.json 的结果目录")
+        folder = QFileDialog.getExistingDirectory(self, "选择含 manifest.json 的结果目录",
+                                                  self.state.directory("import"))
         if folder:
             try:
                 self.add_run(folder)
@@ -341,24 +375,85 @@ class Workbench(QMainWindow):
 
     def add_run(self, folder):
         path = Path(folder).resolve()
+        # Load before changing any visible state, including when reopening a path.
+        # A moved, corrupt or partly written bundle must not replace the last view.
+        loaded = load_run(path)
         for index, run in enumerate(self.runs):
             if run.root == path:
-                self.run_list.setCurrentRow(index)
-                return run
-        run = load_run(path)
-        self.runs.append(run)
-        title = run.manifest.get("title")
-        name = title.strip() if isinstance(title, str) and title.strip() else run.run_id
-        self.run_list.addItem(name)
-        self.run_list.item(self.run_list.count() - 1).setToolTip(f"{run.run_id}\n{run.root}")
-        for box in (self.left_box, self.right_box):
-            box.addItem(f"{name}  ·  {len(self.runs):02d}")
-            box.setItemData(box.count() - 1, f"{run.run_id}\n{run.root}", Qt.ItemDataRole.ToolTipRole)
-        if len(self.runs) == 2:
-            self.right_box.setCurrentIndex(1)
-        self.run_list.setCurrentRow(len(self.runs) - 1)
-        self.refresh_export()
-        return run
+                self.runs[index] = loaded
+                break
+        else:
+            self.runs.append(loaded)
+        self.state.remember_run(loaded.root)
+        self._sync_run_choices(loaded.root)
+        return loaded
+
+    def _sync_run_choices(self, selected_root):
+        """Rebuild the three selectors atomically, retaining identities across removals."""
+        left_root, right_root = self.left_box.currentData(), self.right_box.currentData()
+        previous_count = self.left_box.count()
+        with QSignalBlocker(self.run_list), QSignalBlocker(self.left_box), QSignalBlocker(self.right_box):
+            self.run_list.clear()
+            self.left_box.clear()
+            self.right_box.clear()
+            indices = {}
+            for index, run in enumerate(self.runs):
+                title = run.manifest.get("title")
+                name = title.strip() if isinstance(title, str) and title.strip() else run.run_id
+                root = str(run.root)
+                indices[root] = index
+                self.run_list.addItem(name)
+                self.run_list.item(index).setToolTip(f"{run.run_id}\n{run.root}")
+                for box in (self.left_box, self.right_box):
+                    box.addItem(f"{name}  ·  {index + 1:02d}", root)
+                    box.setItemData(index, f"{run.run_id}\n{run.root}", Qt.ItemDataRole.ToolTipRole)
+            left = indices.get(left_root, 0 if self.runs else -1)
+            fallback_right = next((i for i in range(len(self.runs)) if i != left), left)
+            right = indices.get(right_root, fallback_right)
+            if previous_count < 2 and len(self.runs) >= 2:
+                right = fallback_right
+            self.left_box.setCurrentIndex(left)
+            self.right_box.setCurrentIndex(right)
+            self.run_list.setCurrentRow(indices.get(str(selected_root), 0 if self.runs else -1))
+        self.show_run(self.run_list.currentRow())
+        self.show_comparison()
+
+    def reload_current_run(self):
+        if run := self.current_run():
+            try:
+                self.add_run(run.root)
+            except (OSError, ValueError) as exc:
+                QMessageBox.warning(self, "刷新失败", f"{exc}\n\n已保留上次打开的记录。")
+
+    def close_current_run(self):
+        index = self.run_list.currentRow()
+        if not 0 <= index < len(self.runs):
+            return
+        del self.runs[index]
+        selected = self.runs[min(index, len(self.runs) - 1)].root if self.runs else None
+        self._sync_run_choices(selected)
+
+    def _populate_recent_menu(self):
+        self.recent_menu.clear()
+        recent = self.state.recent_paths()
+        if not recent:
+            self.recent_menu.addAction("还没有打开记录").setEnabled(False)
+            return
+        for root in recent:
+            action = self.recent_menu.addAction(root)
+            action.triggered.connect(lambda _checked=False, path=root: self._open_recent(path))
+        self.recent_menu.addSeparator()
+        self.recent_menu.addAction("清空最近记录", self.state.clear_recent)
+
+    def _open_recent(self, path):
+        try:
+            self.add_run(path)
+        except (OSError, ValueError) as exc:
+            QMessageBox.warning(self, "无法打开最近目录", f"{path}\n\n{exc}")
+
+    def closeEvent(self, event):
+        self.state.sync()
+        super().closeEvent(event)
 
     def load_samples(self):
         try:
@@ -375,37 +470,55 @@ class Workbench(QMainWindow):
 
     def show_run(self, row):
         run = self.current_run()
+        self.reload_btn.setEnabled(run is not None)
+        self.close_run_btn.setEnabled(run is not None)
         if run is None:
+            self.status.setText("导入一份 AIVC 结果目录，或打开两个内置公开样例。")
+            self.summary.setText("导入后查看数据、方法、来源和验证状态。")
+            populate(self.metadata, (), ())
+            self.notes.clear()
+            self.source_btn.setEnabled(False)
+            self.open_dir_btn.setEnabled(False)
+            self.figure_source_btn.setEnabled(False)
+            for box in (self.figure_box, self.table_box):
+                with QSignalBlocker(box):
+                    box.clear()
+            self.show_figure(-1)
+            self.show_table(-1)
+            self.parameters.clear()
+            self.report.clear()
+            self.refresh_export()
             return
         self.status.setText(f"{run.run_id}  ·  {run.backend}  ·  {run.dataset}")
         self.summary.setText(f"运行任务：{run.task}\n结果目录：{run.root}")
         self.source_btn.setEnabled(self.public_source(run) is not None)
         self.open_dir_btn.setEnabled(True)
-        status = run.manifest.get("status", "未记录")
-        validation = run.validation.get("validation_status", run.validation.get(
-            "status", run.manifest.get("validation_status", "未记录")))
-        validation = {"unvalidated": "未经独立验证", "validated": "上游标记为已验证",
-                      "not_performed": "未进行"}.get(validation, validation) if isinstance(validation, str) else validation
+        review = review_status(run)
         populate(self.metadata, ("字段", "记录"), [
             ("运行标识", run.run_id), ("后端", run.backend), ("任务", run.task),
-            ("数据集", run.dataset), ("运行状态", display(status)),
-            ("独立验证状态", display(validation)), ("来源", run.source_url or "未记录"),
+            ("数据集", run.dataset), ("执行状态", status_label(review.execution_status)),
+            ("响应检查", status_label(review.response_status)),
+            ("排名检查", status_label(review.ranking_status)),
+            ("独立验证状态", status_label(review.independent_validation)),
+            ("来源", run.source_url or "未记录"),
             ("结果类别", "公开历史条件" if run.manifest.get("source_kind") ==
              "public-historical-condition-view" else display(run.manifest.get("source_kind", "未记录"))),
             ("源表 / 图", f"{len(run.tables)} / {len(run.figures)}"),
         ])
-        self.notes.setPlainText("\n\n".join(value for value in (run.notes, *run.warnings) if value))
+        self.notes.setPlainText("\n\n".join(dict.fromkeys(
+            value for value in (run.notes, *review.notes, *run.warnings) if value)))
         for box, paths in ((self.figure_box, run.figures), (self.table_box, run.tables)):
             with QSignalBlocker(box):
                 box.clear()
                 box.addItems([path.relative_to(run.root).as_posix() for path in paths])
-        self.figure_source_btn.setEnabled(any(path.name == "figure_manifest.csv" for path in run.tables))
+        self.figure_source_btn.setEnabled(any(path.name.casefold() == "figure_manifest.csv" for path in run.tables))
         self.show_figure(self.figure_box.currentIndex())
         self.show_table(self.table_box.currentIndex())
         self.show_parameters()
         self.show_artifact()
 
     def show_figure(self, index):
+        self._figure_pixmap = None
         self.figure_image.clear()
         run = self.current_run()
         if run is None or index < 0 or index >= len(run.figures):
@@ -436,19 +549,35 @@ class Workbench(QMainWindow):
         if pixmap.isNull():
             self.figure_image.setText("无法解码此图片。")
             return
-        self.figure_image.setPixmap(pixmap.scaled(890, 560, Qt.AspectRatioMode.KeepAspectRatio,
-                                                 Qt.TransformationMode.SmoothTransformation))
+        self._figure_pixmap = pixmap
+        self._fit_figure()
+
+    def _fit_figure(self):
+        if self._figure_pixmap is None:
+            return
+        viewport = self.figure_scroll.viewport().size()
+        target = QSize(max(1, min(viewport.width() - 24, self._figure_pixmap.width())),
+                       max(1, min(viewport.height() - 24, self._figure_pixmap.height())))
+        self.figure_image.setPixmap(self._figure_pixmap.scaled(
+            target, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+
+    def eventFilter(self, watched, event):
+        if (hasattr(self, "figure_scroll") and watched is self.figure_scroll.viewport()
+                and event.type() == QEvent.Type.Resize):
+            self._fit_figure()
+        return super().eventFilter(watched, event)
 
     def open_figure_source(self):
         if run := self.current_run():
-            index = next((i for i, path in enumerate(run.tables) if path.name == "figure_manifest.csv"), -1)
+            index = next((i for i, path in enumerate(run.tables) if path.name.casefold() == "figure_manifest.csv"), -1)
             if index >= 0:
                 self.table_box.setCurrentIndex(index)
                 self.tabs.setCurrentIndex(2)
 
     def show_table(self, index):
         self.preview = None
-        self.column_box.clear()
+        with QSignalBlocker(self.column_box):
+            self.column_box.clear()
         self.chart.set_points([])
         run = self.current_run()
         if run is None or not 0 <= index < len(run.tables):
@@ -457,28 +586,37 @@ class Workbench(QMainWindow):
             return
         path = run.tables[index]
         try:
-            self.preview = read_table(path, limit=600, root=run.root)
+            preview = read_table(path, limit=MAX_DISPLAY_ROWS, root=run.root)
+            row_budget = max(1, min(MAX_DISPLAY_ROWS, MAX_DISPLAY_CELLS // max(1, len(preview.headers))))
+            self.preview = replace(preview, rows=preview.rows[:row_budget],
+                                   truncated=preview.truncated or len(preview.rows) > row_budget)
         except (OSError, ValueError) as exc:
             populate(self.data_table, (), ())
             self.table_info.setText(f"预览失败：{exc}")
             return
         populate(self.data_table, self.preview.headers, self.preview.rows)
-        self.table_info.setText(f"{path.relative_to(run.root)} · 展示 {len(self.preview.rows)} 行"
-                                + ("（预览已截断，完整文件保留在原目录）" if self.preview.truncated else ""))
-        for col, title in enumerate(self.preview.headers):
-            if any(self.numeric(row, col) is not None for row in self.preview.rows):
-                self.column_box.addItem(title, col)
+        message = f"{path.relative_to(run.root)} · 展示 {len(self.preview.rows)} 行"
+        if self.preview.truncated:
+            message += "（行预览已截断，完整文件保留在原目录）"
+        if self.preview.columns_truncated:
+            message += f" · 源表共 {self.preview.total_columns} 列，预览前 {len(self.preview.headers)} 列"
+        self.table_info.setText(message)
+        with QSignalBlocker(self.column_box):
+            for col, title in enumerate(self.preview.headers):
+                if any(self.numeric(row, col) is not None for row in self.preview.rows):
+                    self.column_box.addItem(title, col)
+        self.show_column(self.column_box.currentIndex())
 
     @staticmethod
     def numeric(row, col):
         try:
             result = float(row[col])
-        except (IndexError, ValueError):
+        except (IndexError, TypeError, ValueError):
             return None
         return result if math.isfinite(result) else None
 
     def show_column(self, index):
-        if self.preview is None or index < 0:
+        if self.preview is None or not 0 <= index < self.column_box.count():
             self.chart.set_points([])
             return
         col = self.column_box.itemData(index)
@@ -495,7 +633,7 @@ class Workbench(QMainWindow):
 
     def comparison_pair(self):
         left, right = self.left_box.currentIndex(), self.right_box.currentIndex()
-        if left >= 0 and right >= 0 and left != right:
+        if 0 <= left < len(self.runs) and 0 <= right < len(self.runs) and left != right:
             return self.runs[left], self.runs[right]
         return None
 
@@ -505,6 +643,7 @@ class Workbench(QMainWindow):
         if pair is None:
             self.compare_info.setText("打开两次运行后选择不同的左右运行。")
             populate(self.comparison_table, (), ())
+            populate(self.metric_table, (), ())
             self.metric_title.hide()
             self.metric_table.hide()
             self.metric_notes.hide()
@@ -528,7 +667,13 @@ class Workbench(QMainWindow):
             populate(self.metric_table, ("指标", "左侧", "右侧", "差值", "单位"),
                      [(row.name, row.left, row.right, f"{row.delta:+}", row.unit) for row in metrics])
             self.metric_table.setColumnWidth(0, 205)
+        else:
+            populate(self.metric_table, (), ())
         rows = [row for row in comparison.rows if row.changed or not self.differences_only.isChecked()]
+        if len(rows) > MAX_COMPARISON_ROWS:
+            self.compare_info.setText(self.compare_info.text()
+                + f" 共 {len(rows)} 项比较记录，界面展示前 {MAX_COMPARISON_ROWS} 项，报告保留全部记录。")
+            rows = rows[:MAX_COMPARISON_ROWS]
         populate(self.comparison_table, ("字段", "左侧运行", "右侧运行", "差异"),
                  [(row.field, row.left, row.right, "不同" if row.changed else "相同") for row in rows])
         self.comparison_table.setColumnWidth(1, 246)
@@ -547,11 +692,13 @@ class Workbench(QMainWindow):
 
     def open_public_source(self):
         if (run := self.current_run()) and (url := self.public_source(run)):
-            QDesktopServices.openUrl(url)
+            if not QDesktopServices.openUrl(url):
+                QMessageBox.warning(self, "无法打开来源", f"请检查系统默认浏览器。\n\n{run.source_url}")
 
     def open_source_directory(self):
         if run := self.current_run():
-            QDesktopServices.openUrl(QUrl.fromLocalFile(str(run.root)))
+            if not run.root.is_dir() or not QDesktopServices.openUrl(QUrl.fromLocalFile(str(run.root))):
+                QMessageBox.warning(self, "无法打开目录", f"目录可能已移动或无法访问。\n\n{run.root}")
 
     def show_artifact(self, _index=0):
         run = self.current_run()
@@ -570,20 +717,34 @@ class Workbench(QMainWindow):
     def refresh_export(self, _index=0):
         compare = self.tabs.currentIndex() == 4
         self.export_btn.setText("导出对比报告…" if compare else "导出运行报告…")
-        self.export_btn.setEnabled(bool(self.comparison_pair()) if compare else bool(self.runs))
+        self.export_btn.setEnabled(bool(self.comparison_pair()) if compare else self.current_run() is not None)
 
     def choose_export(self):
         run = self.current_run()
         if run is None:
             return
         pair = self.comparison_pair() if self.tabs.currentIndex() == 4 else None
+        if self.tabs.currentIndex() == 4 and pair is None:
+            return
+        filename = "Aper AI 运行对比.html" if pair else "Aper AI 运行报告.html"
+        initial_path = str(Path(self.state.directory("export")) / filename)
         path, _ = QFileDialog.getSaveFileName(self, "导出 HTML 复核报告",
-                                             "Aper AI 运行对比.html" if pair else "Aper AI 运行报告.html",
+                                             initial_path,
                                              "HTML (*.html)")
         if not path:
             return
         try:
-            saved = export_report(Path(path).with_suffix(".html"), *(pair or (run,)))
+            selected = Path(path)
+            if selected.suffix and selected.suffix.casefold() not in {".html", ".htm"}:
+                raise RunDataError("报告文件名请使用 .html 或 .htm 扩展名。")
+            destination = selected if selected.suffix else selected.with_suffix(".html")
+            if destination != selected and destination.exists():
+                overwrite = QMessageBox.question(self, "确认覆盖报告", f"文件已存在：{destination}\n是否覆盖？",
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
+                if overwrite != QMessageBox.StandardButton.Yes:
+                    return
+            saved = export_report(destination, *(pair or (run,)))
+            self.state.remember_export(saved)
             self.status.setText(f"已导出报告：{saved}")
         except (OSError, ValueError) as exc:
             QMessageBox.warning(self, "导出失败", str(exc))

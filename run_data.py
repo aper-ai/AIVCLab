@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import csv
 import gzip
+import hashlib
 import html
 import io
 import json
@@ -14,6 +15,7 @@ import re
 import tempfile
 import zlib
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from decimal import Decimal, localcontext
 from pathlib import Path
 from typing import Any
@@ -24,12 +26,14 @@ MAX_METADATA_BYTES = 1024 * 1024
 MAX_TABLE_BYTES = 16 * 1024 * 1024
 MAX_FIGURE_BYTES = 8 * 1024 * 1024
 MAX_COLUMNS = 512
+MAX_SOURCE_COLUMNS = 100_000
 MAX_ASSETS = 1000
 MAX_ASSET_DEPTH = 8
 MAX_PREVIEW_ROWS = 10_000
 MAX_METRIC_BYTES = 256 * 1024
 MAX_METRIC_TABLES = 12
 MAX_METRIC_ROWS = 1000
+MAX_REPORT_TABLE_BYTES = 32 * 1024 * 1024
 FIGURE_MIME = {
     ".png": "image/png",
     ".jpg": "image/jpeg",
@@ -71,6 +75,20 @@ class TablePreview:
     headers: tuple[str, ...]
     rows: tuple[tuple[str, ...], ...]
     truncated: bool
+    total_columns: int = 0
+    columns_truncated: bool = False
+
+
+@dataclass(frozen=True)
+class ReviewStatus:
+    """Separate upstream declarations; reading a bundle never validates its science."""
+
+    execution_status: str
+    response_status: str
+    ranking_status: str
+    independent_validation: str
+    notes: tuple[str, ...]
+    sources: tuple[tuple[str, str], ...]
 
 
 @dataclass(frozen=True)
@@ -257,6 +275,120 @@ def _label(value: Any) -> str:
     return ""
 
 
+_UNKNOWN_LABELS = {"", "unknown", "unspecified", "not_recorded", "null", "none", "n/a", "na",
+                   "未记录", "未声明", "未知", "不详", "缺失"}
+
+
+def _known(value: Any) -> bool:
+    if value is MISSING or value is None:
+        return False
+    if isinstance(value, str):
+        return value.strip().casefold() not in _UNKNOWN_LABELS
+    if isinstance(value, (list, dict)):
+        return bool(value) and all(_known(item) for item in (value.values() if isinstance(value, dict) else value))
+    return True
+
+
+def status_label(value: str) -> str:
+    """Human-readable status without upgrading a declaration to verified evidence."""
+    return {
+        "unknown": "未记录 / 未知", "unvalidated": "未经独立验证",
+        "declared_validated": "上游声明已验证（未复核证据）", "conflicting": "上游记录互相冲突",
+        "result_available": "上游已生成结果", "partial": "部分完成", "failed": "失败",
+        "running": "运行中", "pending": "待运行", "cancelled": "已取消",
+        "no_prediction": "无预测结果", "not_applicable": "不适用", "skipped": "已跳过",
+        "varying": "响应有变化", "indistinguishable": "响应不可区分",
+        "available": "上游记录为可用", "unresolved": "尚不能区分候选优先级",
+        "insufficient_conditions": "条件数不足", "not_available": "不可用",
+        "passed": "上游技术检查通过", "not_performed": "未进行",
+    }.get(value, f"上游状态：{value}" if value else "未记录 / 未知")
+
+
+def review_status(run: RunData) -> ReviewStatus:
+    """Normalize known status fields while retaining their JSON source locations.
+
+    A generic validation.status=passed/validated may describe a schema check,
+    not independent validation. Original metadata remains untouched.
+    """
+    notes: list[str] = []
+    sources: list[tuple[str, str]] = []
+    execution_aliases = {"completed": "result_available", "complete": "result_available",
+                         "success": "result_available", "succeeded": "result_available"}
+    execution_values = {"result_available", "partial", "failed", "running", "pending",
+                        "cancelled", "no_prediction", "not_applicable", "skipped"}
+    independent_aliases = {"none": "unvalidated", "not_performed": "unvalidated",
+                           "not_tested": "unvalidated", "unvalidated": "unvalidated",
+                           "validated": "declared_validated", "independently_validated": "declared_validated",
+                           "failed": "failed", "unknown": "unknown"}
+
+    def read(document: dict[str, Any], path: str) -> Any:
+        value: Any = document
+        for key in path.split("."):
+            if not isinstance(value, dict) or key not in value:
+                return MISSING
+            value = value[key]
+        return value
+
+    def collect(field: str, entries: tuple[tuple[str, dict[str, Any], str], ...],
+                kind: str) -> str:
+        found = []
+        for filename, document, path in entries:
+            declared_path = path
+            raw = read(document, path)
+            if isinstance(raw, dict):
+                raw = raw.get("status", MISSING)
+                path += ".status"
+            if raw is MISSING or raw is None:
+                continue
+            if not isinstance(raw, str) or not raw.strip():
+                notes.append(f"{filename}.{path} 未提供可识别的状态字符串。")
+                continue
+            value = raw.strip().casefold()
+            if kind == "execution":
+                value = execution_aliases.get(value, value)
+                if value not in execution_values:
+                    continue
+            elif kind == "independent":
+                # Legacy negative declarations remain useful. A generic positive
+                # status can describe technical/schema validation, so it cannot
+                # assert independent experimental or held-out validation.
+                if declared_path == "status" and value not in {"unvalidated", "not_performed", "not_tested"}:
+                    continue
+                if path.startswith("independent_validation") and value in {"passed", "success"}:
+                    value = "declared_validated"
+                else:
+                    value = independent_aliases.get(value, "unknown")
+            elif value in _UNKNOWN_LABELS:
+                value = "unknown"
+            sources.append((field, f"{filename}.{path}"))
+            found.append(value)
+        known = set(found) - {"unknown"}
+        if len(known) > 1:
+            notes.append(f"{field} 的上游记录不一致，不能自动选择其中一项。")
+            return "conflicting"
+        return next(iter(known)) if known else "unknown"
+
+    documents = (("manifest.json", run.manifest), ("validation.json", run.validation))
+    execution = collect("execution_status", tuple(
+        (name, doc, key) for name, doc in documents
+        for key in ("execution_status", "prediction_status", "status")), "execution")
+    response = collect("response_status", tuple(
+        (name, doc, key) for name, doc in documents
+        for key in ("response_status", "degeneracy_check.response_status")), "technical")
+    ranking = collect("ranking_status", tuple(
+        (name, doc, key) for name, doc in documents
+        for key in ("ranking_status", "degeneracy_check.ranking_status")), "technical")
+    independent = collect("independent_validation", tuple(
+        (name, doc, key) for name, doc in documents
+        for key in ("independent_validation", "validation_status")) +
+        (("validation.json", run.validation, "status"),), "independent")
+    if independent == "unknown":
+        notes.append("未记录独立实验或留出验证状态；运行完成及技术检查通过不能替代独立验证。")
+    elif independent == "declared_validated":
+        notes.append("独立验证状态来自上游声明；本查看器未复核验证数据、划分或实验结果。")
+    return ReviewStatus(execution, response, ranking, independent, tuple(notes), tuple(sources))
+
+
 def _optional_text(root: Path, name: str, warnings: list[str]) -> str:
     path = root / name
     if path.exists() or path.is_symlink():
@@ -335,8 +467,9 @@ def _read_table(path: Path | str, *, limit: int, maximum: int, root: Path | str 
         headers = next((row for row in reader if row), None)
         if not headers or not any(header.strip() for header in headers):
             raise RunDataError(f"{filename} 缺少表头。")
-        if len(headers) > MAX_COLUMNS:
-            raise RunDataError(f"{filename} 超过 {MAX_COLUMNS} 列预览限制。")
+        total_columns = len(headers)
+        if total_columns > MAX_SOURCE_COLUMNS:
+            raise RunDataError(f"{filename} 超过 {MAX_SOURCE_COLUMNS} 列源表读取限制。")
         for row in reader:
             if not row:
                 continue
@@ -345,10 +478,11 @@ def _read_table(path: Path | str, *, limit: int, maximum: int, root: Path | str 
             if len(rows) == limit:
                 truncated = True
                 break
-            rows.append(tuple(row))
+            rows.append(tuple(row[:MAX_COLUMNS]))
     except csv.Error as exc:
         raise RunDataError(f"{filename} 第 {reader.line_num} 行无法按 CSV 读取（{exc}）。") from exc
-    return TablePreview(tuple(headers), tuple(rows), truncated)
+    return TablePreview(tuple(headers[:MAX_COLUMNS]), tuple(rows), truncated,
+                        total_columns, total_columns > MAX_COLUMNS)
 
 
 def _json(value: Any, *, formatted: bool = False) -> str:
@@ -383,7 +517,7 @@ def _metric_rows(preview: TablePreview) -> dict[str, tuple[str, str]]:
     metrics = {}
     for raw_name, raw_value, raw_unit in preview.rows:
         name = raw_name.strip()
-        if not name or name in metrics:
+        if not _known(name) or name in metrics:
             raise RunDataError("存在空白或重复指标名称。")
         metrics[name] = (raw_value.strip(), raw_unit.strip())
     return metrics
@@ -427,7 +561,7 @@ def _compare_metrics(left: RunData, right: RunData) -> tuple[tuple[MetricCompari
                 continue
             left_raw, left_unit = left_metrics[name]
             right_raw, right_unit = right_metrics[name]
-            if not left_unit or left_unit != right_unit:
+            if not _known(left_unit) or not _known(right_unit) or left_unit != right_unit:
                 notes.append(f"{table} · {name} 的单位缺失或不一致。")
                 continue
             left_number, right_number = _metric_number(left_raw), _metric_number(right_raw)
@@ -446,13 +580,97 @@ def _compare_metrics(left: RunData, right: RunData) -> tuple[tuple[MetricCompari
     return tuple(differences), tuple(notes)
 
 
+# Fields describing the measurement context, not the intervention being compared.
+# A new producer can declare additional invariants in comparison_context without
+# requiring a backend-specific reader or changing the original result files.
+_CONTEXT_FIELDS = {
+    "species": "物种", "cell_background": "细胞背景", "cell_type": "细胞类型",
+    "baseline_source": "基线来源", "baseline_kind": "基线类型",
+    "accepts_user_baseline": "用户基线能力", "gene_space": "基因空间",
+    "gene_id_type": "基因标识体系", "gene_order_sha256": "基因顺序哈希",
+    "response_scale": "响应尺度", "expression_scale": "表达尺度",
+    "normalization": "归一化方法", "preprocessing": "预处理",
+    "dose_unit": "剂量单位", "time_unit": "时间单位",
+    "checkpoint_sha256": "权重哈希", "weights_sha256": "权重哈希",
+    "checkpoint_sha256_16": "权重 SHA256 前16位",
+    "input_sha256": "输入数据哈希", "dataset_sha256": "数据集哈希",
+    "baseline_sha256": "基线哈希", "output_type": "输出类型",
+}
+
+_CORE_CONTEXT_FIELDS = {
+    "backend": "后端", "task": "任务", "dataset": "数据集", "backend_version": "后端版本",
+    "model": "模型", "model_version": "模型版本", "dataset_version": "数据集版本",
+    "metrics": "指标定义", "units": "单位", "source_kind": "结果类型",
+    "source_batch": "来源批次", "source_commit": "来源版本",
+}
+
+
+def _context_entries(run: RunData) -> dict[str, list[tuple[str, Any]]]:
+    entries: dict[str, list[tuple[str, Any]]] = {}
+    documents = (("manifest.json", run.manifest), ("validation.json", run.validation),
+                 ("provenance.json", run.provenance), ("parameters", run.parameters))
+    for filename, document in documents:
+        for key in _CONTEXT_FIELDS:
+            if key in document:
+                entries.setdefault(key, []).append((f"{filename}.{key}", document[key]))
+        if "comparison_context" in document:
+            context = document["comparison_context"]
+            if isinstance(context, dict) and context:
+                for key, value in context.items():
+                    # A context contract adds invariants; it never overrides
+                    # contradictory declarations elsewhere in the same bundle.
+                    canonical = key if key in _CONTEXT_FIELDS or key in _CORE_CONTEXT_FIELDS else f"comparison_context.{key}"
+                    entries.setdefault(canonical, []).append(
+                        (f"{filename}.comparison_context.{key}", value))
+            else:
+                entries.setdefault("comparison_context", []).append((f"{filename}.comparison_context", context))
+    # Core metadata already appears in compare_runs. Collect it again only when
+    # a context contract repeats that key, to detect contradictions rather than
+    # silently preferring the contract.
+    for key in entries.keys() & _CORE_CONTEXT_FIELDS.keys():
+        for filename, document in documents:
+            if key in document:
+                entries[key].append((f"{filename}.{key}", document[key]))
+    return entries
+
+
+def _compare_context(left: RunData, right: RunData) -> tuple[list[ComparisonRow], list[str], bool]:
+    left_entries, right_entries = _context_entries(left), _context_entries(right)
+    rows: list[ComparisonRow] = []
+    reasons: list[str] = []
+    anchored = (_known(left.manifest.get("source_batch")) and
+                left.manifest.get("source_batch") == right.manifest.get("source_batch"))
+    for key in sorted(left_entries.keys() | right_entries.keys()):
+        label = _CONTEXT_FIELDS.get(key, _CORE_CONTEXT_FIELDS.get(key, key))
+        a, b = left_entries.get(key, []), right_entries.get(key, [])
+        values = []
+        for side, declared in (("左侧", a), ("右侧", b)):
+            unique = {_json(value) for _, value in declared}
+            if not declared or any(not _known(value) for _, value in declared):
+                reasons.append(f"{side}{label}缺失或未知。")
+                values.append(MISSING if not declared else declared[0][1])
+            elif len(unique) != 1:
+                reasons.append(f"{side}{label}在上游记录中冲突。")
+                values.append({source: value for source, value in declared})
+            else:
+                values.append(declared[0][1])
+        fields = _comparison_rows(label, *values)
+        if all(_known(value) for value in values) and any(row.changed for row in fields):
+            reasons.append(f"{label}不一致。")
+        rows.extend(fields)
+        if key in {"input_sha256", "dataset_sha256", "source_batch", "comparison_context.context_id"}:
+            anchored = anchored or (all(_known(value) for value in values) and
+                                    _json(values[0]) == _json(values[1]))
+    return rows, list(dict.fromkeys(reasons)), anchored
+
+
 def compare_runs(left: RunData, right: RunData) -> RunComparison:
     """Compare run context and parameters, then subtract matching declared metrics."""
     reasons = []
     rows = []
     for key, label in (("backend", "后端"), ("task", "任务"), ("dataset", "数据集")):
         left_label, right_label = getattr(left, key), getattr(right, key)
-        if not left_label or not right_label:
+        if not _known(left_label) or not _known(right_label):
             reasons.append(f"{label}信息不完整。")
         elif left_label != right_label:
             reasons.append(f"{label}不一致。")
@@ -468,16 +686,34 @@ def compare_runs(left: RunData, right: RunData) -> RunComparison:
         if left_value is MISSING and right_value is MISSING:
             continue
         fields = _comparison_rows(label, left_value, right_value)
-        if key != "run_id" and any(row.changed for row in fields):
-            reasons.append(f"{label}不一致。")
+        if key != "run_id":
+            if not _known(left_value) or not _known(right_value):
+                reasons.append(f"{label}缺失或未知。")
+            elif any(row.changed for row in fields):
+                reasons.append(f"{label}不一致。")
         rows.extend(fields)
     left_parameters = left.manifest.get("parameters", left.manifest.get("params", MISSING))
     right_parameters = right.manifest.get("parameters", right.manifest.get("params", MISSING))
     if left_parameters is not MISSING or right_parameters is not MISSING:
         rows.extend(_comparison_rows("参数", left_parameters, right_parameters))
+    context_rows, context_reasons, anchored = _compare_context(left, right)
+    rows.extend(context_rows)
+    reasons.extend(context_reasons)
+    for side, run in (("左侧", left), ("右侧", right)):
+        review = review_status(run)
+        status = review.execution_status
+        if status in {"failed", "no_prediction", "cancelled", "running", "pending", "conflicting",
+                      "skipped", "not_applicable"}:
+            reasons.append(f"{side}运行状态为{status_label(status)}，不能将源表视为完整有效结果。")
+        for label, technical in (("响应检查", review.response_status), ("排名检查", review.ranking_status)):
+            if technical in {"failed", "conflicting"}:
+                reasons.append(f"{side}{label}为{status_label(technical)}；源表未声明指标角色，已暂停数值差值，保留原始数据供诊断。")
     if reasons:
         return RunComparison(False, tuple(reasons), tuple(rows), (), ("运行上下文无法确认可比，已跳过数值差值。",))
     metrics, metric_notes = _compare_metrics(left, right)
+    if metrics and not anchored and left.root != right.root:
+        return RunComparison(False, ("缺少共同来源批次、数据指纹或明确的比较上下文标识。",), tuple(rows), (),
+                             metric_notes + ("同名数据集及同单位不能确认数据来源和处理尺度一致，已跳过数值差值。",))
     return RunComparison(True, (), tuple(rows), metrics, metric_notes)
 
 
@@ -516,11 +752,56 @@ def _figure_uri(run: RunData, figure: Path) -> str:
     return f"data:{FIGURE_MIME[suffix]};base64,{base64.b64encode(data).decode('ascii')}"
 
 
-def _run_html(run: RunData, index: int) -> str:
+def _table_downloads_html(run: RunData, budget: list[int]) -> str:
+    """Embed exact source bytes, sharing one bounded budget across the report."""
+    attached: list[str] = []
+    omitted: list[str] = []
+    for table in run.tables:
+        relative = table.relative_to(run.root).as_posix()
+        try:
+            path = resolve_asset(run.root, table)
+            if path.stat().st_size > budget[0]:
+                raise RunDataError("超过本报告剩余源表附件预算")
+            data = _read_bounded(path, min(MAX_TABLE_BYTES, budget[0]))
+            budget[0] -= len(data)
+            mime = "application/gzip" if table.name.lower().endswith(".gz") else "text/csv;charset=utf-8"
+            encoded = base64.b64encode(data).decode("ascii")
+            name = relative.replace("/", "__")
+            digest = hashlib.sha256(data).hexdigest()
+            attached.append(f'<li><a download="{html.escape(name)}" href="data:{mime};base64,{encoded}">'
+                            f'{html.escape(relative)}</a> · {len(data)} bytes · SHA256 <code>{digest}</code></li>')
+        except (RunDataError, OSError) as exc:
+            omitted.append(f"<li>{html.escape(relative)} · {html.escape(str(exc))}</li>")
+    sections = ["<h3>完整源表附件</h3>",
+                "<p>以下下载包含导出时的原始文件字节，保留全部行列、顺序和缺失值；SHA256 用于核对附件内容。"
+                "表格预览不代表完整数据，也不代表已验证其科学有效性。</p>"]
+    if attached:
+        sections.append("<ul>" + "".join(attached) + "</ul>")
+    else:
+        sections.append("<p>本报告没有内嵌源表附件。</p>")
+    if omitted:
+        sections.append("<h4>未内嵌源表（仍在原运行目录）</h4><ul>" + "".join(omitted) + "</ul>")
+    sections.append(f"<p>每张源表最多 {MAX_TABLE_BYTES // (1024 * 1024)} MiB；"
+                    f"整份报告的源表原字节合计最多 {MAX_REPORT_TABLE_BYTES // (1024 * 1024)} MiB。"
+                    "原始模型文件仅列出名称，未作为附件导出。</p>")
+    return "\n".join(sections)
+
+
+def _run_html(run: RunData, index: int, *, table_budget: list[int] | None = None) -> str:
     escape = html.escape
     heading = ("后端", "任务", "数据集")
     context = tuple(value or "未声明" for value in (run.backend, run.task, run.dataset))
     sections = [f'<section><h2>结果 {index} · {escape(run.run_id)}</h2>', _table_html(heading, (context,))]
+    review = review_status(run)
+    sections.append("<h3>结果状态</h3>")
+    sections.append(_table_html(("运行执行", "响应检查", "候选排名", "独立验证"), ((
+        status_label(review.execution_status), status_label(review.response_status),
+        status_label(review.ranking_status), status_label(review.independent_validation)),)))
+    sections.append(f"<p>导入目录：<code>{escape(str(run.root))}</code></p>")
+    if review.notes:
+        sections.append("<ul>" + "".join(f"<li>{escape(note)}</li>" for note in review.notes) + "</ul>")
+    if review.sources:
+        sections.append("<p>状态记录来源：" + escape("；".join(f"{field}: {source}" for field, source in review.sources)) + "</p>")
     if run.manifest.get("source_kind") == "public-historical-condition-view":
         sections.append("<p>公开历史批次中的条件结果。</p>")
     if run.notes:
@@ -536,16 +817,19 @@ def _run_html(run: RunData, index: int) -> str:
     if run.tables:
         sections.append("<h3>结果表格</h3><ul>" + "".join(f"<li>{escape(path.relative_to(run.root).as_posix())}</li>" for path in run.tables) + "</ul>")
         for table in run.tables[:4]:
-            sections.append(f"<h4>{escape(table.name)}</h4>")
+            sections.append(f"<h4>{escape(table.relative_to(run.root).as_posix())}</h4>")
             try:
                 preview = read_table(table, limit=12, root=run.root)
                 sections.append(_table_html(preview.headers, preview.rows))
                 if preview.truncated:
                     sections.append("<p>仅展示前 12 行。</p>")
+                if preview.columns_truncated:
+                    sections.append(f"<p>源表共 {preview.total_columns} 列，仅预览前 {len(preview.headers)} 列；完整列见源表附件。</p>")
             except RunDataError as exc:
                 sections.append(f"<p>{escape(str(exc))}</p>")
         if len(run.tables) > 4:
             sections.append("<p>报告内预览前 4 张表格。</p>")
+        sections.append(_table_downloads_html(run, table_budget if table_budget is not None else [MAX_REPORT_TABLE_BYTES]))
     if run.figures:
         sections.append("<h3>上游图件</h3><ul>" + "".join(f"<li>{escape(path.relative_to(run.root).as_posix())}</li>" for path in run.figures) + "</ul>")
         for figure in run.figures[:4]:
@@ -607,6 +891,7 @@ def export_report(destination: Path | str, left: RunData, right: RunData | None 
         destination = parent / destination.name
         resolved = destination.resolve()
         runs = (left, right) if right is not None else (left,)
+        table_budget = [MAX_REPORT_TABLE_BYTES]
         if any(destination.is_relative_to(run.root) or resolved.is_relative_to(run.root) for run in runs):
             raise RunDataError("请选择运行结果文件夹之外的报告保存位置。")
         with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=parent, prefix=".aper-report-", delete=False) as output:
@@ -616,10 +901,13 @@ def export_report(destination: Path | str, left: RunData, right: RunData | None 
                          '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; img-src data:; style-src \'unsafe-inline\'; base-uri \'none\'; form-action \'none\'">'
                          f'<title>Aper AI · 虚拟细胞运行报告</title><style>{REPORT_STYLE}</style></head>'
                          '<body><h1>Aper AI · 虚拟细胞运行报告</h1><main>')
+            output.write(f'<p>导出时间（UTC）：{datetime.now(timezone.utc).isoformat(timespec="seconds")}</p>'
+                         '<p>本报告是已导入结果的离线复核快照。工作台未执行模型或独立实验验证；'
+                         '运行、技术检查、候选排名与独立验证分别列示。</p>')
             if right is not None:
                 output.write(_comparison_html(left, right))
             for index, run in enumerate(runs, start=1):
-                output.write(_run_html(run, index))
+                output.write(_run_html(run, index, table_budget=table_budget))
             output.write("</main></body></html>")
         os.replace(temporary_path, destination)
     except (OSError, RuntimeError, ValueError) as exc:
