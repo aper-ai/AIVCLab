@@ -15,7 +15,7 @@ Virtual Cell Research 是面向转录组与单细胞研究的科研 Agent Skill�
 
 项目聚焦**干预前后的转录响应与细胞状态变化**：哪些基因变化、哪些细胞背景响应不同、模型预测相对简单基线表现如何。研究者确定科学问题和干预条件，Agent 组织准备、运行、检查与报告流程，保存方法与结果之间的可追溯记录，为研究假设的比较和后续验证提供依据。
 
-[核心任务](#三项核心研究任务) · [快速开始](#快速开始) · [自有数据](#用自己的数据开展研究) · [真实结果](#四组真实案例从方法到结果) · [案例库](#案例库当前完成到哪一步) · [开放协作](#开放协作与生态共建) · [开源许可](#开源许可)
+[核心任务](#三项核心研究任务) · [快速开始](#快速开始) · [自有数据](#用自己的数据开展研究) · [真实结果](#四组真实案例从方法到结果) · [案例库](#案例库当前完成到哪一步) · [开放协作](#开放协作与生态共建)
 
 ## 三项核心研究任务
 
@@ -29,50 +29,56 @@ Virtual Cell Research 是面向转录组与单细胞研究的科研 Agent Skill�
 
 ## 快速开始
 
-### 1. 让 Agent 读取完整 Skill
+**让 Agent 安装 Skill，把数据文件和研究目标交给它，随后查看完成的分析。** 环境准备、数据检查、模型执行、绘图与报告均由 Agent 组织完成，日常使用无需自己输入终端命令。
 
-获取本仓库源码后，保留完整的 `virtual-cell-research/` 目录，其中包含 `SKILL.md`、脚本、案例和参考说明。在能够读取本地文件并运行命令的 Agent 中，按宿主的 Skill 导入方式加载该目录，或直接复制下面的指令：
+可使用 [WorkBuddy](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Project)、[Codex](https://developers.openai.com/codex/skills)、[Claude Code](https://code.claude.com/docs/en/skills)、[Google Antigravity（反重力）](https://antigravity.google/docs/skills)、[Kimi](https://www.kimi.com/features/skills) / [Kimi Code](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html) 等支持 Skill 的助手。选择能读取你的数据文件并执行分析任务的会话即可；安装方式由 Agent 按当前助手的机制处理。
+
+### 1. 发送 GitHub 链接，让 Agent 安装
+
+**仓库地址：[https://github.com/aper-ai/virtual-cell-workbench](https://github.com/aper-ai/virtual-cell-workbench)**
+
+把下面这段话发给助手：
 
 ```text
-请读取本仓库的 virtual-cell-research/SKILL.md，使用 Virtual Cell Research
-带我完成 prnet-ht115-demo 观测教学。先检查已有环境，按案例获取所需数据，
-计算处理与指定对照的响应，最后打开报告、完整源表和图，解释结果。
+请帮我安装 Virtual Cell Research Skill：
+https://github.com/aper-ai/virtual-cell-workbench
+
+读取仓库说明，按当前助手支持的方式安装完整的 virtual-cell-research/ 目录，
+保留其中的脚本、案例和参考资料，并检查 Skill 是否可以加载使用。
 ```
 
-宿主的导入位置各不相同；本项目也提供可直接运行的 Python 入口。已有自己的数据和目标时，可以直接使用下一节的研究指令。
+安装后，Agent 会说明实际安装位置和可用状态。Skill 文件与模型运行环境按需准备；选定研究任务后，再由 Agent 获取该任务所需的数据、依赖和模型资源。
 
-### 2. 手动跑通一个真实数据案例
+### 2. 把文件和研究目标发给 Agent
 
-该参考案例约需下载 **3.14 MB** 的 HT115 官方 demo，包含 **661 条处理表达谱、20 条对照、978 个基因**。它用于核对输入、指定对照和响应差值；此步骤计算真实观测数据，不加载 PRnet 权重。[案例来源与说明](virtual-cell-research/cases/prnet-ht115-demo/README.md)
+上传表达矩阵、细胞或样本信息及已有处理说明，或直接告诉 Agent 本地文件所在位置。做基因扰动时给出目标基因；做药筛时再提供药物清单和相关实验条件。随后描述希望完成的任务，例如：
 
-以下两组命令选择适合自己系统的一组，从**仓库根目录**执行。需要 Python 3.12 和对案例所列数据来源的网络访问；已有独立数据环境可以复用。
-
-**Linux / macOS**
-
-```bash
-cd virtual-cell-research
-python3.12 -m venv .venv-data
-source .venv-data/bin/activate
-python -m pip install -r requirements-data.txt
-python scripts/cases.py show prnet-ht115-demo
-python scripts/cases.py fetch prnet-ht115-demo --asset demo --output-dir local-runs/prnet-input
-python scripts/observed_prnet_case.py --input local-runs/prnet-input/demo.h5ad --output-dir local-runs/prnet-observed
+```text
+请使用 Virtual Cell Research，基于我提供的表达矩阵和细胞信息，
+分别模拟 STAT3 和 JUN 敲除，比较表达变化与细胞状态差异。
+请完成输入检查、模型选择、环境准备、运行和绘图，
+交付报告、完整源表、图表及运行记录，并解释主要结果。
 ```
 
-**Windows PowerShell**
+把示例基因换成你的实际目标，Agent 会先检查目标与数据是否适配。它会读取文件与已有说明，只补问无法核实且会影响科学解释的条件。你也可以在安装请求后直接附上文件和任务，让 Agent 安装完成后继续执行。过表达、药筛及结果评估的指令见下方[自有数据研究](#用自己的数据开展研究)。
 
-```powershell
-cd virtual-cell-research
-py -3.12 -m venv .venv-data
-.\.venv-data\Scripts\python.exe -m pip install -r requirements-data.txt
-.\.venv-data\Scripts\python.exe scripts/cases.py show prnet-ht115-demo
-.\.venv-data\Scripts\python.exe scripts/cases.py fetch prnet-ht115-demo --asset demo --output-dir local-runs/prnet-input
-.\.venv-data\Scripts\python.exe scripts/observed_prnet_case.py --input local-runs/prnet-input/demo.h5ad --output-dir local-runs/prnet-observed
+### 3. 查看报告、图表和完整结果
+
+Agent 会展示本次完成的分析，提供报告、主要图表、完整源表和运行记录的入口，并解释变化方向、比较基线与结果的适用范围。需要调整目标、按细胞群比较或修改图表时，继续在同一对话中提出要求；每次运行保留独立结果目录，便于比较与复查。
+
+### 暂时没有数据？用公开案例开始
+
+直接把下面的任务发给 Agent，由它获取案例数据并执行：
+
+```text
+请使用 Virtual Cell Research，运行 prnet-ht115-demo 真实观测分析案例。
+请准备所需环境和数据，计算处理与指定对照的响应，生成并展示报告、
+完整结果表和图，解释主要变化、对照配对及结果局限。
 ```
 
-完成后在当前 Skill 目录打开 `local-runs/prnet-observed/report.md`，再查看同一运行目录中的 `tables/condition_index.csv`、完整的 `tables/observed_responses.csv.gz` 和 `figures/observed_response.svg`。计算保留来源处理尺度与指定配对；其中 **338 条处理谱跨 RNA plate 配对**，报告会提示可能的批次影响。
+这个案例约需下载 **3.14 MB** 数据，包含 **661 条处理表达谱、20 条对照和 978 个基因**，用于查看从输入到报告的完整流程。这里计算的是**真实观测响应**；PRnet 预测模型未在此步骤运行。报告会标明 **338 条处理谱跨 RNA plate 配对**的可能批次影响。[案例来源与说明](virtual-cell-research/cases/prnet-ht115-demo/README.md)
 
-重跑时换一个新的输出目录。`requirements-data.txt` 用于数据教学与准备，模型分析按路线建立独立环境；想直接体验模型，可从下方 CellOracle 或 PRnet 案例开始。更完整的上手步骤见 [首次使用](virtual-cell-research/references/first-run.md)。
+希望直接体验模型，也可以告诉 Agent：“运行 [CellOracle Gata1 敲除与过表达案例](virtual-cell-research/cases/gallery/celloracle/README.md)”或“运行 [PRnet 参考预测与基线比较案例](virtual-cell-research/cases/prnet-reference-evaluation/README.md)”。Agent 会按选定路线准备相应环境与资源。更完整的执行与交付说明见[首次使用](virtual-cell-research/references/first-run.md)。
 
 ## 用自己的数据开展研究
 
@@ -295,16 +301,5 @@ python scripts/package_skill.py
 | [docs/desktop-viewer.md](docs/desktop-viewer.md) | 附带的 Windows 结果查看器说明：用于打开已有模型运行包 |
 
 Skill 的使用与模型运行按本页的目录和环境准备；附带查看器的安装包提供结果阅读功能，不包含新 Skill 的模型环境与权重。
-
-## 开源许可
-
-**本项目采用 [MIT License](LICENSE)，允许个人和商业使用、复制、修改、合并、分发、再许可与销售。** 在软件的所有副本或实质性部分中，应保留版权声明和 MIT 许可文本。MIT 不要求公开修改后的源码，也无需向本项目另行申请商业授权。
-
-| 内容 | 适用许可 |
-| --- | --- |
-| 本项目有权授权的代码、文档与原创资产 | MIT License；具体范围与归属见许可及来源记录 |
-| 第三方代码、模型、权重、数据与历史材料 | 保留各自原许可、版权声明和资源使用条款；不因本项目采用 MIT 而自动获得商业使用权 |
-
-贡献者保留自己贡献的版权，并以 MIT 许可提交其有权授权的贡献。第三方资源需按具体代码、模型、数据和权重分别核对；完整范围、条件与免责说明见 [许可说明](virtual-cell-research/docs/licensing.md)。
 
 [代码许可](LICENSE) · [归属说明](virtual-cell-research/NOTICE) · [第三方资源与来源](virtual-cell-research/THIRD_PARTY_NOTICES.md) · [方法说明](virtual-cell-research/docs/methodology-and-scope.md)

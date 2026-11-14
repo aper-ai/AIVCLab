@@ -13,6 +13,49 @@
 
 **Virtual Cell Research** 是面向转录组与单细胞研究的科研 Agent Skill，围绕**虚拟基因敲除、虚拟过表达和虚拟药物筛选**，组织数据准备、模型执行、基线比较与结果解释。研究者提供表达数据、目标基因或药物库后，Agent 核对输入与对照、匹配适用模型并运行分析，按模型能力输出响应、变化基因、状态位移或药物评分，同时保存结构化报告、图表、质量检查和运行记录。各路线的适用条件、实现程度与验证状态分别记录。
 
+## 从安装到分析
+
+**把 GitHub 链接发给 Agent 安装 Skill，再发送对应文件和研究目标即可。** Agent 负责环境准备、执行分析、整理结果和打开报告，日常使用不需要手动输入终端命令。WorkBuddy、Codex、Claude Code、Antigravity、Kimi / Kimi Code 等宿主的具体入口见[仓库首页](../README.md)。
+
+### 1. 让 Agent 自主安装
+
+仓库地址：[https://github.com/aper-ai/virtual-cell-workbench](https://github.com/aper-ai/virtual-cell-workbench)
+
+把这段话发给助手：
+
+```text
+请帮我安装 Virtual Cell Research Skill：
+https://github.com/aper-ai/virtual-cell-workbench
+
+读取仓库说明，按当前助手支持的方式安装完整的 virtual-cell-research/ 目录，
+保留其中的脚本、案例和参考资料，并检查 Skill 是否可以加载使用。
+```
+
+Agent 会按当前宿主的 Skill 机制安装完整目录，保留脚本、案例、参考文档及资源，并核实 Skill 已可发现和加载。
+
+### 2. 发送文件，说明想完成的任务
+
+上传或选择对应的数据文件，直接用自然语言描述目标。例如：
+
+```text
+请使用 Virtual Cell Research，基于我提供的表达矩阵和细胞信息，
+分别模拟 STAT3 和 JUN 敲除，比较表达变化与细胞状态差异。
+请完成输入检查、模型选择、环境准备、运行和绘图，
+生成并打开报告、完整结果表和图，解释主要发现与局限。
+```
+
+将示例基因和任务换成你的研究目标，Agent 会先核对目标与数据是否适配，再检查已有环境、选择兼容路线并准备需要的依赖和资源，完成分析后展示报告、表格和图，说明主要发现与局限。你也可以把安装请求、数据和目标一起发给 Agent，由它连续完成。
+
+### 暂时没有数据时：体验一个可选案例
+
+```text
+我暂时没有自己的数据。请使用 Virtual Cell Research 运行 prnet-ht115-demo。
+先检查已有环境，需要时准备独立环境，并获取这个案例的 demo 数据。
+请完成真实观测分析，生成并打开报告、完整结果表和图，解释结果与局限。
+```
+
+这个教学使用约 **3.14 MB** 的真实来源数据，包含 **661 条处理表达谱、20 条对照和 978 个基因**，计算来源处理谱与指定对照的观测差值，不运行 PRnet 预测模型。已有自己的文件和目标时，直接处理自己的任务；详细流程与结果说明见[首次使用](references/first-run.md)。
+
 ## 能做什么
 
 | 核心任务 | 输入 | 主要结果 |
@@ -88,22 +131,6 @@ Agent 会先读取你已经给出的数据和设置，完成可做的检查，�
 
 Agent 的执行规则见 [SKILL.md](SKILL.md)，科学输入定义见 [输入契约](references/input-contracts.md)，失败处理见 [排错指南](docs/troubleshooting.md)。
 
-## 第一次使用怎样准备
-
-保留完整的 `virtual-cell-research/` 目录。在支持 Skill 的 Agent 中按宿主方式加载，或明确让 Agent 读取该目录的 `SKILL.md`。本项目没有适用于所有 Agent 的统一安装路径，也可以直接运行 Python 入口。
-
-下列命令均在包含 `SKILL.md` 的目录执行。数据准备、教学和结果工具使用独立 Python 3.12 环境；Windows 与 Linux/macOS 的建环境步骤见 [首次使用](references/first-run.md#建立数据教学环境)。
-
-```bash
-python -m pip install -r requirements-data.txt
-python scripts/cases.py list
-python scripts/prepare_user_data.py --help
-python scripts/explain_result.py --help
-python scripts/evaluate_predictions.py --help
-```
-
-轻量数据环境与模型环境分开。查看案例目录或命令帮助不会自动下载全部数据、安装模型或运行推理。
-
 ## 模型能力与实际入口
 
 | 路线 | 当前入口 | 使用条件 |
@@ -147,11 +174,5 @@ python scripts/package_skill.py
 ```
 
 源码包位于 `dist/virtual-cell-research.zip`，包含流程、脚本、案例说明和必要资源记录。模型权重、原始表达矩阵、环境和本地运行结果按需准备。
-
-## 开源许可
-
-本项目有权授权的代码、文档与原创资产采用 [MIT License](LICENSE)，允许个人和商业使用、复制、修改、合并、分发、再许可与销售。在软件的所有副本或实质性部分中，应保留版权声明和 MIT 许可文本；MIT 不要求公开修改后的源码，也无需向本项目另行申请商业授权。
-
-贡献者保留自己贡献的版权，并以 MIT 许可提交其有权授权的贡献。第三方代码、模型、权重、数据与历史材料继续适用各自原许可和使用条款，不因本项目采用 MIT 而自动获得商业使用权。完整范围、条件与免责说明见 [许可说明](docs/licensing.md)。
 
 [许可](LICENSE) · [资源与来源记录](THIRD_PARTY_NOTICES.md) · [方法说明](docs/methodology-and-scope.md)
