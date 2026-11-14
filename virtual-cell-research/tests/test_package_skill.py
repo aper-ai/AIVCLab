@@ -15,6 +15,23 @@ SPEC.loader.exec_module(PACKAGE)
 
 
 class SourcePackageTests(unittest.TestCase):
+    def test_language_switch_targets_survive_packaging(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'SKILL.md').write_text('---\nname: example\ndescription: Example\n---\n', encoding='utf-8')
+            documents = {
+                'README.md': '[简体中文](README.zh-CN.md)\n\n# Research workflows\n',
+                'README.zh-CN.md': '[English](README.md)\n\n# 研究工作流\n',
+            }
+            for name, content in documents.items():
+                (root / name).write_text(content, encoding='utf-8')
+            PACKAGE.build(root)
+            with zipfile.ZipFile(root / 'dist/virtual-cell-research.zip') as archive:
+                manifest = json.loads(archive.read('virtual-cell-research/package_manifest.json'))
+                for name, content in documents.items():
+                    self.assertIn(name, manifest)
+                    self.assertEqual(archive.read('virtual-cell-research/' + name).decode('utf-8'), content)
+
     def test_figure_source_tables_are_bundled_without_general_data_matrices(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -90,3 +107,4 @@ class SourcePackageTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

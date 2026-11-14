@@ -1,281 +1,339 @@
-![Virtual Cell Research：基因扰动、药物响应与可复现工作流](virtual-cell-research/assets/brand/header.svg)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-[![Skill：研究预览阶段](virtual-cell-research/assets/brand/badge-skill.svg)](virtual-cell-research/SKILL.md)
-[![数据工具环境：Python 3.12](virtual-cell-research/assets/brand/badge-python.svg)](virtual-cell-research/requirements-tests.txt)
-[![工程检查配置：Ubuntu 与 Windows](virtual-cell-research/assets/brand/badge-checks.svg)](https://github.com/aper-ai/virtual-cell-workbench/actions/workflows/skill.yml)
-[![许可：MIT](virtual-cell-research/assets/brand/badge-license.svg)](virtual-cell-research/docs/licensing.md)
+![Virtual Cell Research: research workflows for virtual cell science](virtual-cell-research/assets/brand/header.svg)
 
-# Virtual Cell Research · 虚拟细胞研究 Skill
+[![Skill: research preview](virtual-cell-research/assets/brand/badge-skill.svg)](virtual-cell-research/SKILL.md)
+[![Data tools: Python 3.12](virtual-cell-research/assets/brand/badge-python.svg)](virtual-cell-research/requirements-tests.txt)
+[![Engineering checks: Ubuntu and Windows](virtual-cell-research/assets/brand/badge-checks.svg)](https://github.com/aper-ai/virtual-cell-workbench/actions/workflows/skill.yml)
+[![License: MIT](virtual-cell-research/assets/brand/badge-license.svg)](virtual-cell-research/docs/licensing.md)
 
-**面向虚拟细胞研究的可复现分析与方法协作。**
+# Virtual Cell Research
 
-一句话定义研究任务，发起虚拟基因敲除、过表达与药物筛选；Agent 组织数据检查、模型执行、结果复核和报告生成。
+**Launch virtual cell research with one prompt.**
 
-Virtual Cell Research 是面向转录组与单细胞研究的科研 Agent Skill，围绕**虚拟基因敲除、过表达与药物筛选**，衔接数据准备、模型执行、基线比较与结果解释。研究者提供表达数据、目标基因或药物库后，Agent 核对输入与对照、选择兼容模型、执行分析，并交付完整结果、图表和结构化报告。各路线的适用条件、实现程度与验证状态均有明确记录。
+**Research workflows for virtual cell science.** Give your Agent the relevant files and a research question. It organizes input checks, data preparation, analysis, compatible model execution, evaluation, figures, and a traceable research report.
 
-项目聚焦**干预前后的转录响应与细胞状态变化**：哪些基因变化、哪些细胞背景响应不同、模型预测相对简单基线表现如何。研究者确定科学问题和干预条件，Agent 组织准备、运行、检查与报告流程，保存方法与结果之间的可追溯记录，为研究假设的比较和后续验证提供依据。
+Virtual Cell Research is a research Agent Skill for working with transcriptomic and single-cell data. It connects **data preparation, observed response analysis, in silico perturbation, prediction evaluation, and result interpretation** in a reproducible workflow. Gene knockout, overexpression, and compound screening are representative applications within this broader scope. You can also start with an input audit, a donor-paired comparison, predictions that need evaluation, or an existing result that needs review.
 
-[核心任务](#三项核心研究任务) · [快速开始](#快速开始) · [自有数据](#用自己的数据开展研究) · [真实结果](#四组真实案例从方法到结果) · [案例库](#案例库当前完成到哪一步) · [开放协作](#开放协作与生态共建)
+The current implementations focus on expression data, cellular context, and responses to experimental conditions. Each route records what inputs it accepts, what it actually computes, and how far its evidence extends. The researcher defines the scientific question; the Agent manages execution and preserves the connection between methods, complete results, and interpretation.
 
-## 三项核心研究任务
+<!-- Selected technical workflow figure will be inserted here after review. -->
 
-| 任务 | 你希望回答的问题 | 必要输入 | 主要输出 |
+[Research capabilities](#research-capabilities) · [Quick start](#quick-start) · [Use your own data](#use-your-own-data) · [Real case results](#four-real-case-studies-from-methods-to-results) · [Case library](#case-library-current-evidence) · [Research collaboration](#research-collaboration-and-extension)
+
+## Research capabilities
+
+| Research task | Question it addresses | Required materials | Main outputs |
 | --- | --- | --- | --- |
-| **虚拟基因敲除（KO）** | 敲除一个目标后，模型中的表达和细胞状态如何变化？ | 表达矩阵、目标基因、未干预细胞背景；多目标需说明逐个还是联合 | 模型支持的表达响应、受影响基因、状态位移或表征变化 |
-| **虚拟过表达（OE）** | 按指定方式提高目标，哪些下游响应值得继续研究？ | 表达矩阵、目标、背景及明确的 OE 设定 | 目标实际施加值、对应基线、模拟响应与细胞间差异 |
-| **虚拟药物筛选** | 候选药物在指定背景下产生怎样的转录响应，能否进行适用的比较？ | 药物清单或结构、细胞背景、模型要求的基线与剂量/时间；疾病方向比较另需疾病参照 | 逐药逐条件响应、变化基因、适用评分与排序、覆盖情况 |
+| **Data preparation and input audit** | Are the matrix, identifiers, scale, and metadata suitable for the intended analysis? | CSV, TSV, or H5AD; processing history, species, and sample/gene metadata | Prepared input, data card, identity and value checks, coverage, and specific blocking issues |
+| **Observed condition responses** | How does expression change between matched experimental conditions, including within donors? | Measured expression, condition/control mapping, biological units, and the relevant case workflow | Paired responses, condition or donor summaries, figures, and the preserved measurement scale |
+| **In silico gene perturbation** | How does a supported model respond to a defined change in a target gene? | Expression data, target, cellular background, and the model's resources; an explicit setting for OE | Model-specific expression, network, state-projection, or embedding effects; actual intervention settings |
+| **Compound-response analysis and conditional screening** | What transcriptional responses are predicted for compounds in a compatible background? | Compound identities or structures, matched baseline, model resources, and supported dose/time conditions | Complete condition responses, coverage, and applicable comparisons; disease-direction scores require a comparable reference |
+| **Prediction evaluation and held-out baselines** | Does a prediction improve on a simple baseline, and what does the recorded split establish? | Observed and predicted responses on the same scale, stable IDs, biological units, and available split records | Aligned metrics, zero-response comparisons, unit-level summaries, and membership checks; a donor-held-out reference case |
+| **Result interpretation and reporting** | What was computed, what changed, and what evidence supports the interpretation? | Existing reports, manifests, source tables, figures, and supported result contracts | Structured interpretation, key numerical findings, linked evidence, quality issues, and next steps |
+| **Case reproduction and model adapters** | Can another researcher repeat a workflow or add a clearly defined analysis route? | Data/model sources, licenses, input/output definitions, resources, and execution evidence | Reproducible cases, documented adapters, complete result contracts, and recorded implementation status |
 
-结果含义随模型而定。CellOracle 输出调控网络模拟与状态投影；Geneformer 示例输出排序编码扰动后的 embedding 影响；药物响应模型按其基因空间、背景和剂量能力解释。选择路线时先确定需要什么结果，再核对输入与资源。[模型能力说明](virtual-cell-research/references/model-capabilities.md)
+These routes have different implementation stages. Observed analyses currently use explicit case workflows; the interpretation tool recognizes Kang, CellOracle, and PRnet result contracts. Models preserve their own output meanings: a CellOracle state projection, a Geneformer embedding effect, and a drug-response prediction are distinct quantities. See the [model capability register](virtual-cell-research/references/model-capabilities.md) and the [current entry points](#model-capabilities-and-current-entry-points) before choosing a route.
 
-## 快速开始
+## Quick start
 
-**让 Agent 安装 Skill，把数据文件和研究目标交给它，随后查看完成的分析。** 环境准备、数据检查、模型执行、绘图与报告均由 Agent 组织完成，日常使用无需自己输入终端命令。
+**Ask your Agent to install the Skill, send the relevant files and your research goal, then review the completed analysis.** The Agent handles environment preparation, execution, figures, and reporting. Routine use does not require you to type terminal commands.
 
-可使用 [WorkBuddy](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Project)、[Codex](https://developers.openai.com/codex/skills)、[Claude Code](https://code.claude.com/docs/en/skills)、[Google Antigravity（反重力）](https://antigravity.google/docs/skills)、[Kimi](https://www.kimi.com/features/skills) / [Kimi Code](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html) 等支持 Skill 的助手。选择能读取你的数据文件并执行分析任务的会话即可；安装方式由 Agent 按当前助手的机制处理。
+Use a Skill-capable assistant such as [WorkBuddy](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Project), [Codex](https://developers.openai.com/codex/skills), [Claude Code](https://code.claude.com/docs/en/skills), [Google Antigravity](https://antigravity.google/docs/skills), or [Kimi](https://www.kimi.com/features/skills) / [Kimi Code](https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html). Choose a session that can access your files and execute the analysis. The Agent follows the current host's installation mechanism.
 
-### 1. 发送 GitHub 链接，让 Agent 安装
+### 1. Send the repository link and ask the Agent to install
 
-**仓库地址：[https://github.com/aper-ai/virtual-cell-workbench](https://github.com/aper-ai/virtual-cell-workbench)**
+**Repository: [https://github.com/aper-ai/virtual-cell-workbench](https://github.com/aper-ai/virtual-cell-workbench)**
 
-把下面这段话发给助手：
+Copy this request into your assistant:
 
 ```text
-请帮我安装 Virtual Cell Research Skill：
+Please install the Virtual Cell Research Skill:
 https://github.com/aper-ai/virtual-cell-workbench
 
-读取仓库说明，按当前助手支持的方式安装完整的 virtual-cell-research/ 目录，
-保留其中的脚本、案例和参考资料，并检查 Skill 是否可以加载使用。
+Read the repository instructions and install the complete virtual-cell-research/
+directory using this assistant's supported Skill mechanism. Preserve its scripts,
+cases, references, and resources, and verify that the Skill can be discovered and loaded.
 ```
 
-安装后，Agent 会说明实际安装位置和可用状态。Skill 文件与模型运行环境按需准备；选定研究任务后，再由 Agent 获取该任务所需的数据、依赖和模型资源。
+The Agent reports the actual installation location and load status. Data, dependencies, weights, and priors are prepared for the selected task when needed.
 
-### 2. 把文件和研究目标发给 Agent
+### 2. Send your files and describe the research question
 
-上传表达矩阵、细胞或样本信息及已有处理说明，或直接告诉 Agent 本地文件所在位置。做基因扰动时给出目标基因；做药筛时再提供药物清单和相关实验条件。随后描述希望完成的任务，例如：
+Attach expression data, sample or cell metadata, and processing notes, or provide an accessible local directory. Add the conditions, targets, predictions, or existing result files required by your question. For example:
 
 ```text
-请使用 Virtual Cell Research，基于我提供的表达矩阵和细胞信息，
-分别模拟 STAT3 和 JUN 敲除，比较表达变化与细胞状态差异。
-请完成输入检查、模型选择、环境准备、运行和绘图，
-交付报告、完整源表、图表及运行记录，并解释主要结果。
+Use Virtual Cell Research with the expression matrix, sample metadata, and
+processing notes I have provided. Compare the treatment and matched control
+within each donor, and summarize the response across donors.
+
+Check the data scale, identifiers, pairing, and biological units first.
+Carry out the compatible analysis, generate the figures, and deliver the report,
+complete source tables, quality checks, and execution records. Explain the findings.
 ```
 
-把示例基因换成你的实际目标，Agent 会先检查目标与数据是否适配。它会读取文件与已有说明，只补问无法核实且会影响科学解释的条件。你也可以在安装请求后直接附上文件和任务，让 Agent 安装完成后继续执行。过表达、药筛及结果评估的指令见下方[自有数据研究](#用自己的数据开展研究)。
+The Agent reads the files and available records before asking about missing information that would change the scientific interpretation. You can combine installation, files, and the research request in one message. More examples cover input preparation, model analysis, prediction evaluation, and existing results [below](#copyable-research-requests).
 
-### 3. 查看报告、图表和完整结果
+### 3. Review the report, figures, and complete results
 
-Agent 会展示本次完成的分析，提供报告、主要图表、完整源表和运行记录的入口，并解释变化方向、比较基线与结果的适用范围。需要调整目标、按细胞群比较或修改图表时，继续在同一对话中提出要求；每次运行保留独立结果目录，便于比较与复查。
+The Agent presents what was completed, opens or links the report and main figures, and provides the complete tables and execution records. It explains the baseline, measurement scale, direction of change, and scope of the evidence. Continue in the same conversation to compare conditions, refine a supported grouping, or revise a figure. Separate run directories preserve earlier results.
 
-### 暂时没有数据？用公开案例开始
-
-直接把下面的任务发给 Agent，由它获取案例数据并执行：
+### Start with a public case if you do not yet have data
 
 ```text
-请使用 Virtual Cell Research，运行 prnet-ht115-demo 真实观测分析案例。
-请准备所需环境和数据，计算处理与指定对照的响应，生成并展示报告、
-完整结果表和图，解释主要变化、对照配对及结果局限。
+Use Virtual Cell Research to run the prnet-ht115-demo observed-response case.
+Prepare the required environment and data, calculate each treatment's response
+against its source-designated control, and present the report, complete tables,
+and figures. Explain the response scale, control pairing, and limitations.
 ```
 
-这个案例约需下载 **3.14 MB** 数据，包含 **661 条处理表达谱、20 条对照和 978 个基因**，用于查看从输入到报告的完整流程。这里计算的是**真实观测响应**；PRnet 预测模型未在此步骤运行。报告会标明 **338 条处理谱跨 RNA plate 配对**的可能批次影响。[案例来源与说明](virtual-cell-research/cases/prnet-ht115-demo/README.md)
+This case downloads about **3.14 MB** and contains **661 treated expression profiles, 20 controls, and 978 genes**. It demonstrates input-to-report analysis of **measured responses**; this step does not run the PRnet prediction model. The report identifies **338 treated profiles paired across RNA plates** and the possible batch effects. [Case source and method](virtual-cell-research/cases/prnet-ht115-demo/README.md)
 
-希望直接体验模型，也可以告诉 Agent：“运行 [CellOracle Gata1 敲除与过表达案例](virtual-cell-research/cases/gallery/celloracle/README.md)”或“运行 [PRnet 参考预测与基线比较案例](virtual-cell-research/cases/prnet-reference-evaluation/README.md)”。Agent 会按选定路线准备相应环境与资源。更完整的执行与交付说明见[首次使用](virtual-cell-research/references/first-run.md)。
+Other starting points include the [Kang donor-paired and held-out analyses](virtual-cell-research/cases/gallery/kang/README.md), [CellOracle Gata1 KO/OE simulations](virtual-cell-research/cases/gallery/celloracle/README.md), and [PRnet reference inference with baseline comparison](virtual-cell-research/cases/prnet-reference-evaluation/README.md). Ask the Agent to run the selected case and prepare its required resources. The [first-run guide](virtual-cell-research/references/first-run.md) describes execution and delivery in detail.
 
-## 用自己的数据开展研究
+## Use your own data
 
-### 准备哪些信息
+### Materials to provide
 
-| 内容 | 需要明确什么 |
+| Material | What needs to be clear |
 | --- | --- |
-| 表达文件 | CSV、TSV 或 H5AD；表格行列方向，H5AD 使用 `X` 还是指定 layer |
-| 数值与基因 | 原始计数、归一化或 log 处理的真实记录；物种、基因 ID 类型与唯一标识 |
-| 样本背景 | 细胞类型、供体、批次、处理条件及可用对照；元数据按稳定 ID 对齐 |
-| 干预设定 | 目标基因或药物清单，逐个/联合，OE 定义，以及所需剂量和时间 |
-| 评价目标 | 需要原生响应、细胞状态变化，还是与实测比较；疾病方向评分需提供可比较的疾病参照 |
+| Expression files | CSV, TSV, or H5AD; table orientation, or the selected H5AD `X`/layer |
+| Values and genes | Actual raw-count, normalization, or log-processing history; species, gene ID type, and unique identifiers |
+| Sample context | Available cell labels, donors, batches, conditions, and controls; metadata aligned by stable ID |
+| Research conditions | The measured comparison or proposed perturbation; targets or compounds, separate/joint design, OE definition, and relevant dose/time |
+| Evaluation materials | Observed/predicted values, corresponding baselines, biological units, and available training/evaluation membership records |
+| Existing results | The full run directory when available, including source tables, manifests, reports, and figures |
 
-Agent 先读取你已经提供的文件和处理记录，只补问会改变科学解释的缺项。模型、解释器和普通运行参数可依据环境给出有理由的默认。数据准备工具保留原始数值和完整标识，生成新的 H5AD、数据说明和检查报告；具体参数见 [数据准备](virtual-cell-research/references/user-data.md)。
+The Agent checks the files and processing records already provided. Data preparation preserves values and complete identity axes in a new H5AD, data card, and check report; it does not silently normalize, select genes, fill missing values, or establish model compatibility. Ordinary environment and runtime choices can use documented defaults. Scientific inputs such as an unknown scale, control, target, or OE definition need evidence. [Data preparation details](virtual-cell-research/references/user-data.md)
 
-### 三类任务的可复制指令
+### Copyable research requests
 
-**虚拟敲除**
-
-```text
-使用 Virtual Cell Research，对我提供的单细胞数据分别模拟 STAT3 和 JUN 敲除。
-先检查表达尺度、基因覆盖和细胞背景，选择兼容模型；分别运行两个目标，
-输出完整模型结果、变化基因、适用的细胞状态图和结果解释，并比较主要差异。
-```
-
-**虚拟过表达**
+**Prepare data and audit the intended input**
 
 ```text
-使用 Virtual Cell Research，分析我提供的数据中 Gata1 过表达的模拟影响。
-先解释适用模型如何定义过表达，结合我给出的设定核对输入；若设定缺失，
-先指出需要明确的条件。运行后交付基线、实际目标设定、完整响应和状态变化图。
+Use Virtual Cell Research to inspect my expression file and cell/gene metadata.
+Read the processing notes to establish the scale, species, IDs, and matrix orientation.
+Prepare a new input while preserving the original values and complete identifiers,
+and check compatibility with the analysis I have described.
+Deliver the data card, checks, prepared file, and concrete unresolved requirements.
 ```
 
-**虚拟药筛**
+**Analyze observed, donor-paired responses**
 
 ```text
-使用 Virtual Cell Research，结合我提供的表达数据、药物库和疾病参照开展虚拟药筛。
-按输入选择兼容模型，核对基因空间、实际基线、剂量与时间，输出逐药逐条件响应、
-适用的疾病方向评分、变化基因图和结果解释；保留未覆盖或无法评分的条件及原因。
+Use Virtual Cell Research to analyze the measured treatment and control data I supplied.
+Verify the donor, condition, and cell-label mapping; use the compatible case workflow
+or identify the preparation it requires. Calculate within-donor responses on a stated
+scale, summarize donors with equal weight, and show complete tables and figures.
+Treat donors as biological units and explain unmatched conditions and batch effects.
 ```
 
-### 分析交付物
+**Simulate a gene knockout**
 
-| 交付内容 | 用途 |
+```text
+Use Virtual Cell Research to simulate STAT3 and JUN knockout separately in my
+single-cell data. Check the expression scale, target coverage, and cellular context,
+then choose a compatible model. Return complete native outputs, affected genes,
+applicable state figures, and an interpretation of the differences between targets.
+```
+
+**Simulate overexpression with an explicit definition**
+
+```text
+Use Virtual Cell Research to study the simulated effects of Gata1 overexpression
+in my data. Explain how the selected model defines overexpression and check the
+setting I supplied. Identify any missing scientific setting before simulation.
+Deliver the baseline, actual target values, complete responses, and applicable state figures.
+```
+
+**Analyze compound responses and apply screening scores when justified**
+
+```text
+Use Virtual Cell Research with my expression data and compound library.
+Check the model's gene space, actual baseline, cellular context, and supported
+dose/time conditions before predicting compound responses.
+If my disease reference is comparable and a score is applicable, calculate it and
+explain its direction. Keep complete responses and record uncovered or unscored
+conditions, including cases where a meaningful ranking cannot be resolved.
+```
+
+**Evaluate predictions and recorded held-out splits**
+
+```text
+Use Virtual Cell Research to evaluate my predicted and observed responses.
+Align sample and gene IDs, verify the common scale and context, and use the stated
+biological units. Compare with a zero-response baseline and audit the training/evaluation
+membership records I supplied. Deliver complete sample-level and unit-level metrics,
+the aligned results, and a report separating prediction performance from independence.
+```
+
+**Interpret an existing run**
+
+```text
+Use Virtual Cell Research to interpret the result directory I provided.
+Check its actual task, output contract, baseline, status, and source tables.
+For a supported result, generate a structured interpretation with key values,
+linked figures, quality issues, and next steps. State which existing files were read
+and identify missing evidence without presenting this review as a new model run.
+```
+
+### Analysis deliverables
+
+| Deliverable | Purpose |
 | --- | --- |
-| 结构化报告 `report.md` | 研究问题、本次完成范围、主要数值、读图说明和下一步 |
-| 完整矩阵与索引 | 基线、观测或预测、响应，以及对应的细胞/样本、基因、条件 ID |
-| 汇总表和图 | 变化基因、状态位移、模型原生分数或适用的评价图；附展示选择规则 |
-| 参数与运行记录 | 输入来源、模型与资源版本、实际命令、环境、随机种子及输出位置 |
-| 质量检查与失败记录 | 覆盖、异常、未完成条件、基线比较和验证范围，便于继续处理 |
+| Structured report, usually `report.md` | Research question, completed scope, key values, figure interpretation, and next steps |
+| Complete matrices and indices | Baselines, measurements or predictions, responses, and corresponding cell/sample, gene, and condition IDs |
+| Summary tables and figures | Gene responses, state projections, native scores, or applicable evaluation plots, with display-selection rules |
+| Parameters and execution records | Input sources, model/resource versions, actual commands, environment, random seeds, and output locations |
+| Quality and failure records | Coverage, anomalies, incomplete conditions, baseline comparisons, and the scope of validation |
 
-不同路线按实际结果生成文件。已有结果可交给 [结果解释工具](virtual-cell-research/references/result-reading.md)；已有实测与预测可按 [预测评估](virtual-cell-research/references/prediction-evaluation.md)对齐并比较。
+Files follow the actual route. The [interpretation tool](virtual-cell-research/references/result-reading.md) reads supported existing results without rerunning the model. The [evaluation tool](virtual-cell-research/references/prediction-evaluation.md) aligns measurements and predictions and keeps their scientific validation status explicit.
 
-## 一次分析怎样完成
+## How an analysis proceeds
 
-1. **确定研究问题。** 明确目标、细胞背景、干预含义和需要的结果类型。
-2. **检查并准备输入。** 核对尺度、基因/样本身份、目标覆盖和对照，生成可解释的模型输入。
-3. **匹配模型并执行。** 准备该路线的环境、权重或先验，先检查小范围运行，再完成约定任务。
-4. **保存完整结果并比较。** 保留基线、响应和索引，计算适用的摘要；评价预测时加入简单基线。
-5. **画图、解读与交付。** 按完整结果生成图表，解释主要变化，记录参数和复现方法。
+1. **Define the research question.** Establish the measured comparison, proposed intervention, evaluation target, or existing result to review.
+2. **Check and prepare the inputs.** Verify scale, identities, biological units, conditions, targets, and controls where relevant.
+3. **Run the selected analysis.** Use the compatible data workflow or model route; prepare model environments, weights, and priors only when the task requires them.
+4. **Preserve complete results and assess quality.** Save native outputs, baselines, responses, and indices before selecting genes, scoring, or plotting.
+5. **Evaluate and interpret.** Use applicable baselines and comparisons, produce traceable figures, and distinguish observations, simulations, and evaluations.
+6. **Deliver a reviewable research package.** Summarize findings, methods, completed and failed conditions, source tables, figures, and reproducibility records.
 
-执行规则由 [SKILL.md](virtual-cell-research/SKILL.md)维护。输入定义、模型资源和失败后的下一步分别见 [输入契约](virtual-cell-research/references/input-contracts.md)、[模型配置](virtual-cell-research/references/model-setup.md)与 [排错指南](virtual-cell-research/docs/troubleshooting.md)。
+Execution rules are maintained in [SKILL.md](virtual-cell-research/SKILL.md). See [input contracts](virtual-cell-research/references/input-contracts.md), [model setup](virtual-cell-research/references/model-setup.md), and [troubleshooting](virtual-cell-research/docs/troubleshooting.md) for the requirements of a selected route.
 
-## 模型能力与当前入口
+## Model capabilities and current entry points
 
-| 路线 | 当前实现 | 适用条件与结果 |
+| Route | Current implementation | Conditions and output meaning |
 | --- | --- | --- |
-| **CellOracle** | 参数化 KO/OE，500 细胞 Gata1 KO 与 OE 已在 Linux CPU 实跑 | 原始单细胞计数、匹配 GRN 先验及可模拟 TF；输出内部表达差值和状态位移 |
-| **PRnet** | 固定官方代码、权重与 HT115 demo 的 CPU 推理和基线比较 | 输出药物转录响应；自有矩阵需另行核对权重基因轴、预处理和背景适配 |
-| **Geneformer** | 参数化 delete/overexpress、输入检查和表征导出入口 | 人类完整原始转录组与匹配 tokenizer/权重；输出 embedding 影响，真实模型执行待完成 |
-| **chemCPA / UniPert-G2CP** | 已有药筛适配脚本与结果契约 | 按任务配置资源并验收；前者有特定细胞系协变量，后者使用模型自带背景且无剂量维度 |
-| **GEARS / UniCure / DrugReflector** | 研究流程、资源说明和代码示例 | 需完成具体适配与运行验证；GEARS 还需匹配的扰动训练数据 |
+| **CellOracle** | Parameterized KO/OE; Gata1 KO and OE executed on 500 cells with Linux CPU | Raw single-cell counts, a matching GRN prior, and a simulatable TF; internal expression differences and state projections |
+| **PRnet** | CPU reference inference and baseline comparison with fixed official code, weights, and the HT115 demo | Compound transcriptional responses; a user's own matrix still requires separate checks of the weight-specific gene axis, preprocessing, and background |
+| **Geneformer** | Parameterized delete/overexpress, input checks, and embedding export entry point | Human full-transcriptome raw counts and matching tokenizer/weights; embedding effects; real model execution remains pending in this project |
+| **chemCPA / UniPert-G2CP** | Existing compound-screening adapter scripts and result contracts | Resources and execution must be configured and accepted for the task; chemCPA has specific cell-line covariates, while this UniPert-G2CP route uses its own background without a dose dimension |
+| **GEARS / UniCure / DrugReflector** | Research workflows, resource notes, and code examples | Concrete adaptation and execution verification remain necessary; GEARS also needs matched perturbation training data |
 
-路线的详细能力和资源要求见 [模型能力表](virtual-cell-research/references/model-capabilities.md)。已实跑的参考案例是选择起点，新数据仍按其物种、尺度、背景和目标重新检查。
+The [capability register](virtual-cell-research/references/model-capabilities.md) documents detailed requirements. Executed reference cases provide a starting point; new data still require checks of species, scale, cellular context, and research target. An adapter script, a successful input check, and a completed model run establish different stages.
 
-## 四组真实案例：从方法到结果
+## Four real case studies: from methods to results
 
-以下 **5 张图**由仓库脚本读取公开数据与本次计算结果生成。四组案例分别展示基因网络模拟、药物观测、药物模型预测和供体留出评价；每组均有源表、实际命令与结果记录。[全部图集](virtual-cell-research/cases/gallery/README.md)
+The following **five figures** were generated by repository scripts from public data and the recorded computations. The four case groups cover network simulation, measured compound responses, model predictions, and donor-held-out evaluation. Each has source tables, actual commands, and result records. [Complete gallery](virtual-cell-research/cases/gallery/README.md)
 
-### 01 · CellOracle：Gata1 敲除与过表达怎样改变模型状态？
+### 01 · CellOracle: how do Gata1 knockout and overexpression change the modeled state?
 
-> 使用 Virtual Cell Research，从 GSE72857 野生型造血细胞原始计数出发，比较 Gata1 KO 和固定内部 P95 的 OE，生成状态位移、下游表达变化和实际目标设定图。
+> Use Virtual Cell Research with raw counts from GSE72857 wild-type hematopoietic cells. Compare Gata1 KO and OE at a fixed internal P95, and generate state projections, downstream expression effects, and the actual target settings.
 
-**方法。** 从 GEO 实验标签核实野生型小鼠骨髓背景，固定选择 500 个细胞；CellOracle 0.20.0 使用 1,500 个模型基因与全体细胞共同拟合的调控网络，分别执行 KO 和 OE。KO 将 Gata1 设为 0；OE 将其固定为基线内部表达的第 95 百分位 **1.556675**。
+**Method.** GEO experimental labels establish the wild-type mouse bone-marrow background. A fixed subset of 500 cells is used. CellOracle 0.20.0 fits a shared regulatory network across the cells with 1,500 model genes, then runs KO and OE separately. KO sets Gata1 to zero; OE fixes it at the 95th percentile of its internal baseline expression, **1.556675**.
 
-![CellOracle Gata1 KO、OE 与随机化响应在同一 UMAP 上的状态位移](virtual-cell-research/cases/gallery/celloracle/state_shifts.png)
+![CellOracle Gata1 KO, OE, and randomized-response projections on the same UMAP](virtual-cell-research/cases/gallery/celloracle/state_shifts.png)
 
-**读状态图。** 散点显示全部 500 个基线细胞；A、C 是 KO/OE 投影，B、D 是固定网络下随机化表达变化的投影。四个面板使用同一坐标、同一组 240 个确定性选取的箭头和统一比例尺，便于直接比较方向。箭头幅度是 UMAP 投影单位，随机化结果提供描述性参照。
+**Reading the state figure.** The scatter plots show all 500 baseline cells. A and C show KO/OE projections; B and D project randomized expression changes under the fixed network. All four panels use the same coordinates, the same 240 deterministically selected arrows, and a common vector scale. Arrow lengths are in UMAP projection units; the randomized results provide a descriptive reference.
 
-| 全部细胞的结果 | Gata1 KO | Gata1 OE |
+| Result across all cells | Gata1 KO | Gata1 OE |
 | --- | ---: | ---: |
-| 平均投影位移幅度 | 0.513265 | 0.620486 |
-| 单次随机化平均位移幅度 | 0.311007 | 0.330776 |
-| 有非零模拟响应的非目标基因 | 1,311 | 1,311 |
+| Mean projected displacement magnitude | 0.513265 | 0.620486 |
+| Mean magnitude for one randomization | 0.311007 | 0.330776 |
+| Non-target genes with a nonzero simulated response | 1,311 | 1,311 |
 
-![CellOracle Gata1 KO/OE 的下游平均表达变化与所有细胞的实际目标设定](virtual-cell-research/cases/gallery/celloracle/intervention_effects.png)
+![CellOracle Gata1 KO/OE downstream mean expression changes and actual target settings for every cell](virtual-cell-research/cases/gallery/celloracle/intervention_effects.png)
 
-**读表达图。** A、B 排除被强制设定的 Gata1，各展示正、负平均变化最大的 8 个基因；横轴使用 CellOracle 内部的 **imputed log1p(raw-count)** 尺度。KO 中 Elane 为 +0.580168、Car1 为 −0.925505；OE 中 Car1 为 +1.823699、Ctsg 为 −0.926096。C 将所有细胞按基线排序：固定 P95 使 **475 个细胞提高、25 个细胞降低**，因此这里的 OE 并不等于每个细胞都增加相同倍数。
+**Reading the expression figure.** Panels A and B exclude the directly set target Gata1 and show the eight largest positive and eight largest negative mean changes. The horizontal axis uses CellOracle's internal **imputed log1p(raw-count)** scale. In KO, Elane is +0.580168 and Car1 is −0.925505; in OE, Car1 is +1.823699 and Ctsg is −0.926096. Panel C orders all cells by baseline expression: fixing the target at P95 **raises 475 cells and lowers 25**, so this OE setting is not a uniform increase in every cell.
 
-**解释范围。** 这是单只小鼠、固定子集的网络模拟；多名基因映射排除损失了所选细胞约 13.23% 的分子计数，且没有独立 Gata1 扰动真值。状态箭头和基因变化用于提出后续问题。[完整方法、源表与复现命令](virtual-cell-research/cases/gallery/celloracle/README.md) · [运行记录](virtual-cell-research/cases/gallery/celloracle/evidence.json)
+**Interpretation.** This is a network simulation on a fixed subset from one mouse. Excluding ambiguous multi-name gene mappings removed about 13.23% of molecular counts from the selected cells, and no independent Gata1 perturbation ground truth was used. The projected arrows and gene effects support follow-up research questions. [Full methods, source tables, and reproduction commands](virtual-cell-research/cases/gallery/celloracle/README.md) · [Execution evidence](virtual-cell-research/cases/gallery/celloracle/evidence.json)
 
-### 02 · Airway：同一供体中，单药与联合处理有什么不同？
+### 02 · Airway: how do single and combined treatments differ within the same donor?
 
-> 使用 Virtual Cell Research，分析 GSE52778，核对样本与供体身份，比较地塞米松、沙丁胺醇和联合处理相对未处理对照的表达响应，生成图表和结果解释。
+> Use Virtual Cell Research to analyze GSE52778. Verify sample and donor identities, compare dexamethasone, albuterol, and their combination against untreated controls, and explain the observed response scale.
 
-**方法。** 输入为人气道平滑肌的 bulk RNA-seq 来源 FPKM：**4 位供体、16 份表达谱、23,273 个来源基因**；每药 1 µM，处理 18 小时。通过 GEO/SRA 样本记录核实身份，为每位供体分别计算三个处理对比：`log2(1 + FPKM处理) − log2(1 + FPKM对照)`。
+**Method.** The input is source-provided bulk RNA-seq FPKM from human airway smooth muscle: **four donors, 16 expression profiles, and 23,273 source genes**. Each drug is used at 1 µM for 18 hours. GEO/SRA sample records establish identities. Three comparisons are calculated separately within each donor as `log2(1 + FPKM_treated) − log2(1 + FPKM_control)`.
 
-![GSE52778 四供体在地塞米松、沙丁胺醇和联合处理下的真实配对响应](virtual-cell-research/cases/airway-gse52778-drug-response/drug_response.png)
+![GSE52778 measured donor-paired responses to dexamethasone, albuterol, and combined treatment](virtual-cell-research/cases/airway-gse52778-drug-response/drug_response.png)
 
-**读图。** 每列是一位供体，格内数值是该供体的配对差值。三个面板共享色标和八个基因；候选要求来源状态均为 OK 且所有表达谱 FPKM ≥ 1，再按地塞米松供体平均响应选取四个正向、四个负向基因。下表给出其中四个基因的供体等权平均值：
+**Reading the figure.** Each column is a donor, and each displayed value is that donor's paired difference. The three panels share a color scale and eight genes. Eligible genes have source status OK and FPKM ≥ 1 in every profile; four positive and four negative genes are selected by the donor-mean dexamethasone response. The table shows equal-donor mean responses for four of them.
 
-| 基因 | 地塞米松 | 沙丁胺醇 | 联合处理 |
+| Gene | Dexamethasone | Albuterol | Combination |
 | --- | ---: | ---: | ---: |
 | SPARCL1 | +3.884 | +1.966 | +2.887 |
 | FKBP5 | +3.701 | +1.591 | +2.631 |
 | KCTD12 | −2.357 | −0.865 | −1.161 |
 | TNFAIP6 | −2.292 | −0.881 | −1.006 |
 
-**解释范围。** 本例完成的是实测表达的描述性分析，统计单位为四位供体；伪计数后的差值需按上述尺度阅读，联合处理的图形差异不能直接判为协同或拮抗。[全部结果、配对与复现命令](virtual-cell-research/cases/airway-gse52778-drug-response/README.md) · [运行记录](virtual-cell-research/cases/airway-gse52778-drug-response/evidence.json)
+**Interpretation.** This is a descriptive analysis of measured expression with four donors as the biological units. Differences must be read on the stated pseudocount scale. Visual differences in the combined treatment do not establish synergy or antagonism. [Complete results, pairing, and reproduction commands](virtual-cell-research/cases/airway-gse52778-drug-response/README.md) · [Execution evidence](virtual-cell-research/cases/airway-gse52778-drug-response/evidence.json)
 
-### 03 · PRnet：模型预测是否优于零响应基线？
+### 03 · PRnet: does the model outperform a zero-response baseline?
 
-> 使用 Virtual Cell Research，获取固定 PRnet 官方 HT115 demo 与权重，运行药物响应预测，画出实测和预测热图，并在全部处理表达谱上与零响应基线比较。
+> Use Virtual Cell Research to obtain the fixed official PRnet HT115 demo and weights. Run response prediction, show measured and predicted responses, and compare every treated profile with a zero-response baseline.
 
-**方法。** 固定官方权重在 CPU 上推理 **661 条处理谱 × 978 个基因**，保留来源指定对照。沿官方 demo 执行总量归一化与 `log1p`，在该尺度计算处理表达减对照；主预测对 16 个 decoder-noise 向量下的条件均值取平均，本次没有重新训练权重。
+**Method.** Fixed official weights are used for CPU inference on **661 treated profiles × 978 genes**, preserving source-designated controls. The official demo's total normalization and `log1p` are applied, and treatment-minus-control responses are calculated on that scale. The main prediction averages conditional means over 16 decoder-noise vectors. The checkpoint is not retrained.
 
-![PRnet HT115 实测与预测响应、全部 661 条处理谱的配对误差和误差分布](virtual-cell-research/cases/gallery/prnet/predicted_response.png)
+![PRnet HT115 measured and predicted responses, paired errors for all 661 treated profiles, and error distributions](virtual-cell-research/cases/gallery/prnet/predicted_response.png)
 
-**读图。** A、B 使用共同色标，展示 10 个按固定规则选择的处理条件和 12 个按实测响应幅度选择的基因。C 的每一点是一条处理谱，虚线下方表示 PRnet 误差较低；D 展示全部处理谱的误差分布。评价使用完整 978 基因，RMSE 越低越好。
+**Reading the figure.** A and B share a color scale and show 10 treatment conditions chosen by a fixed rule and 12 genes selected by measured response magnitude. Each point in C is a treated profile; points below the diagonal have lower PRnet error. D shows the error distributions across all treated profiles. Evaluation uses all 978 genes, and lower RMSE is better.
 
-| 全部处理谱的结果 | 数值 |
+| Result across all treated profiles | Value |
 | --- | ---: |
-| PRnet 平均逐谱响应 RMSE | 0.140141 |
-| 零响应平均逐谱响应 RMSE | 0.132420 |
-| PRnet − 零响应的平均 RMSE 差值 | +0.007721 |
-| PRnet 误差更低的处理谱 | 185 / 661（27.99%） |
+| PRnet mean per-profile response RMSE | 0.140141 |
+| Zero-response mean per-profile response RMSE | 0.132420 |
+| Mean RMSE difference, PRnet − zero response | +0.007721 |
+| Profiles with lower PRnet error | 185 / 661 (27.99%) |
 
-**解释范围。** 本次模型成功执行，但平均误差未优于零响应。checkpoint 训练重叠未知，全部 demo 参与归一化，且 338 条谱的指定对照跨 RNA plate；因此这是一项固定参考推理，结果不外推为疾病逆转或疗效排名。[方法、源表与复现命令](virtual-cell-research/cases/gallery/prnet/README.md) · [运行记录](virtual-cell-research/cases/gallery/prnet/evidence.json)
+**Interpretation.** The model executed successfully, but its mean error did not improve on zero response. Checkpoint training overlap is unknown, the full demo participates in normalization, and 338 profiles have controls from another RNA plate. This is a fixed reference inference, and its results do not establish disease reversal or treatment efficacy rankings. [Methods, source tables, and reproduction commands](virtual-cell-research/cases/gallery/prnet/README.md) · [Execution evidence](virtual-cell-research/cases/gallery/prnet/evidence.json)
 
-### 04 · Kang：其他供体的平均响应能预测留出的供体吗？
+### 04 · Kang: can other donors' mean responses predict a held-out donor?
 
-> 使用 Virtual Cell Research，下载 Kang IFN-β PBMC 数据，按供体配对分析 CD14+ 单核细胞；每次用另外七位供体的响应均值预测第八位，生成响应热图和逐供体误差。
+> Use Virtual Cell Research with the Kang IFN-β PBMC data. Analyze donor-paired CD14+ monocytes and, in each fold, predict one donor using only the other seven donors' mean responses. Generate response heatmaps and per-donor errors.
 
-**方法。** GSE96583 的八位供体各有对照与 IFN-β 刺激条件，刺激 6 小时。将 **2,785 个对照细胞、2,600 个刺激细胞**的原始 UMI 按供体/条件聚合，使用全部 **35,635 个来源基因**计算 CPM，再求 `log2(1 + CPM刺激) − log2(1 + CPM对照)`。每一折只用其余七位供体的完整响应均值预测留出者。
+**Method.** GSE96583 contains control and six-hour IFN-β stimulation conditions for eight donors. Raw UMI counts from **2,785 control cells and 2,600 stimulated cells** are aggregated by donor and condition. CPM uses all **35,635 source genes**, and responses are `log2(1 + CPM_stimulated) − log2(1 + CPM_control)`. Each fold uses only the other seven donors' complete response vectors to predict the held-out donor.
 
-![Kang 八位供体的配对响应，以及留一供体均值基线与零响应的全基因误差](virtual-cell-research/cases/gallery/kang/donor_response_and_holdout.png)
+![Kang paired responses for eight donors and full-gene errors for leave-one-donor-out mean and zero-response baselines](virtual-cell-research/cases/gallery/kang/donor_response_and_holdout.png)
 
-**读图。** 左侧每列是一位供体，展示供体平均变化最大的六个正向和六个负向基因；右侧连线比较同一位留出供体的两种全基因误差。八位供体的均值预测误差都较低，供体等权平均 RMSE 为 **0.620647**，零响应为 **0.837714**。
+**Reading the figure.** Each heatmap column is a donor; the displayed genes are the six largest positive and six largest negative donor-mean changes. Lines on the right connect the two full-gene errors for the same held-out donor. The mean predictor has lower error for all eight donors. Equal-donor mean RMSE is **0.620647**, compared with **0.837714** for zero response.
 
-**解释范围。** 这是同一研究内的均值基线交叉验证；八折共享训练供体，条件特异文库影响仍在。完整基因轴包含 20,815 个共同零响应基因，汇总误差不能代表每个响应基因都预测准确。[完整方法、逐供体结果与复现命令](virtual-cell-research/cases/gallery/kang/README.md) · [运行记录](virtual-cell-research/cases/gallery/kang/evidence.json)
+**Interpretation.** This is within-study cross-validation of a mean baseline. The eight folds share training donors, and condition-specific library effects remain. The full gene axis includes 20,815 genes with zero responses in all donors; aggregate error does not establish accurate prediction for every responding gene. [Full methods, per-donor results, and reproduction commands](virtual-cell-research/cases/gallery/kang/README.md) · [Execution evidence](virtual-cell-research/cases/gallery/kang/evidence.json)
 
-## 案例库：当前完成到哪一步
+## Case library: current evidence
 
-当前收录 **11 个工作流：5 项数据教学/输入检查/基线评估，2 条真实模型路线，4 项来源与路线整理；独立预测验证为 0 项。** 同一数据可承担多个工作流：HT115 用于观测教学与 PRnet 推理，Kang 用于观测配对与供体留出，Paul2015 分别提供教程对象检查与原始计数模拟。四组图集按研究问题组织。[案例目录与阶段记录](virtual-cell-research/cases/README.md)
+The library records **11 workflows: five data-analysis/input-audit/baseline-evaluation cases, two executed model routes, and four catalogued data or method routes. Independent prediction validations: zero.** A dataset can support multiple workflows: HT115 supports observed analysis and PRnet inference; Kang supports donor pairing and held-out evaluation; Paul2015 supports a tutorial-object audit and a separate raw-count simulation. The four galleries organize these results by research question. [Case catalog and stages](virtual-cell-research/cases/README.md)
 
-| 工作流 | 当前阶段与可获得内容 |
+| Workflow | Current stage and available evidence |
 | --- | --- |
-| [HT115 观测教学](virtual-cell-research/cases/prnet-ht115-demo/README.md) | 已计算完整观测响应，学习指定对照与处理尺度 |
-| [Airway 药物观测](virtual-cell-research/cases/airway-gse52778-drug-response/README.md) | 已完成 4 供体 × 3 处理的配对比较与绘图 |
-| [Paul2015 输入检查](virtual-cell-research/cases/celloracle-paul2015-input-audit/README.md) | 已发现教程 `raw_count` 层非整数，按本入口原始计数要求阻断 |
-| [Kang 供体配对](virtual-cell-research/cases/kang-ifnb-pbmc/README.md) | 已完成计数聚合与八个 CD14+ 供体配对 |
-| [Kang 留一供体评估](virtual-cell-research/cases/kang-heldout-baseline/README.md) | 已完成八折均值基线与零响应比较 |
-| [CellOracle Gata1 KO/OE](virtual-cell-research/cases/celloracle-paul2015-gata1/README.md) | 已分别执行 KO 和 OE，保存完整模型输出 |
-| [PRnet 参考推理](virtual-cell-research/cases/prnet-reference-evaluation/README.md) | 已执行固定权重 CPU 推理与全量基线比较 |
-| [sci-Plex3 剂量响应](virtual-cell-research/cases/sciplex3-chemical-dose/README.md) | 已整理来源、细胞系、药物和剂量条件；矩阵待获取 |
-| [Norman2019 CRISPRa](virtual-cell-research/cases/norman2019-k562-crispra/README.md) | 已整理单基因/组合激活路线；数据准备待完成 |
-| [Adamson2016 UPR CRISPRi](virtual-cell-research/cases/adamson2016-k562-upr-crispri/README.md) | 已整理 UPR 子实验；标签重建与模型评估待完成 |
-| [Replogle2022 K562 CRISPRi](virtual-cell-research/cases/replogle2022-k562-essential-crispri/README.md) | 已整理作者存档与 pseudobulk 路线；矩阵待获取 |
+| [HT115 observed responses](virtual-cell-research/cases/prnet-ht115-demo/README.md) | Complete observed responses calculated; source-designated controls and the source scale retained |
+| [Airway compound observations](virtual-cell-research/cases/airway-gse52778-drug-response/README.md) | Paired comparisons and figures completed for four donors × three treatments |
+| [Paul2015 input audit](virtual-cell-research/cases/celloracle-paul2015-input-audit/README.md) | Non-integer values found in the tutorial `raw_count` layer; blocked under this route's raw-count contract |
+| [Kang donor pairing](virtual-cell-research/cases/kang-ifnb-pbmc/README.md) | Count aggregation and eight CD14+ donor pairs completed |
+| [Kang leave-one-donor-out evaluation](virtual-cell-research/cases/kang-heldout-baseline/README.md) | Eight-fold mean-baseline comparison with zero response completed |
+| [CellOracle Gata1 KO/OE](virtual-cell-research/cases/celloracle-paul2015-gata1/README.md) | KO and OE executed separately; complete native model outputs preserved |
+| [PRnet reference inference](virtual-cell-research/cases/prnet-reference-evaluation/README.md) | Fixed-weight CPU inference and complete baseline comparison executed |
+| [sci-Plex3 dose response](virtual-cell-research/cases/sciplex3-chemical-dose/README.md) | Sources, cell lines, compounds, and dose conditions catalogued; matrix acquisition pending |
+| [Norman2019 CRISPRa](virtual-cell-research/cases/norman2019-k562-crispra/README.md) | Single-gene and combination activation route catalogued; data preparation pending |
+| [Adamson2016 UPR CRISPRi](virtual-cell-research/cases/adamson2016-k562-upr-crispri/README.md) | UPR subexperiment catalogued; label reconstruction and model evaluation pending |
+| [Replogle2022 K562 CRISPRi](virtual-cell-research/cases/replogle2022-k562-essential-crispri/README.md) | Author archive and pseudobulk route catalogued; matrix acquisition pending |
 
-在 Skill 目录执行 `python scripts/cases.py list` 查看全部工作流，`python scripts/cases.py show <case-id>` 查看一个案例；两者离线运行。资源按指定案例逐项获取，阶段以 [catalog.json](virtual-cell-research/cases/catalog.json)和对应运行记录为准。
+Ask the Agent to list the catalog or inspect a selected case before fetching its resources. Catalog inspection is offline; downloads are explicit and case-specific. Stages follow [catalog.json](virtual-cell-research/cases/catalog.json) and the corresponding execution records.
 
-## 结果质量与复现
+## Result quality and reproducibility
 
-**先看基线与尺度，再看变化大小。** 读报告时确认实际背景、干预、单位和完成范围；图中的 Top 基因用于展示，完整结果支持重新汇总。评价预测时同时看误差与简单基线，相关性、执行成功和独立验证各有不同含义。
+**Read the baseline and scale before interpreting magnitude.** Check the actual context, conditions, units, and completed scope. Displayed genes are selected summaries; complete results support alternative summaries. Prediction error, correlation, successful execution, and independent validation answer different questions.
 
-**每张图都能回到源表。** 本项目保留稳定 ID、完整响应、展示筛选规则和绘图入口；并列图尽量共用坐标或色标。四组案例的数值与图形核对范围见 [复核记录](virtual-cell-research/cases/gallery/review-notes.md)。
+**Every figure connects to source tables.** Stable IDs, complete responses, selection rules, and plotting entry points are preserved. Related panels use shared coordinates or color scales where appropriate. The [gallery review notes](virtual-cell-research/cases/gallery/review-notes.md) describe the numerical and visual checks for the four case groups.
 
-**每次运行都能找到方法。** 输入来源、资源身份、软件版本、参数、命令和失败条件随结果保存；重新执行使用新目录。源码包含流程、脚本、案例和轻量图源，原始矩阵、模型权重与完整本地运行包按案例单独准备。需要继续判断预测价值时，使用匹配的实测数据设计留出与基线比较。
+**Every run retains its method.** Sources, resource identities, software versions, parameters, commands, and failed conditions accompany the results. Reruns use new directories. The source package includes workflows, scripts, case documentation, and lightweight figure sources; original matrices, weights, and full local run bundles are prepared per case. Further assessment of predictive value requires matched measurements, a defined split, and suitable baselines.
 
-## 开放协作与生态共建
+## Research collaboration and extension
 
-本项目希望将分散的扰动模型、公开数据与分析经验，逐步沉淀为可运行、可比较、可复核的研究工作流。开放协作围绕具体科学问题展开：明确方法的适用范围，完善数据与评价依据，使模型接入能够进一步支持研究复用与独立验证。
+The project brings models, public datasets, and analysis methods into executable research workflows that can be reproduced, compared, and reviewed. Contributions should establish the scientific scope of a method, make its data and evaluation assumptions explicit, and preserve enough evidence for others to reuse the work.
 
-| 共建方向 | 可贡献内容 | 协作目标 |
+| Contribution area | Contributions | Research objective |
 | --- | --- | --- |
-| **模型与方法** | 模型适配、扰动语义、输入输出定义、适用背景与真实运行案例 | 使方法在各自科学定义下可复现执行，明确能力边界与失败条件 |
-| **数据与基准** | 有来源与许可记录的扰动数据、稳定标识、条件与对照映射、参考任务与数据划分 | 为方法比较和跨数据集研究提供可追溯、可核对的数据基础 |
-| **评测与验证** | 同尺度基线、留出设计、评价指标、独立数据或实验对照 | 评估预测相对简单基线的增益及适用范围，逐步补充独立验证证据 |
-| **可复现工作流** | 数据准备、模型执行、结果汇总、结构化报告、结果解释与使用指南 | 保留资源、参数、完整产物和失败记录，支持研究者复用方法并复核结论 |
+| **Models and methods** | Adapters, perturbation semantics, input/output definitions, applicable contexts, and executed examples | Reproduce each method under its own scientific definition, with explicit capabilities and failure conditions |
+| **Data and benchmarks** | Sources and licenses, stable IDs, condition/control mapping, reference tasks, and data splits | Build a traceable basis for method comparison and research across datasets |
+| **Evaluation and validation** | Matched-scale baselines, held-out designs, suitable metrics, independent data, or experimental controls | Measure improvement over simple baselines and establish where the evidence applies |
+| **Reproducible workflows** | Data preparation, model execution, result summaries, structured reports, interpretation, and usage guides | Preserve resources, parameters, complete outputs, and failures so others can repeat the analysis |
 
-上述方向是后续协作目标。当前已完成 CellOracle 与 PRnet 两条真实模型执行路线，其他路线按各自适配进度记录；独立预测验证仍待完成。贡献可从现有案例或明确的新研究问题出发，随实际证据推进实现与验证阶段。模型、数据和论文保留原始归属，复用条件按具体资源记录。
+Case reproduction and adapter development are the current extension mechanisms. CellOracle and PRnet have executed model routes; other routes retain their actual implementation status. Independent prediction validation remains to be added. New capabilities and validation conclusions should each be supported by identifiable execution or evaluation evidence. Models, datasets, and papers retain their original attribution and resource-specific terms.
 
-### 贡献规范与工程验证
+### Contribution standards and engineering checks
 
-请按 [贡献指南](virtual-cell-research/CONTRIBUTING.md) 说明研究目的、输入与输出、来源与版本、最小运行步骤、完整结果位置及实际验证范围。使用指南和结果解释与代码、案例一起维护，使其他研究者能够从同一份记录重建分析过程。
+Follow the [contribution guide](virtual-cell-research/CONTRIBUTING.md): state the research purpose, inputs and outputs, sources and versions, minimal reproduction steps, complete-result location, and actual validation scope. Maintain usage instructions and interpretation alongside code and cases.
 
-在独立 Python 3.12 环境、Skill 根目录进行工程检查与打包：
+For contributors, run engineering checks and packaging in an independent Python 3.12 environment from the Skill directory:
 
 ```bash
 python -m pip install -r requirements-tests.txt
@@ -284,22 +342,22 @@ python scripts/cases.py validate
 python scripts/package_skill.py
 ```
 
-打包产物为 Skill 目录下的 `dist/virtual-cell-research.zip`。工程检查验证代码和记录的一致性，真实模型执行与独立科学评价按各自案例补充。
+The package is created at `dist/virtual-cell-research.zip` inside the Skill directory. Engineering checks verify code and record consistency; real model execution and independent scientific evaluation are documented separately in their cases.
 
-## 仓库结构与阅读导航
+## Repository map
 
-| 位置 | 作用 |
+| Location | Purpose |
 | --- | --- |
-| [virtual-cell-research/README.md](virtual-cell-research/README.md) | Skill 使用说明与任务入口 |
-| [virtual-cell-research/SKILL.md](virtual-cell-research/SKILL.md) | Agent 执行规则 |
-| [virtual-cell-research/references/](virtual-cell-research/references/) | 首次使用、输入准备、能力表、资源配置、结果解读与评价 |
-| [virtual-cell-research/scripts/](virtual-cell-research/scripts/) | 数据准备、案例获取、观测分析、绘图、评价与打包工具 |
-| [virtual-cell-research/examples/](virtual-cell-research/examples/) | KO/OE 参数化入口与药筛适配示例 |
-| [virtual-cell-research/cases/](virtual-cell-research/cases/) | 11 个工作流的来源、命令、实际阶段与结果 |
-| [virtual-cell-research/cases/gallery/](virtual-cell-research/cases/gallery/) | 实际结果图、图源与读图说明 |
-| [virtual-cell-research/tests/](virtual-cell-research/tests/) | 输入、适配、计算与输出的工程检查 |
-| [docs/desktop-viewer.md](docs/desktop-viewer.md) | 附带的 Windows 结果查看器说明：用于打开已有模型运行包 |
+| [virtual-cell-research/README.md](virtual-cell-research/README.md) | Complete Skill guide and research entry points |
+| [virtual-cell-research/SKILL.md](virtual-cell-research/SKILL.md) | Agent execution rules |
+| [virtual-cell-research/references/](virtual-cell-research/references/) | First use, input preparation, capabilities, resources, interpretation, and evaluation |
+| [virtual-cell-research/scripts/](virtual-cell-research/scripts/) | Data preparation, case acquisition, observed analyses, figures, evaluation, and packaging |
+| [virtual-cell-research/examples/](virtual-cell-research/examples/) | Parameterized KO/OE routes and compound-screening adapter examples |
+| [virtual-cell-research/cases/](virtual-cell-research/cases/) | Sources, commands, stages, and results for 11 workflows |
+| [virtual-cell-research/cases/gallery/](virtual-cell-research/cases/gallery/) | Actual result figures, figure sources, and reading notes |
+| [virtual-cell-research/tests/](virtual-cell-research/tests/) | Engineering checks for inputs, adapters, computations, and outputs |
+| [docs/desktop-viewer.md](docs/desktop-viewer.md) | Companion Windows viewer for existing model result packages |
 
-Skill 的使用与模型运行按本页的目录和环境准备；附带查看器的安装包提供结果阅读功能，不包含新 Skill 的模型环境与权重。
+Use the Skill and the selected route's environment for research execution. The companion viewer opens existing results; its installer does not include the Skill's model environments or weights.
 
-[代码许可](LICENSE) · [归属说明](virtual-cell-research/NOTICE) · [第三方资源与来源](virtual-cell-research/THIRD_PARTY_NOTICES.md) · [方法说明](virtual-cell-research/docs/methodology-and-scope.md)
+[Code license](LICENSE) · [Attribution](virtual-cell-research/NOTICE) · [Third-party resources and sources](virtual-cell-research/THIRD_PARTY_NOTICES.md) · [Methods and scope](virtual-cell-research/docs/methodology-and-scope.md)

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1120" height="200" viewBox="0 0 1120 200" role="img" aria-labelledby="header-title header-description">
   <title id="header-title">Virtual Cell Research</title>
-  <desc id="header-description">A research workflow skill for gene perturbation, drug response, and reproducible workflows. An abstract cell and connected network form the project identity.</desc>
+  <desc id="header-description">An extensible research workflow skill for data preparation, perturbation analysis, prediction evaluation, and result interpretation. An abstract cell and connected network form the project identity.</desc>
   <rect x="0.5" y="0.5" width="1119" height="199" rx="20" fill="#F6F8FB" stroke="#DEE6EC"/>
   <g transform="translate(36 28) scale(1.125)">
   <rect width="128" height="128" rx="28" fill="#142C3E"/>
@@ -15,13 +15,13 @@
   <g font-family="Arial, Helvetica, sans-serif">
     <text x="220" y="51" font-size="12" font-weight="700" letter-spacing="1.8" fill="#47717A">RESEARCH WORKFLOW SKILL</text>
     <text x="218" y="104" font-size="50" font-weight="700" letter-spacing="-1.2" fill="#142C3E">Virtual Cell Research</text>
-    <g font-size="17.5" fill="#4B6271">
-      <text x="220" y="144">Gene perturbation</text>
-      <text x="402" y="144">Drug response</text>
-      <text x="558" y="144">Reproducible workflows</text>
+    <g font-size="17" fill="#4B6271">
+      <text x="220" y="144">Data preparation</text>
+      <text x="410" y="144">Perturbation analysis</text>
+      <text x="624" y="144">Evaluation &amp; interpretation</text>
     </g>
   </g>
-  <path d="M380 132V146M536 132V146" fill="none" stroke="#C7D5DC" stroke-width="1"/>
+  <path d="M391 132V146M605 132V146" fill="none" stroke="#C7D5DC" stroke-width="1"/>
   <g fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path d="M1028 39C1061 59 1071 86 1060 116C1050 151 1025 166 992 162C960 159 936 136 938 104C939 73 954 48 982 39C996 34 1013 33 1028 39Z" stroke="#DDE8EC" stroke-width="2"/>
     <path d="M974 69L1000 103L1035 78M1000 103L1025 139M1000 103L964 126M1035 78L1025 139" stroke="#D6E3E8" stroke-width="2"/>
@@ -32,3 +32,4 @@
   <circle cx="1025" cy="139" r="5" fill="#D6D1E6"/>
   <circle cx="964" cy="126" r="5" fill="#ACD6D1"/>
 </svg>
+

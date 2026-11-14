@@ -44,7 +44,7 @@ def build(root):
                     'selected_gene_means.csv', 'unit_metrics.csv'}))
             if gallery_table and p.stat().st_size > MAX_GALLERY_TABLE_BYTES:
                 raise ValueError('gallery figure-source table exceeds 2 MiB: ' + rel.as_posix())
-            if rel.as_posix() in {'SKILL.md', 'README.md', 'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md',
+            if rel.as_posix() in {'SKILL.md', 'README.md', 'README.zh-CN.md', 'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md',
                                   'CONTRIBUTING.md', 'requirements-tests.txt', 'requirements-data.txt'} or (
                     rel.parts[0] in folders and p.suffix in suffixes) or gallery_table:
                 sources[rel.as_posix()] = p.read_bytes()
@@ -78,3 +78,4 @@ def build(root):
 
 if __name__ == '__main__':
     print(f'Packaged and verified {build(Path(__file__).resolve().parents[1])} files.')
+

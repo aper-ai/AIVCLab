@@ -1,122 +1,125 @@
 ---
 name: virtual-cell-research
-description: 开展虚拟基因敲除、虚拟过表达和虚拟药物筛选。用户提供转录组或单细胞表达数据、目标基因、药物库或已有结果时，组织数据准备、模型匹配、干预分析、预测评估和结果解读，交付完整响应、适用图表及可追溯运行记录。也用于 CSV/TSV/H5AD 输入检查、公开案例复现、基线比较和数据划分审计；按实际模型能力执行，保留未完成项与独立验证状态。
+description: Orchestrate extensible virtual cell research workflows for transcriptomic and single-cell data. Use for data preparation and input audits, observed-response analysis, model-based gene or compound perturbations, prediction evaluation and split audits, interpretation of existing results, public-case reproduction, and method or adapter integration. Gene knockout, overexpression and drug screening are representative applications. Execute compatible analysis routes, preserve full results and provenance, and report implementation, quality and independent-validation status separately.
 ---
 
-# Virtual Cell Research：虚拟敲除、过表达与药物筛选
+# Virtual Cell Research
 
-从用户的研究问题出发，检查表达数据、目标和细胞背景，选择适用模型并执行虚拟干预，保存完整响应、图表、质量检查和运行记录。按需调用数据准备、预测评估和结果解读工具；以研究目标驱动任务执行，衔接数据、模型与计算环境，减少重复配置与手工整理。
+Organize extensible virtual cell research workflows around the research question. Enter data preparation and auditing, observed-response analysis, model perturbation, prediction evaluation, interpretation of existing results, or public-case reproduction according to the user's current objective. Run these entry points individually or combine them into a complete analysis. Treat gene knockout, overexpression and drug screening as representative applications within this broader scope.
 
-## 接收文件与任务，负责执行和交付
+Reuse the existing data, model and evaluation contracts. When adding a data type, backend or method, first verify its sources, input/output definitions and implementation status. Follow the contribution guidelines to adapt and validate it before registering the capability. Record unimplemented routes honestly; extension goals do not substitute for execution evidence. Preserve complete responses, applicable figures, quality checks and provenance.
 
-用户提供数据文件或可访问的本地目录，并用自然语言说明研究目标。环境检查、依赖准备、所选资源获取、脚本运行、绘图和结果整理由 Agent 执行；不要将仅提供代码、命令或操作计划作为分析任务的完成。安装请求同时包含数据与研究目标时，安装完成后继续该任务；只有安装请求时，核验完整 Skill 的安装位置与可加载状态，并说明如何提供数据和开始分析。
+## Accept files and tasks; execute and deliver the analysis
 
-收到文件后先检查其内容与已有记录，再补齐真正影响科学解释的信息。无法访问文件、仓库或执行环境时，准确说明受阻步骤及所需条件；已有授权连接或完整本地副本可用时优先复用。运行后展示报告与主要图表，提供完整结果和运行记录的入口，并解释本次完成范围。日常流程由 Agent 操作；技术复现命令用于执行与排错，不要求用户逐条代为运行。
+Accept data files or an accessible local directory together with a research objective in natural language. Perform environment checks, dependency preparation, selected resource retrieval, script execution, plotting and result organization as the Agent. Providing only code, commands or an action plan does not complete an analysis task. If an installation request also includes data and a research objective, continue with that task after installation. For installation-only requests, verify the complete Skill's installation location and loadability, then explain how to provide data and begin an analysis.
 
-## 1. 选择入口并补齐真正的缺项
+Inspect the files and existing records before requesting information that materially affects scientific interpretation. If files, the repository or an execution environment are inaccessible, identify the blocked step and the conditions needed to proceed. Reuse an already authorized connection or complete local copy when available. After execution, show the report and main figures, provide access to full results and run records, and explain the completed scope. Operate the routine workflow as the Agent; use technical reproduction commands for execution and troubleshooting without requiring the user to run them line by line.
 
-先从当前请求判断入口；已明确时直接继续：
+## 1. Select an entry point and resolve material gaps
 
-| 入口 | 实际工作 | 完成依据 |
+Infer the entry point from the current request and proceed directly when it is clear:
+
+| Entry point | Work to perform | Evidence of completion |
 | --- | --- | --- |
-| 用户数据准备 | 按声明的尺度与标识整理 CSV/TSV/H5AD，保留原始数值和完整轴 | 新 H5AD、数据说明、检查与来源记录；准备成功不等于模型就绪 |
-| 真实模型分析 | 检查用户/参考数据与模型资源，运行兼容路线 | 本次命令、日志、版本、模型原生输出和检查记录 |
-| 预测评估 | 对齐实测与预测，比较简单基线并检查训练/评估成员 | 同尺度完整指标、成员审计及明确的科学验证状态 |
-| 真实数据教学 | 默认推荐 HT115 处理与对照的观测阅读；显式获取所选资源后计算差值 | 新的来源、完整观测差值、条件索引和 QC；不是模型推理 |
-| 输入审计 | 核实数据是否满足指定路线的输入假设 | 检查记录与具体阻断原因；发现输入问题不等于模型失败 |
-| 已有结果或历史复核 | 读取报告、清单、表格、图与勘误 | 指明读取了哪些已有产物，不声称本次重跑 |
+| Prepare user data | Organize CSV/TSV/H5AD using declared scales and identifiers; preserve original values and complete axes | A new H5AD, data description, checks and provenance; successful preparation does not establish model readiness |
+| Execute a model | Check user/reference data and model resources; execute a compatible route | Commands, logs, versions, native model outputs and checks from this run |
+| Evaluate predictions | Align observed and predicted data, compare simple baselines and inspect training/evaluation membership | Complete metrics on the same scale, membership audits and an explicit scientific-validation status |
+| Learn from real observations | By default, recommend the HT115 treatment/control walkthrough; explicitly retrieve selected resources and compute contrasts | New provenance, complete observed contrasts, condition indices and QC; this is not model inference |
+| Audit inputs | Verify whether data meet the input assumptions of a specified route | Check records and specific blocking reasons; an input problem is not a model failure |
+| Review existing or historical results | Read reports, manifests, tables, figures and corrections | Identify the existing artifacts inspected; do not claim a new execution |
+| Integrate a method or adapter | Follow the contribution guidelines to verify sources, input/output contracts and implementation scope | Register the capability only after adaptation and contract validation; preserve execution evidence and limitations |
 
-已有数据与目标时直接处理该任务，不强制先做教学。CSV/TSV/H5AD 整理读取 [自带数据](references/user-data.md)；已有实测和预测时读取 [预测评估](references/prediction-evaluation.md)；已有支持的运行结果需要说明时读取 [结果解读](references/result-reading.md)。
+When data and an objective are already available, handle that task directly without requiring a walkthrough first. Read [User data](references/user-data.md) for CSV/TSV/H5AD preparation, [Prediction evaluation](references/prediction-evaluation.md) when observations and predictions are available, and [Result interpretation](references/result-reading.md) when explaining a supported existing run.
 
-首次使用读 [首次使用](references/first-run.md)，按 [案例目录](cases/README.md) 选择具体案例。`python scripts/cases.py list`、`show <case-id>` 和 `validate` 离线运行；只有明确的 `fetch <case-id> --asset <asset-id> --output-dir <新目录>` 才下载一个资源，默认限额 64 MiB。不要自动下载全部案例。
+For first use, read [First run](references/first-run.md) and select a specific case from the [Case catalog](cases/README.md). `python scripts/cases.py list`, `show <case-id>` and `validate` run offline. Only an explicit `fetch <case-id> --asset <asset-id> --output-dir <new-directory>` downloads a single resource, with a default limit of 64 MiB. Do not download every case automatically.
 
-用户希望从案例看实际输出时，读取 [公开案例结果](cases/gallery/README.md)。按案例命令获取公开数据并执行分析，再调用对应绘图入口；保留完整源表、展示选择规则、共同坐标或色标及本次数值核对。给每张图配简短研究问题与读图说明，分清观测数据、模型模拟和预测评估。
+When the user wants to see actual case outputs, read [Public case results](cases/gallery/README.md). Retrieve public data and execute the analysis using that case's commands, then invoke its plotting entry point. Preserve complete source tables, display-selection rules, shared axes or color scales, and numerical checks for the current run. Accompany each figure with a brief research question and reading guide; distinguish observations, model simulations and prediction evaluations.
 
-观测响应示例可执行 `scripts/observed_prnet_case.py` 的 HT115 教学：约 3.14 MB 的真实来源数据，按指定对照计算 661 条处理表达谱的观测差值，保留 20 条对照和 978 个基因。338 条处理谱跨 RNA plate 配对，必须说明可能的批次影响。该步骤不加载或运行 PRnet。模型分析用户已指定输入和目标时，不改成教学案例。
+For an observed-response example, execute the HT115 walkthrough in `scripts/observed_prnet_case.py`: approximately 3.14 MB of real source data, observed contrasts for 661 treatment profiles against their specified controls, with 20 control profiles and 978 genes retained. Of these, 338 treatment profiles are paired across RNA plates; explain the possible batch effects. This step does not load or run PRnet. Do not replace a model-analysis task with a walkthrough when the user has specified inputs and objectives.
 
-**先观察，后提问。** 继承用户已给的数据、目标、基线、模型和环境；读取可访问文件的元信息、已有处理记录和可用模型环境。启动阶段最多一轮简短合并提问，只询问会改变研究问题或科学解释、且无法从现有信息核实的缺项，例如目标基因、逐个还是联合扰动、实际细胞背景、对照、药物库或 CellOracle OE 设定。不要重新列出六项必填表。
+**Inspect first, then ask.** Carry forward the data, objectives, baselines, models and environments already supplied. Inspect metadata in accessible files, processing records and available model environments. At startup, ask at most one brief, consolidated round of questions, limited to missing information that changes the research question or scientific interpretation and cannot be verified from existing information. Examples include target genes, separate versus joint perturbations, the actual cell background, controls, a compound library or a CellOracle OE setting. Do not repeat a six-field intake form.
 
-用户未指定的模型、兼容解释器、工作目录和普通运行参数，可依据研究目标、输入及资源给出可更改默认，简要说明理由并记录；满足条件后直接运行，不再询问“确认开始”。不能默认猜测基因/药物、原始计数来源、疾病参照、OE 生物学设定，或静默替换用户指定的模型、基线、目标与任务。关键科学输入不明确时完成检查并报告阻断项，不启动对应推理。后续新发现实质性输入矛盾时可再次询问该问题，不重复索取已知设置。
+For an unspecified model, compatible interpreter, working directory or routine run parameter, select an adjustable default based on the research objective, inputs and resources; briefly explain and record the choice. Run directly once the requirements are met, without asking again for confirmation to start. Do not guess genes/compounds, the provenance of raw counts, a disease reference or the biological definition of OE, or silently replace a user-specified model, baseline, target or task. If a critical scientific input remains unclear, complete the checks, report the blocker and do not start the affected inference. A material input contradiction discovered later may warrant a focused follow-up question; do not request known settings again.
 
-## 2. 检查输入与真实可用能力
+## 2. Check inputs and actual available capabilities
 
-按 [输入契约](references/input-contracts.md) 检查格式、尺度、物种、基因 ID、细胞背景、目标覆盖、对照及药物/剂量信息。缺失与实测零值分别记录；未知尺度不靠数值外观猜测，缺失的必需基因不静默补零。疾病参照仅在疾病方向比较时必需。
+Use the [Input contracts](references/input-contracts.md) to check format, scale, species, gene IDs, cell background, target coverage, controls and compound/dose information. Record missing values separately from measured zeros. Do not infer an unknown scale from numerical appearance or silently zero-fill required missing genes. A disease reference is required only for comparisons with a disease expression direction.
 
-需要将用户表格或指定 H5AD 表达层整理为可用输入时，按 `scripts/prepare_user_data.py` 的实际参数执行，记录明确的矩阵方向、尺度和物种；检查元数据按唯一 ID 对齐。该步骤不自动归一化、筛选基因、去重或解释基因别名，不把数值像整数当作原始计数来源认证。输出新的数据卡和文件后继续模型特定检查。
+When preparing user tables or a specified H5AD expression layer, use the actual parameters of `scripts/prepare_user_data.py` and record an explicit matrix orientation, scale and species. Check that metadata align by unique IDs. This step does not automatically normalize, select genes, deduplicate or resolve gene aliases; integer-looking values do not certify raw-count provenance. After writing a new data card and files, continue with model-specific checks.
 
-需要文件级检查时，按 [预检与排错](docs/troubleshooting.md) 准备请求并运行 `scripts/preflight.py`。H5AD 默认仅检查元数据；显式设置 `scan_h5ad_values: true` 可按块扫描所选 dense/CSR/CSC 矩阵的全部存储值。数值检查不认证原始 counts 来源、稀疏索引、`n_counts` 一致性或模型兼容。`incomplete` 表示必需检查未完成，`preflight_ready` 只覆盖有限预检范围；读取阻断项与未检查项后继续后端核验。Paul2015 教程文件的 `raw_count` 非整数阻断是输入审计证据，不是模型运行失败。
+For file-level checks, prepare a request using [Preflight and troubleshooting](docs/troubleshooting.md) and run `scripts/preflight.py`. H5AD checks inspect metadata only by default; explicitly setting `scan_h5ad_values: true` scans all stored values of the selected dense/CSR/CSC matrix in blocks. Value checks do not certify raw-count provenance, sparse indices, `n_counts` consistency or model compatibility. `incomplete` means required checks remain unfinished; `preflight_ready` covers only the limited preflight scope. Read blockers and unchecked items, then continue backend verification. A noninteger `raw_count` blocker in the Paul2015 tutorial file is input-audit evidence, not a failed model run.
 
-| 路线 | 本仓库提供的入口 | 使用边界 |
+| Route | Entry point provided in this repository | Scope and constraints |
 | --- | --- | --- |
-| CellOracle | `examples/ko_oe/celloracle_run.py` 参数化脚本；[原始数据到 Gata1 KO 的实际案例](cases/celloracle-paul2015-gata1/README.md) | 单细胞原始计数、匹配 GRN 先验和可模拟 TF；输出模型表达差值与状态位移 |
-| Geneformer | `examples/ko_oe/geneformer_route.py` 参数化脚本 | 本示例限人类完整原始转录组、匹配 tokenizer/权重和所需环境；输出 embedding 影响 |
-| PRnet | `scripts/prnet_reference_case.py` 的固定官方资源参考评估；历史脚本另保留 | 只接收明确固定的参考资源，已实跑不等于任意用户基线适配；训练重叠未知时仍未独立验证 |
-| chemCPA、UniPert-G2CP | `examples/lung_cancer/` 下的历史适配脚本 | 需核对并适配路径、输入、环境和权重；不能把历史脚本存在当成本机已可运行 |
-| GEARS、UniCure、DrugReflector | 相应 workflow 参考文档与代码片段 | 按任务准备数据、资源并实现/验证适配；尚非统一的一键入口 |
+| CellOracle | Parameterized `examples/ko_oe/celloracle_run.py`; [Actual case from raw data to Gata1 KO](cases/celloracle-paul2015-gata1/README.md) | Requires raw single-cell counts, a matching GRN prior and a TF eligible for simulation; outputs simulated expression differences and state shifts |
+| Geneformer | Parameterized `examples/ko_oe/geneformer_route.py` | This example is limited to a complete human raw transcriptome, matching tokenizer/weights and the required environment; outputs embedding effects |
+| PRnet | Fixed official-resource reference evaluation in `scripts/prnet_reference_case.py`; historical scripts are retained separately | Accepts only the explicitly fixed reference resources. An executed reference case does not establish compatibility with arbitrary user baselines; unknown training overlap still precludes independent-validation claims |
+| chemCPA, UniPert-G2CP | Historical adaptation scripts under `examples/lung_cancer/` | Verify and adapt paths, inputs, environments and weights; the presence of a historical script does not establish local executability |
+| GEARS, UniCure, DrugReflector | Respective workflow references and code snippets | Prepare task-specific data/resources and implement/validate an adapter; these are not yet unified one-command entry points |
 
-模型选择读取 [能力登记](references/model-capabilities.md)，选定路线再读 [资源与执行入口](references/model-setup.md)。环境说明中的历史路径只作排查参考，不视为当前机器的安装事实。不同后端隔离环境，不把旧依赖强装进主环境。
+Read the [Capability registry](references/model-capabilities.md) to select a model, then [Resources and execution entry points](references/model-setup.md) for the chosen route. Treat historical paths in environment notes as troubleshooting references, not evidence of installation on the current machine. Isolate backend environments; do not force old dependencies into the main environment.
 
-## 3. 计算并保留结果原始含义
+## 3. Compute results while preserving their original meaning
 
-- **观测教学**：差值是来源处理谱减其指定对照谱，保留原始处理后尺度与跨板标记；不称为预测、单细胞前后追踪或模型验证。
-- **Kang 供体配对教学**：按样本与 barcode 对齐，保留唯一基因 ID；用原始计数聚合供体/条件/细胞标签，明确全基因 CPM 分母与伪计数，供体内求差、供体间等权汇总。细胞数不作为独立重复，缺失配对不补成零响应。
-- **CellOracle**：KO 设为 0；OE 必须给出内部 `imputed_count` 尺度内的固定值或分位数及依据，并报告基线高于设定值、因而被下调的细胞。随机化表达变化的投影是技术对照；原始与随机投影的向量差不能解释为特异信号。
-- **Geneformer**：`delete` 删除目标 token，`overexpress` 改变排序编码；当前示例不支持 `inhibit`/`activate`。embedding 变化不转写成表达倍数、差异表达或药效。只在原始完整转录组来源核实后设置脚本的确认参数。
-- **GEARS**：需要与目标背景及扰动类型匹配的训练数据；KO/CRISPRi 训练不能直接声称支持任意 OE。
-- **药筛**：PRnet/chemCPA 外部基线须匹配权重的基因顺序、尺度、协变量与训练域，患者样本按 OOD 探索记录。UniPert-G2CP 使用模型自带对照，不支持在本调用中随意替换成用户基线或增加剂量。DrugReflector 保留原生排名/类别定义。
-- 未列入实际入口的模型先按未适配处理，补齐来源、输入契约与运行证据后再接入；历史资料中出现模型名不构成当前能力。分子对接仅在用户已选药物和蛋白、且任务明确包含它时开展。
+- **Observed-response walkthrough:** Compute each contrast as the source treatment profile minus its specified control. Preserve the source-processed scale and cross-plate flags. Do not describe these contrasts as predictions, longitudinal single-cell tracking or model validation.
+- **Kang donor-paired walkthrough:** Align by sample and barcode, preserving unique gene IDs. Aggregate raw counts by donor/condition/cell label, explicitly specify the all-gene CPM denominator and pseudocount, compute within-donor contrasts and combine donors with equal weight. Do not treat cell counts as independent replicates or fill missing pairs with zero responses.
+- **CellOracle:** Set KO to 0. For OE, require a fixed value or quantile on the internal `imputed_count` scale, with its rationale; report cells whose baseline exceeds that setting and is therefore reduced. Projections of randomized expression changes are technical controls. Do not interpret the vector difference between original and randomized projections as a specific signal.
+- **Geneformer:** `delete` removes the target token; `overexpress` changes the rank encoding. The current example does not support `inhibit`/`activate`. Do not translate embedding changes into expression fold changes, differential expression or drug effects. Set the script's confirmation parameters only after verifying the provenance of the complete raw transcriptome.
+- **GEARS:** Require training data that match the target background and perturbation type. Training on KO/CRISPRi does not establish support for arbitrary OE.
+- **Compound screening:** External baselines for PRnet/chemCPA must match the weights' gene order, scale, covariates and training domain. Record patient-sample analyses as OOD exploration. UniPert-G2CP uses its bundled controls; the current invocation does not support arbitrary substitution with a user baseline or addition of doses. Preserve DrugReflector's native ranking/category definitions.
+- Treat models without an actual entry point as unadapted until their sources, input contracts and execution evidence are established. A model name in historical materials is not a current capability. Perform molecular docking only when the user has selected compounds and proteins and explicitly included docking in the task.
 
-执行前记录有效设置、选择依据、实际解释器、代码/模型版本、权重/先验、输入哈希、参数、随机性与训练域。每个条件单独登记；失败条件保留错误，已完成条件保留产物，不覆盖历史结果。
+Before execution, record effective settings, selection rationale, the actual interpreter, code/model versions, weights/priors, input hashes, parameters, randomness and training domain. Track each condition separately. Retain errors for failed conditions and artifacts for completed conditions without overwriting historical results.
 
-## 4. 保存完整结果，再检查和筛选
+## 4. Save complete results before checking and selecting them
 
-观测教学先保存完整来源与观测差值；模型分析先保存全量预测、对应基线、响应、基因轴与条件索引，再做 Top 表、评分和绘图。按稳定药物/条件 ID 连接排名与响应，不能靠排序后的行号取另一张表。历史全量数据缺失时标明不可恢复项，不从图片或 Top 表补造。
+For observed-response walkthroughs, first save complete provenance and observed contrasts. For model analyses, first save all predictions, corresponding baselines, responses, the gene axis and condition indices; only then derive top-result tables, scores and figures. Join rankings and responses by stable compound/condition IDs, not by row positions after sorting. If historical full results are missing, identify unrecoverable items; do not fabricate them from figures or top-result tables.
 
-保留后端实际支持的 `expression`、`network`、`state_embedding`、`ranking` 或 `docking` 输出；记录条件、单位、背景、来源、覆盖与 OOD 状态。
+Retain the `expression`, `network`, `state_embedding`, `ranking` or `docking` outputs the backend actually supports. Record conditions, units, backgrounds, provenance, coverage and OOD status.
 
-案例目录的 `catalogued`、`data_downloaded`、`prepared`、`model_executed`、`validated` 不可混用；阶段来自证据，不因脚本存在、下载成功或预检通过自动晋升。观测教学的 `model_status` 保持 `not_run`，`independent_validation` 保持 `not_assessed`。模型运行则分别记录：
+Keep the catalog stages `catalogued`, `data_downloaded`, `prepared`, `model_executed` and `validated` distinct. Assign stages from evidence; a script's existence, a successful download or a passed preflight does not automatically advance the stage. For observed-response walkthroughs, keep `model_status` at `not_run` and `independent_validation` at `not_assessed`. For model runs, record separately:
 
-- 运行：`result_available`、`partial`、`no_prediction`、`failed`、`not_applicable`。
-- 响应：`response_status`，描述不同条件是否有可辨别变化及检查依据。
-- 排名：分别记录 `condition_ranking_status` 与 `drug_ranking_status`；药物聚合后重新判断区分度，药筛 `ranking_status` 保留药物级兼容别名。不可区分时记 `unresolved` 并停止候选推荐，保留有效预测和合法的逐条件描述性方向。
-- 独立验证：缺少匹配实验或独立留出验证时记 `validation_status: unvalidated`，不覆盖运行状态。
+- Execution: `result_available`, `partial`, `no_prediction`, `failed`, `not_applicable`.
+- Response: `response_status`, describing whether conditions produce distinguishable changes and the evidence for that check.
+- Ranking: Record `condition_ranking_status` and `drug_ranking_status` separately. Reassess distinguishability after compound-level aggregation; retain screening `ranking_status` as the drug-level compatibility alias. If ranks are indistinguishable, record `unresolved` and stop candidate recommendations while retaining valid predictions and legitimate per-condition descriptive directions.
+- Independent validation: When matching experiments or independent held-out validation are absent, record `validation_status: unvalidated` without replacing the execution status.
 
-输入无法解释、无输出、非有限结果或关键索引缺失时阻断对应条件。高相关、排名并列和缺少独立验证不自动等于计算失败；通过技术检查也不等于药敏或疗效成立。
+Block an affected condition when its input cannot be interpreted, output is absent, results are nonfinite or critical indices are missing. High correlations, tied rankings and a lack of independent validation do not automatically mean computation failed; passing technical checks does not establish drug sensitivity or efficacy.
 
-有同尺度实测与预测时使用 `scripts/evaluate_predictions.py`。按稳定样本/基因 ID 对齐，保留零响应参照和按声明生物学单位等权的指标；核对训练/评估成员、背景、尺度与基线。成员不重叠仅证明已提供清单内的划分检查，不能自动证明所有训练来源独立。留一供体均值基线是交叉验证教学，不作为 CellOracle 或 PRnet 的独立准确性证据。
+When observations and predictions share a scale, use `scripts/evaluate_predictions.py`. Align stable sample/gene IDs; retain the zero-response reference and metrics weighted equally across the declared biological units. Check training/evaluation membership, background, scale and baseline. Nonoverlapping membership establishes a split check only within the supplied lists; it does not automatically establish independence from every training source. A leave-one-donor-out mean baseline is a cross-validation walkthrough, not independent accuracy evidence for CellOracle or PRnet.
 
-## 5. 生成适用的图和说明
+## 5. Generate applicable figures and explanations
 
-出图前读 [下游结果规范](references/downstream-results.md)。按实际输出生成互补图组：表达响应、状态位移、embedding 影响或原生排名；图旁标注单位、基线和源表。只有提供适配疾病参照、且基因空间、表达平台与实验条件可比时才计算疾病方向分数；否则跳过该评分并保留原生输出。
+Before plotting, read [Downstream result requirements](references/downstream-results.md). Generate complementary figure sets from actual outputs: expression responses, state shifts, embedding effects or native rankings. Annotate units, baselines and source tables alongside the figures. Compute disease-direction scores only when a suitable disease reference is provided and gene spaces, expression platforms and experimental conditions are comparable. Otherwise, skip that scoring and preserve native outputs.
 
-药筛逐条件结果及全量响应先落盘；有表达输出时交付每药每条件的 Top 30 变化基因，并保留方向和稳定 ID。恢复方向分类只描述预测转录响应；无效或未评分条件保留“无法判定”及原因。
+Save per-condition compound-screening results and full responses first. When expression output is available, deliver the top 30 changed genes for each compound/condition, preserving direction and stable IDs. Reversal-direction categories describe predicted transcriptional responses only. Retain an "undetermined" classification and reason for invalid or unscored conditions.
 
-支持的 Kang、CellOracle 与 PRnet 运行结果可用 `scripts/explain_result.py` 在新目录生成结果解读。解释工具只读取既有结果，不重跑模型；先核对实际状态和必要表，再提取主要数值。同时交代正负变化、指标定义、独立重复单位、质量问题和下一步；无法识别的契约返回具体缺项，不凭文件存在推断成功。
+For supported Kang, CellOracle and PRnet runs, use `scripts/explain_result.py` to generate an interpretation in a new directory. The interpretation tool reads existing results without rerunning the model. Check actual statuses and required tables before extracting key values. Explain positive and negative changes, metric definitions, independent replicate units, quality issues and next steps. For an unrecognized contract, report specific missing requirements instead of inferring success from the presence of files.
 
-模型路线逐图登记 `figures/figure_manifest.csv` 的生成、跳过或失败状态；HT115 与 Kang 观测教学使用其实际输出的根目录 `figure_manifest.json`，不要求补造模型图清单。缺可选图不改写成功预测状态；图形失败只重画相关图，不重跑已完成模型。真实扰动验证图与模拟图分开，p 值、误差条、存活率和 IC50 只在有对应数据和方法时提供。
+For model routes, record each figure's generated, skipped or failed status in `figures/figure_manifest.csv`. HT115 and Kang observed-response walkthroughs use the root-level `figure_manifest.json` their scripts actually produce; do not fabricate a model figure manifest. Missing optional figures do not change successful prediction status. If a figure fails, regenerate only the affected figure without rerunning a completed model. Keep experimental perturbation-validation figures separate from simulation figures. Provide p-values, error bars, viability and IC50 only when corresponding data and methods exist.
 
-## 6. 交付可复查的运行包
+## 6. Deliver an auditable run package
 
-输出目录必须新建。观测教学保留脚本实际生成的 `report.md`、`provenance.json`、`qc.json`、`figure_manifest.json`、完整表和原始数组，不补造模型推理记录。模型分析使用新的 `<analysis_dir>/results/<run_id>/`，保存 `manifest.json`、`provenance.json`、`raw/`、`tables/`、`figures/`、`validation.json`、`errors.jsonl` 和 `report.md`。脚本未自动记录的字段由执行者补充，保留原始记录。
+Create a new output directory. For observed-response walkthroughs, retain the script's actual `report.md`, `provenance.json`, `qc.json`, `figure_manifest.json`, complete tables and raw arrays; do not fabricate model-inference records. For model analyses, use a new `<analysis_dir>/results/<run_id>/` and save `manifest.json`, `provenance.json`, `raw/`, `tables/`, `figures/`, `validation.json`, `errors.jsonl` and `report.md`. Supplement fields the script does not record automatically while preserving the original records.
 
-报告先回答做了什么、哪些条件完成、用了什么基线、结果能说明什么，再给主要数值、源表/图、异常与下一步。明确区分历史读取、本次重跑、技术检查和独立验证。临床疗效、疾病机制、因果关系及靶点确证不由预测分数直接推出。
+Start the report with what was done, which conditions completed, the baseline used and what the results support. Then provide key values, source tables/figures, exceptions and next steps. Clearly distinguish historical review, current execution, technical checks and independent validation. Do not infer clinical efficacy, disease mechanisms, causality or target confirmation directly from prediction scores.
 
-## 按需参考
+## References to load as needed
 
-- [首次使用](references/first-run.md)：Agent 安装、文件与研究任务、结果交付、可选公开案例及技术复现。
-- [自带数据](references/user-data.md)：表格/H5AD 整理、尺度与 ID 检查，以及后续模型输入。
-- [预测评估](references/prediction-evaluation.md)：同尺度比较、简单基线、按生物学单位汇总与数据划分审计。
-- [结果解读](references/result-reading.md)：支持的结果契约、关键数值与源表、限制及处理建议。
-- [案例目录](cases/README.md)、[catalog.json](cases/catalog.json)：案例来源、资源、实际阶段及限制。
-- [执行手册](references/execution-playbook.md)：默认设置、一次合并提问、运行记录和失败处理。
-- [输入契约](references/input-contracts.md)、[能力登记](references/model-capabilities.md)：输入和模型适用范围。
-- [方法依据与独立维护范围](docs/methodology-and-scope.md)：明确观测/预测尺度、实验单位、评估泄漏和科学归属；不沿用历史演示结论证明新分析成立。
-- [资源与执行入口](references/model-setup.md)、[环境说明](references/backend-environments.md)：选定后端后核对资源和依赖。
-- [KO/OE 参数化示例](examples/ko_oe/README.md)：CellOracle/Geneformer 的实际 CLI 与输出。
-- [GEARS](references/gears-workflow.md)、[UniCure](references/unicure-workflow.md)、[DrugReflector](references/drugreflector-workflow.md)：按需适配的研究路线。
-- [下游结果规范](references/downstream-results.md)：绘图、评分、条件索引和科学解释边界。
-- [历史归档](archive/aivc-587579e7/reproduction-report.md)、[勘误](docs/audit-remediation.md)：仅在复核旧研究时读取，不充当新案例执行证据。
-- [贡献指南](CONTRIBUTING.md)、[来源说明](THIRD_PARTY_NOTICES.md)：以单个案例或适配维护，保留原作者与资源许可。
-- [预检与排错](docs/troubleshooting.md)：轻量预检请求、状态与常见问题的下一步。
+- [First run](references/first-run.md): Agent installation, files and research tasks, result delivery, optional public cases and technical reproduction.
+- [User data](references/user-data.md): Table/H5AD preparation, scale and ID checks, and subsequent model inputs.
+- [Prediction evaluation](references/prediction-evaluation.md): Same-scale comparisons, simple baselines, biological-unit aggregation and split audits.
+- [Result interpretation](references/result-reading.md): Supported result contracts, key values and source tables, limitations and next actions.
+- [Case catalog](cases/README.md), [catalog.json](cases/catalog.json): Case sources, resources, actual stages and limitations.
+- [Execution playbook](references/execution-playbook.md): Default settings, one consolidated question round, run records and failure handling.
+- [Input contracts](references/input-contracts.md), [Capability registry](references/model-capabilities.md): Input requirements and model scope.
+- [Methodology and independent maintenance scope](docs/methodology-and-scope.md): Observation/prediction scales, experimental units, evaluation leakage and scientific attribution; historical demonstration conclusions do not establish new analyses.
+- [Resources and execution entry points](references/model-setup.md), [Environment notes](references/backend-environments.md): Verify resources and dependencies after selecting a backend.
+- [Parameterized KO/OE examples](examples/ko_oe/README.md): Actual CellOracle/Geneformer CLIs and outputs.
+- [GEARS](references/gears-workflow.md), [UniCure](references/unicure-workflow.md), [DrugReflector](references/drugreflector-workflow.md): Research routes that require task-specific adaptation.
+- [Downstream result requirements](references/downstream-results.md): Plotting, scoring, condition indices and scientific interpretation boundaries.
+- [Historical archive](archive/aivc-587579e7/reproduction-report.md), [Corrections](docs/audit-remediation.md): Read only when reviewing earlier research; these do not constitute execution evidence for a new case.
+- [Contribution guidelines](CONTRIBUTING.md), [Source notices](THIRD_PARTY_NOTICES.md): Maintain individual cases or adapters while preserving authorship and resource licenses.
+- [Preflight and troubleshooting](docs/troubleshooting.md): Lightweight preflight requests, statuses and next steps for common problems.
 
-维护现有仓库时做定点修改，不重新初始化 Skill。分发前检查文档链接、相关行为测试与 `scripts/package_skill.py` 的文件清单；不把模型权重、用户数据或临时运行产物加入分发包。
+Make targeted changes when maintaining this repository; do not reinitialize the Skill. Before distribution, check documentation links, relevant behavior tests and the file list produced by `scripts/package_skill.py`. Exclude model weights, user data and temporary run artifacts from the distribution package.
