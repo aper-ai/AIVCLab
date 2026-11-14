@@ -3,7 +3,7 @@
 [![Skill：研究预览阶段](virtual-cell-research/assets/brand/badge-skill.svg)](virtual-cell-research/SKILL.md)
 [![数据工具环境：Python 3.12](virtual-cell-research/assets/brand/badge-python.svg)](virtual-cell-research/requirements-tests.txt)
 [![工程检查配置：Ubuntu 与 Windows](virtual-cell-research/assets/brand/badge-checks.svg)](https://github.com/aper-ai/virtual-cell-workbench/actions/workflows/skill.yml)
-[![许可：PolyForm NC 与既有 MIT](virtual-cell-research/assets/brand/badge-license.svg)](virtual-cell-research/docs/licensing.md)
+[![许可：MIT](virtual-cell-research/assets/brand/badge-license.svg)](virtual-cell-research/docs/licensing.md)
 
 # Virtual Cell Research · 虚拟细胞研究 Skill
 
@@ -15,7 +15,7 @@ Virtual Cell Research 是面向转录组与单细胞研究的科研 Agent Skill�
 
 项目聚焦**干预前后的转录响应与细胞状态变化**：哪些基因变化、哪些细胞背景响应不同、模型预测相对简单基线表现如何。研究者确定科学问题和干预条件，Agent 组织准备、运行、检查与报告流程，保存方法与结果之间的可追溯记录，为研究假设的比较和后续验证提供依据。
 
-[核心任务](#三项核心研究任务) · [快速开始](#快速开始) · [自有数据](#用自己的数据开展研究) · [真实结果](#四组真实案例从方法到结果) · [案例库](#案例库当前完成到哪一步) · [开放协作](#开放协作与生态共建) · [使用许可](#使用许可与商业授权)
+[核心任务](#三项核心研究任务) · [快速开始](#快速开始) · [自有数据](#用自己的数据开展研究) · [真实结果](#四组真实案例从方法到结果) · [案例库](#案例库当前完成到哪一步) · [开放协作](#开放协作与生态共建) · [开源许可](#开源许可)
 
 ## 三项核心研究任务
 
@@ -296,16 +296,15 @@ python scripts/package_skill.py
 
 Skill 的使用与模型运行按本页的目录和环境准备；附带查看器的安装包提供结果阅读功能，不包含新 Skill 的模型环境与权重。
 
-## 使用许可与商业授权
+## 开源许可
 
-**个人非商业使用免费，超出免费许可范围的商业使用须取得书面授权。** 新贡献采用 [PolyForm Noncommercial 1.0.0](LICENSE)，支持源码阅读、许可范围内的修改与分享；教育、公共研究及协议列明的其他机构按协议条款免费使用，不因资金来源而缩小该许可。
+**本项目采用 [MIT License](LICENSE)，允许个人和商业使用、复制、修改、合并、分发、再许可与销售。** 在软件的所有副本或实质性部分中，应保留版权声明和 MIT 许可文本。MIT 不要求公开修改后的源码，也无需向本项目另行申请商业授权。
 
 | 内容 | 适用许可 |
 | --- | --- |
-| 本次起有权授权的项目新贡献与品牌资产 | PolyForm Noncommercial 1.0.0；超出其许可范围的用途另行商议商业授权 |
-| 既有 MIT 版本及带入新版的相同旧内容 | 原 MIT 权利继续有效，包括商业使用权；新条款不溯及既往 |
-| 第三方代码、模型、权重、数据与历史材料 | 分别按原许可和资源条款处理，项目商业授权不替代这些权利 |
+| 本项目有权授权的代码、文档与原创资产 | MIT License；具体范围与归属见许可及来源记录 |
+| 第三方代码、模型、权重、数据与历史材料 | 保留各自原许可、版权声明和资源使用条款；不因本项目采用 MIT 而自动获得商业使用权 |
 
-当前分析代码的大部分已经载有 MIT 许可，不能仅更换 LICENSE 就将这些旧内容改成必须商业授权。原许可、固定版本文件清单、贡献者权利及申请途径在 [完整许可说明](virtual-cell-research/docs/licensing.md) 中明确登记。该政策属于**源码开放的非商业许可**，不宣称为 OSI 批准的开源许可。
+贡献者保留自己贡献的版权，并以 MIT 许可提交其有权授权的贡献。第三方资源需按具体代码、模型、数据和权重分别核对；完整范围、条件与免责说明见 [许可说明](virtual-cell-research/docs/licensing.md)。
 
 [代码许可](LICENSE) · [归属说明](virtual-cell-research/NOTICE) · [第三方资源与来源](virtual-cell-research/THIRD_PARTY_NOTICES.md) · [方法说明](virtual-cell-research/docs/methodology-and-scope.md)

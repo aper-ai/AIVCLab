@@ -4,7 +4,7 @@ Virtual Cell Research 由本项目独立维护。项目的工作流组织、案�
 
 ## 已纳入的第三方代码和文档
 
-部分模型适配脚本、结果整理代码、参考文档和历史示例来自 [Pengzhi-Gao/aivc-skill](https://github.com/Pengzhi-Gao/aivc-skill)，固定提交 `587579e7e004ccfa7079c794d7dd1948caa211f9`。本项目继续修改和维护这些文件，不需要在运行时下载或调用该 Skill。原 MIT 版权与许可正文保存在 [legacy-mit.md](docs/licenses/legacy-mit.md)，逐文件来源在 [source-ledger.json](docs/source-ledger.json)。
+部分模型适配脚本、结果整理代码、参考文档和历史示例来自 [Pengzhi-Gao/aivc-skill](https://github.com/Pengzhi-Gao/aivc-skill)，固定提交 `587579e7e004ccfa7079c794d7dd1948caa211f9`。本项目继续修改和维护这些文件，不需要在运行时下载或调用该 Skill。原 MIT 版权与许可正文保存在 [LICENSE](LICENSE)，逐文件来源在 [source-ledger.json](docs/source-ledger.json)。
 
 来源台账区分保留、修改及本项目新增文件。文件改名、重写部分内容或产品重新定位，都不抹去已经纳入代码的来源。产品首页使用独立名称；必要署名、许可和历史记录仍保留。
 
@@ -25,7 +25,7 @@ Virtual Cell Research 由本项目独立维护。项目的工作流组织、案�
 
 当前包括案例目录及其校验/单资源下载工具、PRnet HT115 观测数据教学、Kang 按供体配对的观测响应分析与留一供体均值基线评价、Paul2015 原始计数准备与输入审计、PRnet 固定 checkpoint 参考评估入口、用户 CSV/TSV/H5AD 数据准备、预测与实测矩阵评价、中文结果解读、输入预检增强、首次使用与贡献流程，以及对应行为测试。CellOracle 适配入口沿用并修改了已有实现，其版本特定容量检查是本项目新增；KO 与 OE 案例的执行记录、图和说明由本项目生成。PRnet 模型实现和权重按固定来源获取，未移作本项目自创模型。
 
-许可切换前的项目新增内容已有 MIT 授权，原许可及其既有权利继续有效。本次起有权授权的新贡献采用 [PolyForm Noncommercial 1.0.0](LICENSE)，具体范围、旧版本清单和商业授权方式见 [使用许可](docs/licensing.md)；文件属于本项目新增，并不意味着其历史 MIT 权利被收回。精确来源与既有修改范围见来源台账。[方法与解释范围](docs/methodology-and-scope.md)说明独立维护的工作流与已有科学理论的边界。实际案例图由本项目运行生成，其所依据的数据和模型仍按各案例注明来源；可运行、数值一致性检查和独立科学验证分别记录。
+本项目有权授权的代码、文档、工作流实现与新贡献采用 [MIT](LICENSE)，允许按协议进行个人和商业使用、修改与分发，无需另行取得项目商业授权。已有 MIT 版权与许可声明继续保留，具体范围见 [开源许可](docs/licensing.md)。精确来源与既有修改范围见来源台账。[方法与解释范围](docs/methodology-and-scope.md)说明独立维护的工作流与已有科学理论的边界。实际案例图由本项目运行生成，其所依据的数据和模型仍按各案例注明来源；可运行、数值一致性检查和独立科学验证分别记录。
 
 ## 本次公开案例图集
 
@@ -35,4 +35,4 @@ Virtual Cell Research 由本项目独立维护。项目的工作流组织、案�
 
 ## 许可文本与品牌资产
 
-PolyForm 许可文本来自 [官方 1.0.0 文件](https://github.com/polyformproject/polyform-licenses/blob/1.0.0/PolyForm-Noncommercial-1.0.0.md)，按其 [文本复用许可](https://github.com/polyformproject/polyform-licenses/blob/1.0.0/README.md#license) 逐字保留，非本项目原创。`assets/brand/` 下的项目标识、页首和徽章为本项目新建的 SVG 矢量资产，用于项目识别，不作为科学数据或分析结果。原有案例图的来源、方法和证据含义不变。
+本项目采用标准 [MIT 许可](https://opensource.org/license/mit)，许可正文非本项目原创。`assets/brand/` 下的项目标识、页首和徽章为本项目新建的 SVG 矢量资产，采用 MIT，用于项目识别，不作为科学数据或分析结果。原有案例图的来源、方法和证据含义不变。

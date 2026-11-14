@@ -2,31 +2,29 @@
   "schema_version": 1,
   "project": "Virtual Cell Research",
   "maintainer": "Aper AI contributors",
-  "recorded_on": "2026-11-13",
+  "recorded_on": "2026-11-14",
   "source": {
     "repository": "https://github.com/Pengzhi-Gao/aivc-skill",
     "revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
     "license": "MIT",
     "notice": "../NOTICE",
-    "license_file": "licenses/legacy-mit.md"
+    "license_file": "../LICENSE"
   },
   "interpretation": [
     "This independently maintained product includes imported third-party implementation and documentation. A separate name does not imply exclusive original authorship.",
     "retained/modified compares the recorded original Git blob with the project file at this audit; subsequent edits should update the ledger.",
     "project_added means a new repository file, not ownership of any referenced scientific dataset, model, algorithm, or historical result.",
     "Full expression matrices and model weights are fetched from their providers and are not bundled.",
-    "Per-file source_repository overrides the primary imported-source repository when a separate standard license text is recorded.",
-    "The project_added category is provenance, not a grant of exclusive copyright or commercial relicensing rights. See docs/licensing.md and docs/licenses/mit-baseline.json for preserved MIT permissions."
+    "The project_added category records provenance, not exclusive copyright or a replacement license for referenced models or datasets. Project-authored material is licensed under MIT; see docs/licensing.md."
   ],
   "imported_files": [
     {
       "path": "LICENSE",
-      "source_repository": "https://github.com/polyformproject/polyform-licenses",
-      "source_path": "PolyForm-Noncommercial-1.0.0.md",
-      "source_revision": "1.0.0",
-      "source_git_blob": "5ecc88cfc4b1cff608ed640efe913c9dd97935c3",
-      "change_status": "retained",
-      "scope": "Official standard license text reproduced unchanged under its source reuse permission; adopted only for the scope in NOTICE and docs/licensing.md, not claimed as project-authored text."
+      "source_path": "LICENSE",
+      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
+      "source_git_blob": "4f90f4001022d67efd9b91d7ac157aad4508c12a",
+      "change_status": "modified",
+      "scope": "Imported MIT license with original copyright and permission notice retained; project additions are also licensed under MIT."
     },
     {
       "path": "README.md",
@@ -75,14 +73,6 @@
       "source_git_blob": "9838628914086f5c6d4d8498e83cc38c42d85fba",
       "change_status": "retained",
       "scope": "Imported material and subsequent project modifications; original MIT attribution retained"
-    },
-    {
-      "path": "docs/licenses/legacy-mit.md",
-      "source_path": "LICENSE",
-      "source_revision": "587579e7e004ccfa7079c794d7dd1948caa211f9",
-      "source_git_blob": "4f90f4001022d67efd9b91d7ac157aad4508c12a",
-      "change_status": "modified",
-      "scope": "Original MIT notice and baseline project-additions notice preserved byte for byte from project commit 3d7c32bd3242a5c1d3093114a31b46a5e2e46c69; relocated without withdrawing existing permissions."
     },
     {
       "path": "docs/troubleshooting.md",
@@ -362,32 +352,32 @@
     {
       "path": "assets/brand/badge-checks.svg",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "assets/brand/badge-license.svg",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "assets/brand/badge-python.svg",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "assets/brand/badge-skill.svg",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "assets/brand/header.svg",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "assets/brand/icon.svg",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "cases/README.md",
@@ -730,14 +720,9 @@
       "scope": "Project-authored case material; original scientific data, models and publications are separately credited in the case."
     },
     {
-      "path": "docs/licenses/mit-baseline.json",
-      "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
-    },
-    {
       "path": "docs/licensing.md",
       "change_status": "project_added",
-      "scope": "Project-created branding or licensing-scope record. Existing MIT rights and third-party terms are preserved as described in docs/licensing.md."
+      "scope": "Project-created SVG branding or license documentation, provided under MIT; third-party resource terms and original attribution remain separate."
     },
     {
       "path": "docs/methodology-and-scope.md",
@@ -931,10 +916,9 @@
     }
   ],
   "licensing_policy": {
-    "current_standard_license": "PolyForm-Noncommercial-1.0.0",
+    "current_standard_license": "MIT",
     "scope_document": "licensing.md",
-    "legacy_mit_notice": "licenses/legacy-mit.md",
-    "legacy_baseline": "licenses/mit-baseline.json",
-    "existing_rights_preserved": true
+    "third_party_notices": "../THIRD_PARTY_NOTICES.md",
+    "original_attribution_retained": true
   }
 }

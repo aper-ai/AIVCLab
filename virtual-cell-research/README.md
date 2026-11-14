@@ -3,7 +3,7 @@
 [![Skill：研究预览阶段](assets/brand/badge-skill.svg)](SKILL.md)
 [![数据工具环境：Python 3.12](assets/brand/badge-python.svg)](requirements-tests.txt)
 [![工程检查配置：Ubuntu 与 Windows](assets/brand/badge-checks.svg)](https://github.com/aper-ai/virtual-cell-workbench/actions/workflows/skill.yml)
-[![许可：PolyForm NC 与既有 MIT](assets/brand/badge-license.svg)](docs/licensing.md)
+[![许可：MIT](assets/brand/badge-license.svg)](docs/licensing.md)
 
 # Virtual Cell Research · 虚拟细胞研究 Skill
 
@@ -148,10 +148,10 @@ python scripts/package_skill.py
 
 源码包位于 `dist/virtual-cell-research.zip`，包含流程、脚本、案例说明和必要资源记录。模型权重、原始表达矩阵、环境和本地运行结果按需准备。
 
-## 使用许可与商业授权
+## 开源许可
 
-有权授权的新贡献采用 **PolyForm Noncommercial 1.0.0**：个人非商业使用，以及协议列明的教育、公共研究等机构用途免费；超出许可范围的商业用途须单独取得书面授权。允许在许可范围内修改与分享。
+本项目有权授权的代码、文档与原创资产采用 [MIT License](LICENSE)，允许个人和商业使用、复制、修改、合并、分发、再许可与销售。在软件的所有副本或实质性部分中，应保留版权声明和 MIT 许可文本；MIT 不要求公开修改后的源码，也无需向本项目另行申请商业授权。
 
-既有 MIT 版本及沿用的旧内容继续保留原 MIT 权利，第三方模型和数据分别遵守自己的条款。当前新增许可主要覆盖新贡献，不为已有 MIT 分析代码建立排他商用权。完整范围、基准版本和商业咨询入口见 [使用许可](docs/licensing.md)。本项目采用“源码开放”的表述。
+贡献者保留自己贡献的版权，并以 MIT 许可提交其有权授权的贡献。第三方代码、模型、权重、数据与历史材料继续适用各自原许可和使用条款，不因本项目采用 MIT 而自动获得商业使用权。完整范围、条件与免责说明见 [许可说明](docs/licensing.md)。
 
 [许可](LICENSE) · [资源与来源记录](THIRD_PARTY_NOTICES.md) · [方法说明](docs/methodology-and-scope.md)

@@ -1,34 +1,22 @@
 Virtual Cell Research
-Required Notice: Copyright (c) 2026 Aper AI contributors.
+Copyright (c) 2026 Aper AI contributors.
 
-License scope for this distribution:
-New project-authored material introduced with or after this policy, and which
-the relevant copyright holder is entitled to license, is offered under
-PolyForm Noncommercial License 1.0.0, subject to the
-existing-license and third-party exceptions below. Commercial uses outside
-that license require a separate written agreement with the relevant rights
-holder. The project maintainer cannot license rights it does not hold.
+Project-authored code, documentation and SVG identity assets for which the
+project has licensing rights are provided under the MIT License (LICENSE).
+Personal and commercial use, modification, redistribution and sublicensing
+are permitted under that license. Preserve the applicable copyright and
+permission notices. No separate project commercial authorization is required.
+The software is provided without warranty as specified in LICENSE.
 
-Existing MIT permissions are preserved. The virtual-cell-research directory
-at commit 3d7c32bd3242a5c1d3093114a31b46a5e2e46c69 carried an MIT notice
-covering imported material and project additions. That material, including
-unchanged portions carried into later versions, remains available under
-the existing MIT terms; the new policy does not revoke or restrict them.
-The exact notice is retained in virtual-cell-research/docs/licenses/legacy-mit.md.
-A path/blob snapshot is in virtual-cell-research/docs/licenses/mit-baseline.json.
-Only new, independently copyrightable project contributions for which the
-rights holder adopts the new license are subject to the new terms.
+Included third-party material retains its copyright, provenance and terms.
+The Skill's MIT notices are in virtual-cell-research/LICENSE, with per-file
+provenance in virtual-cell-research/docs/source-ledger.json. Historical samples
+and installer language components retain samples/LICENSE-AIVC.txt and
+installer/languages/LICENSE respectively.
 
-Third-party code, scientific models, weights, datasets, figures and bundled
-components retain their own terms. In particular, see samples/LICENSE-AIVC.txt,
-installer/languages/LICENSE, virtual-cell-research/THIRD_PARTY_NOTICES.md and
-the per-resource case records. No project commercial license automatically
-grants commercial rights to these resources or to other contributors' work.
+Scientific models, weights, datasets, historical results and other third-party
+components are not automatically licensed under the project's MIT License.
+Their separate terms remain applicable. See
+virtual-cell-research/THIRD_PARTY_NOTICES.md and the case resource records.
 
-The license text itself is provided by PolyForm Project under its own reuse
-permission and is reproduced without changes. Policy and commercial inquiry
-instructions: virtual-cell-research/docs/licensing.md.
-
-The legacy desktop-viewer implementation and installer assets outside the
-Skill directory are not relicensed by this change. Their presence is not
-evidence that all rights have been audited; separate notices remain applicable.
+Scope and contribution guidance: virtual-cell-research/docs/licensing.md.

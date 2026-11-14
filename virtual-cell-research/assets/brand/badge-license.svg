@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="28" viewBox="0 0 200 28" role="img" aria-labelledby="badge-license-title badge-license-description">
-  <title id="badge-license-title">License: PolyForm NC + MIT</title>
-  <desc id="badge-license-description">PolyForm Noncommercial applies only to new contributions that the licensor has the right to license under those terms. Legacy and third-party MIT rights are preserved. Commercial uses beyond the permissions already granted require separate authorization. See the project license for full terms and exceptions.</desc>
-  <rect x="0.5" y="0.5" width="199" height="27" rx="5" fill="#EEEAF6" stroke="#D7E1E7"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="28" viewBox="0 0 112 28" role="img" aria-labelledby="badge-license-title badge-license-description">
+  <title id="badge-license-title">License: MIT</title>
+  <desc id="badge-license-description">Project code and identity assets use the MIT License. Personal and commercial use are permitted with the required notices. Third-party models, weights and datasets retain their own terms.</desc>
+  <rect x="0.5" y="0.5" width="111" height="27" rx="5" fill="#E5F3F1" stroke="#D7E1E7"/>
   <path d="M5 0H69V28H5A5 5 0 0 1 0 23V5A5 5 0 0 1 5 0Z" fill="#233D4F"/>
   <g font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle">
     <text x="34.5" y="18.2" font-weight="700" fill="#FFFFFF">License</text>
-    <text x="134.5" y="18.2" fill="#655A7F">PolyForm NC + MIT</text>
+    <text x="90.5" y="18.2" fill="#216B63">MIT</text>
   </g>
 </svg>

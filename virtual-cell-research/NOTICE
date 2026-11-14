@@ -1,16 +1,10 @@
 Virtual Cell Research — independently maintained by Aper AI contributors.
-Required Notice: Copyright (c) 2026 Aper AI contributors.
+Copyright (c) 2026 Aper AI contributors.
 
-License scope:
-New project contributions whose rights holder adopts these terms are offered
-under PolyForm Noncommercial License 1.0.0 (LICENSE). Uses outside its
-permissions require a separate written license from the relevant rights holder.
-Existing MIT permissions are preserved for the skill material at commit
-3d7c32bd3242a5c1d3093114a31b46a5e2e46c69, including the corresponding portions
-carried into later versions. The policy is not retroactive. See
-docs/licenses/legacy-mit.md, docs/licenses/mit-baseline.json and docs/licensing.md.
-Submitting a contribution does not automatically grant the maintainer rights
-to commercially relicense another contributor's work.
+Project-authored code, documentation and SVG identity assets are provided
+under the MIT License (LICENSE), to the extent their authors have the rights
+to license them. No separate project commercial authorization is required.
+Contributors retain their copyright and license their contributions under MIT.
 
 This project maintains its own workflow, case catalogue, data inspection tools,
 observed-response tutorials, documentation and verification process. It does not
@@ -22,14 +16,12 @@ examples were imported from Pengzhi-Gao/aivc-skill and are maintained here.
 Source: https://github.com/Pengzhi-Gao/aivc-skill
 Revision: 587579e7e004ccfa7079c794d7dd1948caa211f9
 Retrieved: 2026-11-13
-Original MIT copyright and permission notices are retained in
-docs/licenses/legacy-mit.md; the old project-additions notice is retained too.
+Original MIT copyright and permission notices, together with the project
+additions notice, are retained in LICENSE.
 Per-file provenance is recorded in docs/source-ledger.json.
 
 Third-party model implementations, datasets and historical scientific results
 are not claimed as this project's original work. Their terms and citations are
 recorded separately in THIRD_PARTY_NOTICES.md and the case catalogue.
 Original matrices and model weights are not included in the source package.
-
-The PolyForm license text is reproduced unchanged under its authors' reuse
-permission; it is not original project material. See docs/licensing.md.
+The project's MIT License does not replace third-party resource terms.
