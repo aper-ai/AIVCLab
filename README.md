@@ -17,7 +17,7 @@ Virtual Cell Research is a research Agent Skill for working with transcriptomic 
 
 The current implementations focus on expression data, cellular context, and responses to experimental conditions. Each route records what inputs it accepts, what it actually computes, and how far its evidence extends. The researcher defines the scientific question; the Agent manages execution and preserves the connection between methods, complete results, and interpretation.
 
-<!-- Selected technical workflow figure will be inserted here after review. -->
+![Virtual Cell Research workflow](virtual-cell-research/assets/brand/research-workflow.png)
 
 [Research capabilities](#research-capabilities) · [Quick start](#quick-start) · [Use your own data](#use-your-own-data) · [Real case results](#four-real-case-studies-from-methods-to-results) · [Case library](#case-library-current-evidence) · [Research collaboration](#research-collaboration-and-extension)
 
