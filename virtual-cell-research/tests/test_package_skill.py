@@ -30,7 +30,8 @@ class SourcePackageTests(unittest.TestCase):
                 manifest = json.loads(archive.read('virtual-cell-research/package_manifest.json'))
                 for name, content in documents.items():
                     self.assertIn(name, manifest)
-                    self.assertEqual(archive.read('virtual-cell-research/' + name).decode('utf-8'), content)
+                    self.assertEqual(archive.read('virtual-cell-research/' + name),
+                                     (root / name).read_bytes())
 
     def test_figure_source_tables_are_bundled_without_general_data_matrices(self):
         with tempfile.TemporaryDirectory() as temporary:
