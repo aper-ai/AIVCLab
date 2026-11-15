@@ -7,13 +7,13 @@
 [![工程检查配置：Ubuntu 与 Windows](virtual-cell-research/assets/brand/badge-checks.svg)](https://github.com/aper-ai/virtual-cell-workbench/actions/workflows/skill.yml)
 [![许可：MIT](virtual-cell-research/assets/brand/badge-license.svg)](virtual-cell-research/docs/licensing.md)
 
-# Virtual Cell Research · 虚拟细胞研究 Skill
+# AIVCLab · AI 虚拟细胞研究平台
 
 **一句话启动虚拟细胞研究，从细胞变化中寻找疾病干预入口，发现逆转疾病状态的候选药物与基因靶点。**
 
 **面向虚拟细胞科学的研究工作流。** 将相关文件和研究问题交给 Agent，由它组织输入检查、数据准备、分析计算、兼容模型执行、结果评价、绘图与可追溯报告。
 
-Virtual Cell Research 是面向转录组与单细胞数据的科研 Agent Skill，衔接**数据准备、观测响应分析、虚拟干预、预测评估与结果解释**。基因敲除、过表达和药物筛选是其中的代表性应用；研究也可以从输入审计、供体配对比较、已有预测的评价，或已有结果的复核开始。
+AIVCLab 提供面向转录组与单细胞数据的科研 Agent Skill，衔接**数据准备、观测响应分析、虚拟干预、预测评估与结果解释**。基因敲除、过表达和药物筛选是其中的代表性应用；研究也可以从输入审计、供体配对比较、已有预测的评价，或已有结果的复核开始。
 
 当前实现聚焦表达数据、细胞背景与实验条件引起的响应。每条路线分别记录可接收的输入、实际计算内容与证据范围。研究者确定科学问题，Agent 负责执行与整理，保留方法、完整结果和解释之间的可追溯联系。
 
@@ -48,7 +48,7 @@ Virtual Cell Research 是面向转录组与单细胞数据的科研 Agent Skill�
 把下面这段话发给助手：
 
 ```text
-请帮我安装 Virtual Cell Research Skill：
+请帮我安装 AIVCLab 的 Virtual Cell Research Skill：
 https://github.com/aper-ai/virtual-cell-workbench
 
 读取仓库说明，按当前助手支持的方式安装完整的 virtual-cell-research/ 目录，
