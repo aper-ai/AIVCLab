@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1120" height="200" viewBox="0 0 1120 200" role="img" aria-labelledby="header-title header-description">
-  <title id="header-title">Virtual Cell Research</title>
+  <title id="header-title">AIVCLab</title>
   <desc id="header-description">An extensible research workflow skill for data preparation, perturbation analysis, prediction evaluation, and result interpretation. An abstract cell and connected network form the project identity.</desc>
   <rect x="0.5" y="0.5" width="1119" height="199" rx="20" fill="#F6F8FB" stroke="#DEE6EC"/>
   <g transform="translate(36 28) scale(1.125)">
@@ -14,7 +14,7 @@
   </g>
   <g font-family="Arial, Helvetica, sans-serif">
     <text x="220" y="51" font-size="12" font-weight="700" letter-spacing="1.8" fill="#47717A">RESEARCH WORKFLOW SKILL</text>
-    <text x="218" y="104" font-size="50" font-weight="700" letter-spacing="-1.2" fill="#142C3E">Virtual Cell Research</text>
+    <text x="218" y="104" font-size="50" font-weight="700" letter-spacing="-1.2" fill="#142C3E">AIVCLab</text>
     <g font-size="17" fill="#4B6271">
       <text x="220" y="144">Data preparation</text>
       <text x="410" y="144">Perturbation analysis</text>
