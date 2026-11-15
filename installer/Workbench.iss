@@ -1,4 +1,4 @@
-﻿#define WorkbenchName "Aper AI 虚拟细胞工作台"
+﻿#define WorkbenchName "AIVCLab · 虚拟细胞研究平台"
 #define WorkbenchPublisher "Aper AI"
 #define WorkbenchExe "AperVirtualCellWorkbench.exe"
 #ifndef WorkbenchPayload
