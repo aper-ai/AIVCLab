@@ -18,7 +18,7 @@ from PySide6.QtWidgets import (
 from run_data import MAX_FIGURE_BYTES, RunDataError, compare_runs, export_report, load_run, read_table, resolve_asset
 
 
-TITLE = "Aper AI 虚拟细胞工作台"
+TITLE = "AIVCLab · 虚拟细胞研究平台"
 APP_ROOT = Path(__file__).resolve().parent
 ASSETS = APP_ROOT / "samples"
 ICON = APP_ROOT / "installer" / "aper-workbench.ico"
@@ -167,7 +167,7 @@ class Workbench(QMainWindow):
         brand.addWidget(mark)
         brand.addWidget(label("APER AI", "brand"), 1)
         side.addLayout(brand)
-        side.addWidget(label("虚拟细胞 · 结果工作台"))
+        side.addWidget(label("AIVCLab · 结果工作台"))
         side.addSpacing(15)
         self.import_btn = button("导入运行目录…", self.import_directory)
         self.sample_btn = button("打开 AIVC 公开样例", self.load_samples)
@@ -186,7 +186,7 @@ class Workbench(QMainWindow):
         content = QVBoxLayout(body)
         content.setContentsMargins(24, 18, 24, 12)
         header = QHBoxLayout()
-        header.addWidget(label("虚拟细胞工作台", "headline"), 1)
+        header.addWidget(label("AIVCLab", "headline"), 1)
         self.export_btn = button("导出报告…", self.choose_export, primary=True)
         self.export_btn.setEnabled(False)
         header.addWidget(self.export_btn)
