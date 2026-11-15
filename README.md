@@ -7,13 +7,13 @@
 [![Engineering checks: Ubuntu and Windows](virtual-cell-research/assets/brand/badge-checks.svg)](https://github.com/aper-ai/virtual-cell-workbench/actions/workflows/skill.yml)
 [![License: MIT](virtual-cell-research/assets/brand/badge-license.svg)](virtual-cell-research/docs/licensing.md)
 
-# Virtual Cell Research
+# AIVCLab · AI Virtual Cell Research
 
 **Launch virtual cell research with one prompt: identify opportunities for disease intervention from cellular changes and discover candidate drugs and gene targets for reversing disease states.**
 
-**Research workflows for virtual cell science.** Give your Agent the relevant files and a research question. It organizes input checks, data preparation, analysis, compatible model execution, evaluation, figures, and a traceable research report.
+**AIVCLab — research workflows for virtual cell science.** Give your Agent the relevant files and a research question. It organizes input checks, data preparation, analysis, compatible model execution, evaluation, figures, and a traceable research report.
 
-Virtual Cell Research is a research Agent Skill for working with transcriptomic and single-cell data. It connects **data preparation, observed response analysis, in silico perturbation, prediction evaluation, and result interpretation** in a reproducible workflow. Gene knockout, overexpression, and compound screening are representative applications within this broader scope. You can also start with an input audit, a donor-paired comparison, predictions that need evaluation, or an existing result that needs review.
+AIVCLab provides a research Agent Skill for working with transcriptomic and single-cell data. It connects **data preparation, observed response analysis, in silico perturbation, prediction evaluation, and result interpretation** in a reproducible workflow. Gene knockout, overexpression, and compound screening are representative applications within this broader scope. You can also start with an input audit, a donor-paired comparison, predictions that need evaluation, or an existing result that needs review.
 
 The current implementations focus on expression data, cellular context, and responses to experimental conditions. Each route records what inputs it accepts, what it actually computes, and how far its evidence extends. The researcher defines the scientific question; the Agent manages execution and preserves the connection between methods, complete results, and interpretation.
 
@@ -48,7 +48,7 @@ Use a Skill-capable assistant such as [WorkBuddy](https://www.codebuddy.cn/docs/
 Copy this request into your assistant:
 
 ```text
-Please install the Virtual Cell Research Skill:
+Please install the AIVCLab Virtual Cell Research Skill:
 https://github.com/aper-ai/virtual-cell-workbench
 
 Read the repository instructions and install the complete virtual-cell-research/
