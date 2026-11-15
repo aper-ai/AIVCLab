@@ -9,7 +9,7 @@
 
 # Virtual Cell Research
 
-**Launch virtual cell research with one prompt.**
+**Launch virtual cell research with one prompt: identify opportunities for disease intervention from cellular changes and discover candidate drugs and gene targets for reversing disease states.**
 
 **Research workflows for virtual cell science.** Give your Agent the relevant files and a research question. It organizes input checks, data preparation, analysis, compatible model execution, evaluation, figures, and a traceable research report.
 
